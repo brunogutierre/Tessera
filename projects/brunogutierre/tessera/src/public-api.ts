@@ -28,3 +28,5 @@ export { TesAlert } from './lib/alert/alert';
 export type { TesAlertLive, TesAlertTone } from './lib/alert/alert';
 export { TesProgress } from './lib/progress/progress';
 export type { TesProgressSize, TesProgressTone } from './lib/progress/progress';
+export { TesStat } from './lib/stat/stat';
+export type { TesStatTrend } from './lib/stat/stat';
