@@ -2,6 +2,8 @@
 
 An Angular design system: 30 accessible components, three professional themes (Enterprise, Fintech and Care), each with light and dark modes, documented in Storybook.
 
+**Live Storybook:** https://brunogutierre.github.io/Tessera/
+
 > Work in progress. Sections are filled in as each part of the system lands.
 
 ## Goal
@@ -16,8 +18,10 @@ Show how a production-grade design system is built with modern Angular: design t
 | Styling         | Plain CSS: custom properties, `oklch()`, `light-dark()`, cascade layers    |
 | Behavior        | `@angular/aria` (headless APG widgets) and Angular CDK (overlay, a11y)     |
 | Packaging       | ng-packagr (Angular Package Format), single entry point                    |
+| Documentation   | Storybook 10 (`@storybook/angular-vite`), deployed to GitHub Pages         |
 | Unit tests      | Vitest 5 via `@angular/build:unit-test`, browser mode in headless Chromium |
 | Lint and format | angular-eslint (type-checked rules), Prettier                              |
+| Story tests     | `@storybook/addon-vitest` + `@storybook/addon-a11y` (axe, WCAG 2.2 AA)     |
 | Package checks  | publint, `@arethetypeswrong/cli`, `npm pack --dry-run`                     |
 
 ## Repository layout
@@ -31,7 +35,11 @@ projects/brunogutierre/tessera/   the library (@brunogutierre/tessera)
     base.css                      text and background of themed subtrees
   src/lib/core/                   shared utilities (ids, tokens, theme, labels)
   src/public-api.ts               everything the package exports
-.github/workflows/ci.yml          format, lint, tests with coverage, build and package checks
+.storybook/                      Storybook config: globals for theme, mode and direction; fonts
+  src/docs/                       MDX pages and foundation stories
+vitest.storybook.config.mts       runs every story as a browser test
+.github/workflows/ci.yml          format, lint, unit tests, package checks, story tests
+.github/workflows/pages.yml       deploys Storybook to GitHub Pages on every push to main
 ```
 
 ## Themes and design tokens
@@ -86,6 +94,9 @@ Every built-in string (button names, screen-reader text, paginator summary) come
 ## Decisions
 
 - **Library-only workspace.** Storybook is the documentation and the playground, so there is no separate demo app to build, deploy and keep in sync.
+- **Storybook on Vite (`@storybook/angular-vite`) instead of Webpack.** It is the only Angular framework that runs stories as Vitest tests, and it matches Angular's own esbuild/Vite toolchain. It is still marked preview, so versions are pinned exactly; the fallback is `@storybook/angular`.
+- **Every story is a test.** `npm run test:stories` renders each story in Chromium, runs its play function and fails on any axe violation (`a11y.test: 'error'`).
+- **Fonts only in Storybook.** The package ships no fonts and its tokens end in system stacks; Storybook loads OFL fonts locally (`@fontsource-variable/*`) so pages and screenshots never depend on a CDN.
 - **Unit tests run in a real browser (Chromium) instead of jsdom.** Components rely on the Popover API, focus management, `:focus-visible`, `matchMedia` and the CSS cascade to resolve tokens; jsdom fakes or lacks all of these.
 - **Theme state is two attributes on `<html>`.** `TesseraTheme` only writes `data-tes-theme` and `data-tes-mode`; the CSS does the rest. It adopts attributes already present in `index.html`, so server-rendered or static pages never flash the wrong theme.
 - **Built-in strings are injectable, and the ones with numbers are functions** (`pageRange(first, last, total)`), because word order and plurals differ between languages.
@@ -107,15 +118,18 @@ npm ci
 npm test
 ```
 
-| Command                 | What it does                                       |
-| ----------------------- | -------------------------------------------------- |
-| `npm test`              | Unit tests in headless Chromium                    |
-| `npm run test:watch`    | Unit tests in watch mode                           |
-| `npm run test:coverage` | Unit tests with coverage thresholds (80%)          |
-| `npm run lint`          | ESLint (TypeScript and templates)                  |
-| `npm run format:check`  | Prettier check (`npm run format` fixes)            |
-| `npm run build`         | Builds the library into `dist/`                    |
-| `npm run check:package` | Build, then publint, attw and `npm pack --dry-run` |
+| Command                   | What it does                                       |
+| ------------------------- | -------------------------------------------------- |
+| `npm test`                | Unit tests in headless Chromium                    |
+| `npm run test:watch`      | Unit tests in watch mode                           |
+| `npm run test:coverage`   | Unit tests with coverage thresholds (80%)          |
+| `npm run lint`            | ESLint (TypeScript and templates)                  |
+| `npm run format:check`    | Prettier check (`npm run format` fixes)            |
+| `npm run build`           | Builds the library into `dist/`                    |
+| `npm run storybook`       | Storybook at http://localhost:6006                 |
+| `npm run test:stories`    | Every story as a browser test, with axe            |
+| `npm run build-storybook` | Static Storybook in `storybook-static/`            |
+| `npm run check:package`   | Build, then publint, attw and `npm pack --dry-run` |
 
 ## License
 
