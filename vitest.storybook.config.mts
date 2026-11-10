@@ -31,6 +31,7 @@ export default defineConfig({
       '@angular/cdk/bidi',
       '@angular/cdk/overlay',
       '@angular/cdk/portal',
+      '@angular/cdk/dialog',
       '@angular/aria/menu',
       '@angular/aria/listbox',
       '@angular/aria/combobox',

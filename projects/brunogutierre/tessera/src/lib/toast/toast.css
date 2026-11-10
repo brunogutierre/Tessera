@@ -1,0 +1,76 @@
+@layer tessera.components {
+  :host {
+    display: block;
+  }
+
+  /* Empty stack: nothing on screen, nothing to tab through. */
+  .stack:has(.list:empty) {
+    display: none;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--tes-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .toast {
+    --_accent: var(--tes-color-info-text);
+
+    display: flex;
+    align-items: center;
+    gap: var(--tes-space-2);
+    box-sizing: border-box;
+    inline-size: min(24rem, calc(100vw - 2rem));
+    padding: var(--tes-space-2) var(--tes-space-2) var(--tes-space-2) var(--tes-space-3);
+    border: var(--tes-border-width) solid var(--tes-color-border);
+    border-inline-start: 4px solid var(--_accent);
+    border-radius: var(--tes-radius-md);
+    background-color: var(--tes-color-surface-raised);
+    box-shadow: var(--tes-shadow-lg);
+    color: var(--tes-color-text);
+    font-family: var(--tes-font-sans);
+    font-size: var(--tes-text-sm);
+    line-height: var(--tes-leading-tight);
+    transition:
+      opacity var(--tes-duration-normal) var(--tes-easing-emphasized),
+      translate var(--tes-duration-normal) var(--tes-easing-emphasized);
+  }
+
+  @starting-style {
+    .toast {
+      opacity: 0;
+      translate: 0 0.5rem;
+    }
+  }
+
+  .toast[data-tone='success'] {
+    --_accent: var(--tes-color-success-text);
+  }
+
+  .toast[data-tone='warning'] {
+    --_accent: var(--tes-color-warning-text);
+  }
+
+  .toast[data-tone='danger'] {
+    --_accent: var(--tes-color-danger-text);
+  }
+
+  .icon {
+    color: var(--_accent);
+  }
+
+  .message {
+    flex: 1;
+    margin: 0;
+  }
+
+  @media (forced-colors: active) {
+    .toast {
+      border-color: CanvasText;
+    }
+  }
+}
