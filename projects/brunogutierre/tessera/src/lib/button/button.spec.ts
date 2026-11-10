@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { userEvent } from 'vitest/browser';
 import { resolveColor, toRgba } from '../../test-utils/color';
+import { movePointerAway } from '../../test-utils/pointer';
 import { loadTesseraStyles } from '../../test-utils/styles';
 import { TesIcon } from '../icon/icon';
 import { TesButton } from './button';
@@ -40,6 +41,7 @@ async function render() {
 const bg = (el: Element) => toRgba(getComputedStyle(el).backgroundColor);
 
 beforeAll(loadTesseraStyles);
+beforeEach(movePointerAway);
 afterEach(() => {
   document.getElementById('consumer-css')?.remove();
 });

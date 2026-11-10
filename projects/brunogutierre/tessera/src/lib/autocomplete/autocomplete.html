@@ -1,0 +1,57 @@
+<input
+  tes-input
+  ngCombobox
+  #combobox="ngCombobox"
+  cdkOverlayOrigin
+  #origin="cdkOverlayOrigin"
+  autocomplete="off"
+  [(value)]="query"
+  [(expanded)]="expanded"
+  [disabled]="disabled()"
+  [required]="required()"
+  [attr.aria-invalid]="invalid() || null"
+  [placeholder]="placeholder()"
+  (blur)="touch.emit()"
+/>
+
+<!-- The popup registers with the combobox at once; the overlay is its deferred content. -->
+<ng-template ngComboboxPopup [combobox]="combobox">
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="origin"
+    [cdkConnectedOverlayOpen]="true"
+    [cdkConnectedOverlayPositions]="positions"
+    [cdkConnectedOverlayMatchWidth]="true"
+    cdkConnectedOverlayUsePopover="inline"
+  >
+    <div class="panel">
+      <div
+        ngComboboxWidget
+        ngListbox
+        #listbox="ngListbox"
+        class="list"
+        selectionMode="explicit"
+        focusMode="activedescendant"
+        [softDisabled]="false"
+        [value]="selected()"
+        (valueChange)="onSelectionChange($event)"
+        [activeDescendant]="listbox.activeDescendant()"
+      >
+        @for (option of suggestions(); track option.value) {
+          <div
+            ngOption
+            class="option"
+            [value]="option.value"
+            [label]="option.label"
+            [disabled]="!!option.disabled"
+          >
+            {{ option.label }}
+          </div>
+        }
+      </div>
+      @if (suggestions().length === 0) {
+        <p class="empty" role="status">{{ labels.noResults }}</p>
+      }
+    </div>
+  </ng-template>
+</ng-template>

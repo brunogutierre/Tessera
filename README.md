@@ -63,20 +63,33 @@ Tokens come in three tiers:
 
 ## Components
 
-| Component   | Selector                              | Built on   | Notes                                                     |
-| ----------- | ------------------------------------- | ---------- | --------------------------------------------------------- |
-| Button      | `button[tes-button]`, `a[tes-button]` | native     | 5 variants, 3 sizes, icon-only, loading (stays focusable) |
-| Icon        | `tes-icon`                            | inline SVG | 35 icons adapted from Lucide; decorative unless labelled  |
-| Spinner     | `tes-spinner`                         | native     | Indeterminate progressbar; pulses with reduced motion     |
-| Badge       | `tes-badge`                           | native     | 6 tones, subtle or solid; text always states the status   |
-| Tag         | `tes-tag`                             | native     | Optional remove button named "Remove {text}"              |
-| Avatar      | `tes-avatar`                          | native     | Picture or initials; falls back when the picture fails    |
-| Card        | `tes-card`, `article[tes-card]`       | native     | Outlined, elevated or filled; optional header and footer  |
-| Skeleton    | `tes-skeleton`                        | native     | Text lines, rectangle or circle; always `aria-hidden`     |
-| Alert       | `tes-alert`                           | native     | 4 tones spoken first ("Warning: …"); optional live region |
-| Progress    | `tes-progress`                        | native     | Determinate or indeterminate progressbar, localized value |
-| Stat        | `tes-stat`                            | native     | KPI with localized change; `positive` picks the color     |
-| Breadcrumbs | `tes-breadcrumbs`                     | native     | `nav > ol` over your own `<li>` links (any router)        |
+| Component    | Selector                                  | Built on   | Notes                                                       |
+| ------------ | ----------------------------------------- | ---------- | ----------------------------------------------------------- |
+| Button       | `button[tes-button]`, `a[tes-button]`     | native     | 5 variants, 3 sizes, icon-only, loading (stays focusable)   |
+| Icon         | `tes-icon`                                | inline SVG | 35 icons adapted from Lucide; decorative unless labelled    |
+| Spinner      | `tes-spinner`                             | native     | Indeterminate progressbar; pulses with reduced motion       |
+| Badge        | `tes-badge`                               | native     | 6 tones, subtle or solid; text always states the status     |
+| Tag          | `tes-tag`                                 | native     | Optional remove button named "Remove {text}"                |
+| Avatar       | `tes-avatar`                              | native     | Picture or initials; falls back when the picture fails      |
+| Card         | `tes-card`, `article[tes-card]`           | native     | Outlined, elevated or filled; optional header and footer    |
+| Skeleton     | `tes-skeleton`                            | native     | Text lines, rectangle or circle; always `aria-hidden`       |
+| Alert        | `tes-alert`                               | native     | 4 tones spoken first ("Warning: …"); optional live region   |
+| Progress     | `tes-progress`                            | native     | Determinate or indeterminate progressbar, localized value   |
+| Stat         | `tes-stat`                                | native     | KPI with localized change; `positive` picks the color       |
+| Breadcrumbs  | `tes-breadcrumbs`                         | native     | `nav > ol` over your own `<li>` links (any router)          |
+| Form field   | `tes-form-field`                          | native     | Label, hint and error wired to the control by itself        |
+| Input        | `input[tes-input]`, `textarea[tes-input]` | native     | Native value and validation; textareas grow with content    |
+| Checkbox     | `input[type=checkbox][tes-checkbox]`      | native     | Checked, indeterminate; mark cut out with a CSS mask        |
+| Radio        | `input[type=radio][tes-radio]`            | native     | Browser arrow keys and single tab stop                      |
+| Switch       | `input[type=checkbox][tes-switch]`        | native     | `role="switch"`; knob mirrors in RTL                        |
+| Slider       | `input[type=range][tes-slider]`           | native     | Filled track follows the value, even when set by a form     |
+| Choice       | `label[tes-choice]`                       | native     | Clickable label for a checkbox, radio or switch             |
+| Fieldset     | `fieldset[tes-fieldset]`                  | native     | Legend, hint and error for a group of choices               |
+| Tooltip      | `[tesTooltip]`                            | CDK        | WCAG 1.4.13: dismissible, hoverable; always the description |
+| Menu         | `tes-menu`                                | Aria + CDK | Menu button with data-driven items, separators, danger      |
+| Select       | `tes-select`                              | Aria + CDK | Single or multiple; a Signal Forms `FormValueControl`       |
+| Listbox      | `tes-listbox`                             | Aria       | Always-visible list, single (follows focus) or multiple     |
+| Autocomplete | `tes-autocomplete`                        | Aria + CDK | Editable combobox, accent-insensitive filter, "no results"  |
 
 ## Usage
 
