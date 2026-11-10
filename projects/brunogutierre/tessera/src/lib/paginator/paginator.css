@@ -1,0 +1,35 @@
+@layer tessera.components {
+  :host {
+    display: block;
+  }
+
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--tes-space-2) var(--tes-space-5);
+    color: var(--tes-color-text-muted);
+    font-size: var(--tes-text-sm);
+  }
+
+  .size {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--tes-space-2);
+  }
+
+  .size-select {
+    inline-size: 5rem;
+  }
+
+  .range {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .buttons {
+    display: inline-flex;
+    gap: var(--tes-space-1);
+  }
+}
