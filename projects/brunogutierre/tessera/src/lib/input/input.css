@@ -1,0 +1,75 @@
+@layer tessera.components {
+  :host {
+    --_height: var(--tes-control-height-md);
+    --_border: var(--tes-color-border-strong);
+
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-block-size: var(--_height);
+    margin: 0;
+    padding-block: 0;
+    padding-inline: var(--tes-input-padding-x, calc(var(--tes-control-padding-x) * 0.75));
+    border: var(--tes-border-width) solid var(--_border);
+    border-radius: var(--tes-input-radius, var(--tes-radius-md));
+    background-color: var(--tes-color-surface);
+    color: var(--tes-color-text);
+    font: inherit;
+    font-size: var(--tes-text-md);
+    line-height: var(--tes-leading-normal);
+    transition: border-color var(--tes-duration-fast) var(--tes-easing-standard);
+  }
+
+  :host([data-size='sm']) {
+    --_height: var(--tes-control-height-sm);
+    font-size: var(--tes-text-sm);
+  }
+
+  :host([data-size='lg']) {
+    --_height: var(--tes-control-height-lg);
+    font-size: var(--tes-text-lg);
+  }
+
+  /* Text areas grow with their content, from three lines up to twelve. */
+  :host(textarea) {
+    padding-block: var(--tes-space-2);
+    resize: vertical;
+    field-sizing: content;
+    min-block-size: calc(3lh + 2 * var(--tes-space-2));
+    max-block-size: calc(12lh + 2 * var(--tes-space-2));
+  }
+
+  :host::placeholder {
+    color: var(--tes-color-text-muted);
+    opacity: 1;
+  }
+
+  :host(:hover:not(:disabled, :read-only, :focus)) {
+    --_border: var(--tes-color-text-muted);
+  }
+
+  :host(:focus-visible) {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: var(--tes-focus-ring-offset);
+  }
+
+  :host([aria-invalid='true']) {
+    --_border: var(--tes-color-danger);
+  }
+
+  :host(:read-only:not(:disabled)) {
+    background-color: var(--tes-color-surface-sunken);
+  }
+
+  :host(:disabled) {
+    --_border: var(--tes-color-border);
+    background-color: var(--tes-color-neutral-subtle);
+    color: var(--tes-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    :host([aria-invalid='true']) {
+      border-width: calc(var(--tes-border-width) * 2);
+    }
+  }
+}

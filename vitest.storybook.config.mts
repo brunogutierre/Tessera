@@ -22,6 +22,17 @@ export default defineConfig({
     storybookTest({ configDir: path.join(dirname, '.storybook') }),
   ],
   define: { __TES_GLOBALS__: JSON.stringify({ theme, mode }) },
+  // Pre-bundle every entry point stories import, so Vite never discovers one mid-run and reloads.
+  optimizeDeps: {
+    include: [
+      '@angular/forms',
+      '@angular/forms/signals',
+      '@angular/cdk/a11y',
+      '@angular/cdk/bidi',
+      '@angular/cdk/overlay',
+      'storybook/test',
+    ],
+  },
   test: {
     name: `${theme}-${mode}`,
     browser: {

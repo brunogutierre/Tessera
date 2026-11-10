@@ -31,3 +31,6 @@ export type { TesProgressSize, TesProgressTone } from './lib/progress/progress';
 export { TesStat } from './lib/stat/stat';
 export type { TesStatTrend } from './lib/stat/stat';
 export { TesBreadcrumbs } from './lib/breadcrumbs/breadcrumbs';
+export { TesFormField } from './lib/form-field/form-field';
+export { TesInput } from './lib/input/input';
+export type { TesInputSize } from './lib/input/input';
