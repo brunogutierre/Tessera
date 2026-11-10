@@ -1,0 +1,81 @@
+@layer tessera.components {
+  :host {
+    --_track-w: 2.25rem;
+    --_track-h: 1.25rem;
+    --_knob: calc(var(--_track-h) - 0.375rem);
+    --_knob-color: var(--tes-color-text-muted);
+    --_start: 0.125rem;
+    --_end: calc(var(--_track-w) - var(--_knob) - 0.125rem - 2 * var(--tes-border-width));
+    --_x: var(--_start);
+
+    appearance: none;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    inline-size: var(--_track-w);
+    block-size: var(--_track-h);
+    margin: 0;
+    border: var(--tes-border-width) solid var(--tes-color-border-strong);
+    border-radius: var(--tes-radius-full);
+    background-color: var(--tes-color-neutral-subtle);
+    background-image: radial-gradient(
+      circle closest-side,
+      var(--_knob-color) 0 calc(100% - 0.5px),
+      transparent 100%
+    );
+    background-size: var(--_knob) var(--_knob);
+    background-position: var(--_x) center;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    cursor: pointer;
+    transition:
+      background-position var(--tes-duration-fast) var(--tes-easing-standard),
+      background-color var(--tes-duration-fast) var(--tes-easing-standard);
+  }
+
+  :host(:checked) {
+    --_knob-color: var(--tes-color-on-primary);
+    --_x: var(--_end);
+    border-color: var(--tes-color-primary);
+    background-color: var(--tes-color-primary);
+  }
+
+  /* The knob starts on the inline-start side, which is the right in right-to-left layouts. */
+  :host(:dir(rtl)) {
+    --_x: var(--_end);
+  }
+
+  :host(:dir(rtl):checked) {
+    --_x: var(--_start);
+  }
+
+  :host(:hover:not(:disabled, :checked)) {
+    border-color: var(--tes-color-text-muted);
+  }
+
+  :host(:focus-visible) {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: var(--tes-focus-ring-offset);
+  }
+
+  :host(:disabled) {
+    --_knob-color: var(--tes-color-text-disabled);
+    border-color: var(--tes-color-border);
+    background-color: var(--tes-color-neutral-subtle);
+    cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    :host {
+      forced-color-adjust: none;
+      --_knob-color: CanvasText;
+      border-color: CanvasText;
+      background-color: Canvas;
+    }
+
+    :host(:checked) {
+      --_knob-color: HighlightText;
+      border-color: Highlight;
+      background-color: Highlight;
+    }
+  }
+}

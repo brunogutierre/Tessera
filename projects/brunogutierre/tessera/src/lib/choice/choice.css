@@ -1,0 +1,18 @@
+@layer tessera.components {
+  :host {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--tes-space-2);
+    min-block-size: 1.5rem;
+    color: var(--tes-color-text);
+    font-size: var(--tes-text-md);
+    line-height: var(--tes-leading-tight);
+    cursor: pointer;
+  }
+
+  /* Muted, not "disabled" text: the label stays readable (4.5:1). */
+  :host(:has(input:disabled)) {
+    color: var(--tes-color-text-muted);
+    cursor: not-allowed;
+  }
+}

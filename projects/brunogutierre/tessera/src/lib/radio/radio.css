@@ -1,0 +1,53 @@
+@layer tessera.components {
+  :host {
+    --_size: var(--tes-radio-size, 1.125rem);
+
+    appearance: none;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    inline-size: var(--_size);
+    block-size: var(--_size);
+    margin: 0;
+    border: calc(var(--tes-border-width) * 1.5) solid var(--tes-color-border-strong);
+    border-radius: 50%;
+    background-color: var(--tes-color-surface);
+    vertical-align: middle;
+    cursor: pointer;
+    transition: border var(--tes-duration-fast) var(--tes-easing-standard);
+  }
+
+  :host(:hover:not(:disabled, :checked)) {
+    border-color: var(--tes-color-text-muted);
+  }
+
+  /* A thick ring leaves the surface showing as the inner dot. */
+  :host(:checked) {
+    border: calc(var(--_size) * 0.3) solid var(--tes-color-primary);
+  }
+
+  :host(:focus-visible) {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: var(--tes-focus-ring-offset);
+  }
+
+  :host([aria-invalid='true']:not(:checked)) {
+    border-color: var(--tes-color-danger);
+  }
+
+  :host(:disabled) {
+    border-color: var(--tes-color-border);
+    background-color: var(--tes-color-neutral-subtle);
+    cursor: not-allowed;
+  }
+
+  :host(:disabled:checked) {
+    border-color: var(--tes-color-text-disabled);
+    background-color: var(--tes-color-surface);
+  }
+
+  @media (forced-colors: active) {
+    :host {
+      appearance: auto;
+    }
+  }
+}
