@@ -85,7 +85,10 @@ describe('design tokens', () => {
 
     it.each(MODES)('meets text contrast (4.5:1) in %s mode', (mode) => {
       const el = scope(theme, mode);
-      const failures = TEXT_PAIRS.map(([fg, bg]) => ({ pair: `${fg} on ${bg}`, ratio: ratio(fg, bg, el) }))
+      const failures = TEXT_PAIRS.map(([fg, bg]) => ({
+        pair: `${fg} on ${bg}`,
+        ratio: ratio(fg, bg, el),
+      }))
         .filter((r) => r.ratio < 4.5)
         .map((r) => `${r.pair}: ${r.ratio.toFixed(2)}`);
       expect(failures).toEqual([]);
@@ -93,7 +96,10 @@ describe('design tokens', () => {
 
     it.each(MODES)('meets non-text contrast (3:1) in %s mode', (mode) => {
       const el = scope(theme, mode);
-      const failures = UI_PAIRS.map(([fg, bg]) => ({ pair: `${fg} on ${bg}`, ratio: ratio(fg, bg, el) }))
+      const failures = UI_PAIRS.map(([fg, bg]) => ({
+        pair: `${fg} on ${bg}`,
+        ratio: ratio(fg, bg, el),
+      }))
         .filter((r) => r.ratio < 3)
         .map((r) => `${r.pair}: ${r.ratio.toFixed(2)}`);
       expect(failures).toEqual([]);
@@ -135,6 +141,8 @@ describe('design tokens', () => {
     const fintech = scope('fintech', 'dark');
     expect(token(inner, '--tes-font-sans')).toBe(token(fintech, '--tes-font-sans'));
     expect(resolveColor('--tes-color-bg', inner)).toEqual(resolveColor('--tes-color-bg', fintech));
-    expect(resolveColor('--tes-color-bg', outer)).not.toEqual(resolveColor('--tes-color-bg', inner));
+    expect(resolveColor('--tes-color-bg', outer)).not.toEqual(
+      resolveColor('--tes-color-bg', inner),
+    );
   });
 });
