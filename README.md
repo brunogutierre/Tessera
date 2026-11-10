@@ -93,6 +93,7 @@ Tokens come in three tiers:
 | Tabs         | `tes-tabs`, `tes-tab-panel`               | Aria       | Tabs built from panel labels; hidden panels stay rendered   |
 | Accordion    | `tes-accordion`, `tes-accordion-item`     | Aria       | One section at a time unless `multi`; lazy content          |
 | Toolbar      | `tes-toolbar`, `[tesToolbarItem]`         | Aria       | Single tab stop, arrow keys, separators                     |
+| Tree         | `tes-tree`                                | Aria       | Data-driven hierarchy; expand, collapse, typeahead, select  |
 
 ## Usage
 
