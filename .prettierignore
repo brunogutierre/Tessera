@@ -5,3 +5,6 @@ node_modules
 package-lock.json
 manual
 storybook-static
+playwright-report
+test-results
+visual/__screenshots__

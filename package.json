@@ -19,6 +19,8 @@
     "check:package": "npm run build && publint dist/brunogutierre/tessera && cd dist/brunogutierre/tessera && attw --pack . --profile esm-only && npm pack --dry-run",
     "storybook": "ng run @brunogutierre/tessera:storybook",
     "build-storybook": "ng run @brunogutierre/tessera:build-storybook",
+    "test:visual": "playwright test -c visual/playwright.config.ts",
+    "test:visual:container": "podman run --rm --ipc=host -v \"$PWD\":/work:Z -w /work -e CI=1 mcr.microsoft.com/playwright:v1.64.1-noble npx playwright test -c visual/playwright.config.ts",
     "test:stories": "node scripts/test-stories.mjs"
   },
   "dependencies": {
@@ -43,6 +45,7 @@
     "@fontsource-variable/inter": "^5.3.0",
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "@fontsource-variable/nunito": "^5.3.0",
+    "@playwright/test": "1.64.1",
     "@storybook/addon-a11y": "10.6.6",
     "@storybook/addon-docs": "10.6.6",
     "@storybook/addon-vitest": "10.6.6",

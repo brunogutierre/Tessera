@@ -65,3 +65,41 @@ jobs:
 
       - name: Build Storybook
         run: npm run build-storybook
+
+  visual:
+    name: Visual regression
+    runs-on: ubuntu-latest
+    # The same image renders the committed baselines locally (npm run test:visual:container).
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --ipc=host
+    env:
+      HOME: /root
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Storybook
+        run: npm run build-storybook
+
+      - name: Compare screenshots
+        run: npm run test:visual
+        env:
+          CI: true
+
+      - name: Upload the diff report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-diffs
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7

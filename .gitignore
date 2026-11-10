@@ -38,6 +38,7 @@ yarn-error.log
 testem.log
 /typings
 __screenshots__/
+!/visual/__screenshots__/
 
 # Storybook and Playwright output
 /storybook-static
