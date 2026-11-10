@@ -1,0 +1,81 @@
+@layer tessera.components {
+  :host {
+    --_size: var(--tes-checkbox-size, 1.125rem);
+    --_ring: calc(var(--tes-focus-ring-width) + var(--tes-focus-ring-offset));
+
+    appearance: none;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    inline-size: var(--_size);
+    block-size: var(--_size);
+    margin: 0;
+    border: calc(var(--tes-border-width) * 1.5) solid var(--tes-color-border-strong);
+    border-radius: min(var(--tes-radius-sm), 0.3125rem);
+    background-color: var(--tes-color-surface);
+    vertical-align: middle;
+    cursor: pointer;
+    transition:
+      background-color var(--tes-duration-fast) var(--tes-easing-standard),
+      border-color var(--tes-duration-fast) var(--tes-easing-standard);
+  }
+
+  :host(:hover:not(:disabled, :checked, :indeterminate)) {
+    border-color: var(--tes-color-text-muted);
+  }
+
+  /*
+   * Checked: fill the box and cut the mark out of it. The second mask layer is grown by the focus
+   * ring width and not clipped, so the outline stays visible around a checked box.
+   */
+  :host(:checked),
+  :host(:indeterminate) {
+    border-color: var(--tes-color-primary);
+    background-color: var(--tes-color-primary);
+    mask-image: var(--_mark), linear-gradient(#000 0 0);
+    mask-size:
+      80%,
+      calc(100% + 2 * var(--_ring) + 2px) calc(100% + 2 * var(--_ring) + 2px);
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-origin: border-box;
+    mask-clip: no-clip;
+    mask-composite: exclude;
+  }
+
+  :host(:checked) {
+    --_mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 6 9 17l-5-5' fill='none' stroke='%23000' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  :host(:indeterminate) {
+    --_mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12h12' fill='none' stroke='%23000' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  }
+
+  :host(:focus-visible) {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: var(--tes-focus-ring-offset);
+  }
+
+  :host([aria-invalid='true']:not(:checked, :indeterminate)) {
+    border-color: var(--tes-color-danger);
+  }
+
+  :host(:disabled) {
+    border-color: var(--tes-color-border);
+    background-color: var(--tes-color-neutral-subtle);
+    cursor: not-allowed;
+  }
+
+  :host(:disabled:checked),
+  :host(:disabled:indeterminate) {
+    background-color: var(--tes-color-text-disabled);
+    border-color: var(--tes-color-text-disabled);
+  }
+
+  /* System colors replace ours: the native control is already right. */
+  @media (forced-colors: active) {
+    :host {
+      appearance: auto;
+      mask: none;
+    }
+  }
+}

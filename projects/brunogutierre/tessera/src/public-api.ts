@@ -34,3 +34,5 @@ export { TesBreadcrumbs } from './lib/breadcrumbs/breadcrumbs';
 export { TesFormField } from './lib/form-field/form-field';
 export { TesInput } from './lib/input/input';
 export type { TesInputSize } from './lib/input/input';
+export { TesChoice } from './lib/choice/choice';
+export { TesCheckbox } from './lib/checkbox/checkbox';
