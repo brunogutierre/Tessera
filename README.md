@@ -52,10 +52,43 @@ Tokens come in three tiers:
 <html data-tes-theme="fintech" data-tes-mode="dark"></html>
 ```
 
+## Usage
+
+```bash
+npm install @brunogutierre/tessera @angular/cdk @angular/aria
+```
+
+1. Add `node_modules/@brunogutierre/tessera/styles/tessera.css` to the `styles` of your `angular.json`.
+2. Set the first theme in `index.html` so the first paint is already themed: `<html data-tes-theme="enterprise" data-tes-mode="system">`.
+3. Provide Tessera:
+
+```ts
+bootstrapApplication(App, {
+  providers: [provideTessera({ theme: 'fintech', mode: 'dark', labels: { close: 'Fechar' } })],
+});
+```
+
+Switch at runtime with signals, or theme a subtree with a directive:
+
+```ts
+const theme = inject(TesseraTheme);
+theme.theme.set('care');
+theme.mode.set('system');
+theme.resolvedMode(); // 'light' | 'dark'
+```
+
+```html
+<aside tesTheme="enterprise" tesMode="light">…</aside>
+```
+
+Every built-in string (button names, screen-reader text, paginator summary) comes from `TES_LABELS`, in English by default and overridable through `provideTessera({ labels })`.
+
 ## Decisions
 
 - **Library-only workspace.** Storybook is the documentation and the playground, so there is no separate demo app to build, deploy and keep in sync.
 - **Unit tests run in a real browser (Chromium) instead of jsdom.** Components rely on the Popover API, focus management, `:focus-visible`, `matchMedia` and the CSS cascade to resolve tokens; jsdom fakes or lacks all of these.
+- **Theme state is two attributes on `<html>`.** `TesseraTheme` only writes `data-tes-theme` and `data-tes-mode`; the CSS does the rest. It adopts attributes already present in `index.html`, so server-rendered or static pages never flash the wrong theme.
+- **Built-in strings are injectable, and the ones with numbers are functions** (`pageRange(first, last, total)`), because word order and plurals differ between languages.
 - **Lint enforces the component conventions.** Selectors must use the `tes` prefix (`<tes-select>`, `button[tes-button]`, `[tesTooltip]`), components must be OnPush and prefer signals, so reviews can focus on behavior.
 - **Plain CSS tokens, no Sass and no token pipeline.** Custom properties switch at runtime and cross component boundaries; a pipeline such as Style Dictionary only pays off when tokens must also reach native apps or design tools.
 - **`light-dark()` with `color-scheme` for modes.** Each theme defines each color once, `system` mode needs no JavaScript, and a subtree can switch mode by setting one attribute.
