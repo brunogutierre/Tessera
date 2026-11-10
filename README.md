@@ -194,6 +194,10 @@ npm test
 
 To accept an intended visual change: `npm run build-storybook && npm run test:visual:container -- --update-snapshots`.
 
+## Releases
+
+Versions follow SemVer and are listed in [CHANGELOG.md](CHANGELOG.md). Publishing a GitHub Release `vX.Y.Z` runs `.github/workflows/publish.yml`: it checks that the tag matches the package version, runs lint, tests and package checks, and publishes to npm with provenance through npm Trusted Publishing (OIDC, no token).
+
 ## Roadmap
 
 - A date picker on the `@angular/aria` grid (cut from this first version; native `input[type=date][tes-input]` is themed meanwhile).
