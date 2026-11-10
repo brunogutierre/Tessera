@@ -44,3 +44,5 @@ export { TES_DROPDOWN_POSITIONS, TES_TOOLTIP_POSITIONS } from './lib/core/overla
 export { TesTooltip, TesTooltipPanel } from './lib/tooltip/tooltip';
 export { TesMenu } from './lib/menu/menu';
 export type { TesMenuEntry, TesMenuItem } from './lib/menu/menu';
+export { TesSelect } from './lib/select/select';
+export type { TesOption, TesSelectValue } from './lib/select/select';

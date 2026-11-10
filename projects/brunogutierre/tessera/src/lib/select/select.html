@@ -1,0 +1,63 @@
+<div
+  ngCombobox
+  #combobox="ngCombobox"
+  cdkOverlayOrigin
+  #origin="cdkOverlayOrigin"
+  class="trigger"
+  [id]="id"
+  [(expanded)]="expanded"
+  [disabled]="disabled()"
+  [attr.aria-labelledby]="field ? field.labelId : null"
+  [attr.aria-describedby]="describedBy()"
+  [attr.aria-invalid]="isInvalid() || null"
+  [attr.aria-required]="required() || null"
+  (focusout)="onFocusOut($event)"
+>
+  <span class="text" [class.placeholder]="!displayText()">{{
+    displayText() || placeholder()
+  }}</span>
+  <tes-icon name="chevron-down" class="chevron" />
+</div>
+
+<!--
+  The popup must exist from the start so it registers with the combobox; its content is deferred
+  until the combobox expands, and that content is the overlay (open as long as it exists).
+-->
+<ng-template ngComboboxPopup [combobox]="combobox">
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="origin"
+    [cdkConnectedOverlayOpen]="true"
+    [cdkConnectedOverlayPositions]="positions"
+    [cdkConnectedOverlayMatchWidth]="true"
+    cdkConnectedOverlayUsePopover="inline"
+  >
+    <div
+      ngComboboxWidget
+      ngListbox
+      #listbox="ngListbox"
+      class="panel"
+      [multi]="multiple()"
+      selectionMode="explicit"
+      focusMode="activedescendant"
+      [softDisabled]="false"
+      [value]="selected()"
+      (valueChange)="onSelectionChange($event)"
+      [activeDescendant]="listbox.activeDescendant()"
+      [attr.aria-multiselectable]="multiple() || null"
+    >
+      @for (option of options(); track option.value) {
+        <div
+          ngOption
+          class="option"
+          [value]="option.value"
+          [label]="option.label"
+          [disabled]="!!option.disabled"
+        >
+          <span class="option-label">{{ option.label }}</span>
+          <tes-icon name="check" class="check" />
+        </div>
+      }
+    </div>
+  </ng-template>
+</ng-template>

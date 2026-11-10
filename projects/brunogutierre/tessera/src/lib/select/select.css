@@ -1,0 +1,150 @@
+@layer tessera.components {
+  :host {
+    display: block;
+    min-inline-size: 0;
+  }
+
+  /* The trigger looks like tes-input. */
+  .trigger {
+    --_border: var(--tes-color-border-strong);
+
+    display: flex;
+    align-items: center;
+    gap: var(--tes-space-2);
+    box-sizing: border-box;
+    min-block-size: var(--tes-control-height-md);
+    padding-inline: calc(var(--tes-control-padding-x) * 0.75) var(--tes-space-2);
+    border: var(--tes-border-width) solid var(--_border);
+    border-radius: var(--tes-input-radius, var(--tes-radius-md));
+    background-color: var(--tes-color-surface);
+    color: var(--tes-color-text);
+    font-size: var(--tes-text-md);
+    line-height: var(--tes-leading-normal);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .trigger:hover:not([aria-disabled='true']) {
+    --_border: var(--tes-color-text-muted);
+  }
+
+  .trigger:focus-visible {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: var(--tes-focus-ring-offset);
+  }
+
+  .trigger[aria-invalid='true'] {
+    --_border: var(--tes-color-danger);
+  }
+
+  .trigger[aria-disabled='true'] {
+    --_border: var(--tes-color-border);
+    background-color: var(--tes-color-neutral-subtle);
+    color: var(--tes-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .text {
+    flex: 1;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .placeholder {
+    color: var(--tes-color-text-muted);
+  }
+
+  .chevron {
+    color: var(--tes-color-text-muted);
+    transition: rotate var(--tes-duration-fast) var(--tes-easing-standard);
+  }
+
+  .trigger[aria-expanded='true'] .chevron {
+    rotate: 180deg;
+  }
+
+  /* Panel: resets inherited text styles, since it renders in the top layer. */
+  .panel {
+    box-sizing: border-box;
+    /* The CDK pane is a flex container sized to the trigger (matchWidth); fill it. */
+    inline-size: 100%;
+    max-block-size: min(18rem, 60vh);
+    overflow-y: auto;
+    padding: var(--tes-space-1);
+    border: var(--tes-border-width) solid var(--tes-color-border);
+    border-radius: var(--tes-radius-lg);
+    background-color: var(--tes-color-surface-raised);
+    box-shadow: var(--tes-shadow-md);
+    color: var(--tes-color-text);
+    font-family: var(--tes-font-sans);
+    font-size: var(--tes-text-md);
+    line-height: var(--tes-leading-tight);
+    text-align: start;
+    white-space: normal;
+    outline: none;
+    transition: opacity var(--tes-duration-fast) var(--tes-easing-standard);
+  }
+
+  @starting-style {
+    .panel {
+      opacity: 0;
+    }
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: var(--tes-space-2);
+    min-block-size: max(var(--tes-control-height-sm), 1.75rem);
+    padding-inline: var(--tes-space-3);
+    border-radius: var(--tes-radius-md);
+    cursor: pointer;
+  }
+
+  .option-label {
+    flex: 1;
+  }
+
+  .check {
+    visibility: hidden;
+    color: var(--tes-color-primary);
+    --tes-icon-size: 1rem;
+  }
+
+  .option:hover,
+  .option[data-active='true'] {
+    background-color: var(--tes-color-neutral-subtle);
+  }
+
+  /* Active descendant focus: the ring follows the active option while the list has focus. */
+  .panel:focus-within .option[data-active='true'],
+  .trigger[aria-expanded='true'] ~ * .option[data-active='true'] {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: calc(-1 * var(--tes-focus-ring-width));
+  }
+
+  .option[aria-selected='true'] {
+    font-weight: var(--tes-weight-medium);
+  }
+
+  .option[aria-selected='true'] .check {
+    visibility: visible;
+  }
+
+  .option[aria-disabled='true'] {
+    color: var(--tes-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    .panel {
+      border-color: CanvasText;
+    }
+
+    .option[data-active='true'] {
+      outline: 2px solid Highlight;
+    }
+  }
+}
