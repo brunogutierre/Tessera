@@ -37,7 +37,7 @@
               "functions": 80,
               "lines": 80
             },
-            "coverageExclude": ["**/*.stories.ts", "**/public-api.ts"]
+            "coverageExclude": ["**/*.stories.ts", "**/public-api.ts", "**/test-utils/**"]
           }
         },
         "lint": {

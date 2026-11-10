@@ -44,6 +44,7 @@ __screenshots__/
 /test-results
 /playwright-report
 /blob-report
+/.vitest
 
 # System files
 .DS_Store

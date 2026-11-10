@@ -1,0 +1,22 @@
+/*
+ * Color modes. Themes declare every color once as `light-dark(<light>, <dark>)`; the
+ * `color-scheme` set here decides which side applies to each subtree. It also switches native
+ * UI (scrollbars, form controls) to match.
+ *
+ * No attribute (or `system`) follows the operating system. `:where()` keeps the root rule at
+ * zero specificity, so an explicit `data-tes-mode` on the root always wins.
+ */
+@layer tessera.themes {
+  :where(:root),
+  [data-tes-mode='system'] {
+    color-scheme: light dark;
+  }
+
+  [data-tes-mode='light'] {
+    color-scheme: light;
+  }
+
+  [data-tes-mode='dark'] {
+    color-scheme: dark;
+  }
+}

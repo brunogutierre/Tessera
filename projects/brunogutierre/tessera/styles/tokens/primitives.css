@@ -1,0 +1,188 @@
+/*
+ * Tessera primitives (tier 1): raw values with no meaning attached.
+ *
+ * Themes map primitives to semantic tokens (tier 2); components only read semantic tokens.
+ * Palettes are OKLCH ramps from 50 (lightest) to 950 (darkest). Every value is inside the sRGB
+ * gamut, so browsers render exactly the color the contrast checks were computed for.
+ */
+@layer tessera.tokens {
+  :root {
+    --tes-palette-white: oklch(100% 0 0);
+
+    /* slate: cool, nearly neutral grey (Enterprise neutrals) */
+    --tes-palette-slate-50: oklch(98.5% 0.003 255);
+    --tes-palette-slate-100: oklch(96.7% 0.005 255);
+    --tes-palette-slate-200: oklch(92.8% 0.008 255);
+    --tes-palette-slate-300: oklch(87.2% 0.012 255);
+    --tes-palette-slate-400: oklch(71.5% 0.018 255);
+    --tes-palette-slate-500: oklch(60% 0.022 255);
+    --tes-palette-slate-600: oklch(48% 0.024 255);
+    --tes-palette-slate-700: oklch(38.5% 0.025 255);
+    --tes-palette-slate-800: oklch(28.5% 0.023 255);
+    --tes-palette-slate-900: oklch(22.5% 0.02 255);
+    --tes-palette-slate-950: oklch(17% 0.017 255);
+
+    /* ink: deep navy grey, more chroma in the darks (Fintech neutrals) */
+    --tes-palette-ink-50: oklch(98.5% 0.004 268);
+    --tes-palette-ink-100: oklch(96.2% 0.007 268);
+    --tes-palette-ink-200: oklch(92% 0.012 268);
+    --tes-palette-ink-300: oklch(86% 0.018 268);
+    --tes-palette-ink-400: oklch(72% 0.028 268);
+    --tes-palette-ink-500: oklch(59% 0.034 268);
+    --tes-palette-ink-600: oklch(47% 0.04 268);
+    --tes-palette-ink-700: oklch(36% 0.045 268);
+    --tes-palette-ink-800: oklch(26.5% 0.045 268);
+    --tes-palette-ink-900: oklch(21% 0.04 268);
+    --tes-palette-ink-950: oklch(16% 0.035 268);
+
+    /* sand: warm grey (Care neutrals) */
+    --tes-palette-sand-50: oklch(98.7% 0.004 75);
+    --tes-palette-sand-100: oklch(96.7% 0.006 75);
+    --tes-palette-sand-200: oklch(92.8% 0.009 75);
+    --tes-palette-sand-300: oklch(87.2% 0.012 75);
+    --tes-palette-sand-400: oklch(71.5% 0.015 75);
+    --tes-palette-sand-500: oklch(60% 0.016 75);
+    --tes-palette-sand-600: oklch(48% 0.015 75);
+    --tes-palette-sand-700: oklch(38.5% 0.013 75);
+    --tes-palette-sand-800: oklch(29% 0.011 75);
+    --tes-palette-sand-900: oklch(23% 0.009 75);
+    --tes-palette-sand-950: oklch(17.5% 0.008 75);
+
+    /* blue: calm corporate blue (Enterprise primary) */
+    --tes-palette-blue-50: oklch(97.5% 0.011 258);
+    --tes-palette-blue-100: oklch(94.5% 0.025 258);
+    --tes-palette-blue-200: oklch(89.5% 0.049 258);
+    --tes-palette-blue-300: oklch(83% 0.082 258);
+    --tes-palette-blue-400: oklch(74.5% 0.12 258);
+    --tes-palette-blue-500: oklch(65.5% 0.15 258);
+    --tes-palette-blue-600: oklch(52% 0.165 258);
+    --tes-palette-blue-700: oklch(46.5% 0.15 258);
+    --tes-palette-blue-800: oklch(40% 0.13 258);
+    --tes-palette-blue-900: oklch(33.5% 0.105 258);
+    --tes-palette-blue-950: oklch(26.5% 0.075 258);
+
+    /* indigo: electric blue-violet (Fintech primary) */
+    --tes-palette-indigo-50: oklch(97.5% 0.011 278);
+    --tes-palette-indigo-100: oklch(94.5% 0.025 278);
+    --tes-palette-indigo-200: oklch(89.5% 0.049 278);
+    --tes-palette-indigo-300: oklch(83% 0.082 278);
+    --tes-palette-indigo-400: oklch(74.5% 0.128 278);
+    --tes-palette-indigo-500: oklch(65.5% 0.18 278);
+    --tes-palette-indigo-600: oklch(53.5% 0.25 278);
+    --tes-palette-indigo-700: oklch(46.5% 0.24 278);
+    --tes-palette-indigo-800: oklch(40% 0.2 278);
+    --tes-palette-indigo-900: oklch(33.5% 0.15 278);
+    --tes-palette-indigo-950: oklch(26.5% 0.11 278);
+
+    /* teal: soft blue-green (Care primary) */
+    --tes-palette-teal-50: oklch(97.5% 0.015 185);
+    --tes-palette-teal-100: oklch(94.5% 0.035 185);
+    --tes-palette-teal-200: oklch(89.5% 0.06 185);
+    --tes-palette-teal-300: oklch(83% 0.09 185);
+    --tes-palette-teal-400: oklch(74.5% 0.11 185);
+    --tes-palette-teal-500: oklch(65.5% 0.11 185);
+    --tes-palette-teal-600: oklch(51.5% 0.088 185);
+    --tes-palette-teal-700: oklch(46.5% 0.079 185);
+    --tes-palette-teal-800: oklch(40% 0.068 185);
+    --tes-palette-teal-900: oklch(33.5% 0.057 185);
+    --tes-palette-teal-950: oklch(26.5% 0.045 185);
+
+    /* sky: cyan-leaning blue (info status) */
+    --tes-palette-sky-50: oklch(97.5% 0.013 235);
+    --tes-palette-sky-100: oklch(94.5% 0.029 235);
+    --tes-palette-sky-200: oklch(89.5% 0.055 235);
+    --tes-palette-sky-300: oklch(83% 0.09 235);
+    --tes-palette-sky-400: oklch(74.5% 0.12 235);
+    --tes-palette-sky-500: oklch(65.5% 0.13 235);
+    --tes-palette-sky-600: oklch(53.5% 0.11 235);
+    --tes-palette-sky-700: oklch(46.5% 0.095 235);
+    --tes-palette-sky-800: oklch(40% 0.082 235);
+    --tes-palette-sky-900: oklch(33.5% 0.068 235);
+    --tes-palette-sky-950: oklch(26.5% 0.054 235);
+
+    /* green: success status */
+    --tes-palette-green-50: oklch(97.5% 0.02 152);
+    --tes-palette-green-100: oklch(94.5% 0.045 152);
+    --tes-palette-green-200: oklch(89.5% 0.08 152);
+    --tes-palette-green-300: oklch(83% 0.13 152);
+    --tes-palette-green-400: oklch(74.5% 0.16 152);
+    --tes-palette-green-500: oklch(65.5% 0.16 152);
+    --tes-palette-green-600: oklch(53.5% 0.136 152);
+    --tes-palette-green-700: oklch(46.5% 0.118 152);
+    --tes-palette-green-800: oklch(40% 0.102 152);
+    --tes-palette-green-900: oklch(33.5% 0.085 152);
+    --tes-palette-green-950: oklch(26.5% 0.065 152);
+
+    /* amber: warning status; hue drifts from yellow (light steps) to orange (dark steps) */
+    --tes-palette-amber-50: oklch(97.5% 0.025 88);
+    --tes-palette-amber-100: oklch(94.5% 0.055 86);
+    --tes-palette-amber-200: oklch(89.5% 0.1 84);
+    --tes-palette-amber-300: oklch(83% 0.14 80);
+    --tes-palette-amber-400: oklch(74.5% 0.152 75);
+    --tes-palette-amber-500: oklch(65.5% 0.139 68);
+    --tes-palette-amber-600: oklch(53.5% 0.121 60);
+    --tes-palette-amber-700: oklch(46.5% 0.111 55);
+    --tes-palette-amber-800: oklch(40% 0.099 52);
+    --tes-palette-amber-900: oklch(33.5% 0.085 50);
+    --tes-palette-amber-950: oklch(26.5% 0.065 48);
+
+    /* red: danger status */
+    --tes-palette-red-50: oklch(97.5% 0.011 18);
+    --tes-palette-red-100: oklch(94.5% 0.026 18);
+    --tes-palette-red-200: oklch(89.5% 0.053 19);
+    --tes-palette-red-300: oklch(83% 0.091 20);
+    --tes-palette-red-400: oklch(74.5% 0.149 22);
+    --tes-palette-red-500: oklch(65.5% 0.2 25);
+    --tes-palette-red-600: oklch(53.5% 0.21 27);
+    --tes-palette-red-700: oklch(46.5% 0.18 27);
+    --tes-palette-red-800: oklch(40% 0.155 27);
+    --tes-palette-red-900: oklch(33.5% 0.13 26);
+    --tes-palette-red-950: oklch(26.5% 0.1 25);
+
+    /*
+     * Lengths, named after their pixel value at the default 16px root size. They are rem so
+     * spacing, type and controls follow the user's font size preference.
+     */
+    --tes-size-2: 0.125rem;
+    --tes-size-4: 0.25rem;
+    --tes-size-6: 0.375rem;
+    --tes-size-8: 0.5rem;
+    --tes-size-10: 0.625rem;
+    --tes-size-12: 0.75rem;
+    --tes-size-13: 0.8125rem;
+    --tes-size-14: 0.875rem;
+    --tes-size-16: 1rem;
+    --tes-size-18: 1.125rem;
+    --tes-size-20: 1.25rem;
+    --tes-size-22: 1.375rem;
+    --tes-size-24: 1.5rem;
+    --tes-size-28: 1.75rem;
+    --tes-size-32: 2rem;
+    --tes-size-36: 2.25rem;
+    --tes-size-40: 2.5rem;
+    --tes-size-44: 2.75rem;
+    --tes-size-48: 3rem;
+    --tes-size-56: 3.5rem;
+
+    /* Durations. Reduced to 0ms below when the user prefers reduced motion. */
+    --tes-time-80: 80ms;
+    --tes-time-100: 100ms;
+    --tes-time-120: 120ms;
+    --tes-time-150: 150ms;
+    --tes-time-200: 200ms;
+    --tes-time-250: 250ms;
+    --tes-time-400: 400ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --tes-time-80: 0ms;
+      --tes-time-100: 0ms;
+      --tes-time-120: 0ms;
+      --tes-time-150: 0ms;
+      --tes-time-200: 0ms;
+      --tes-time-250: 0ms;
+      --tes-time-400: 0ms;
+    }
+  }
+}

@@ -1,0 +1,170 @@
+/*
+ * Care theme: soft, rounded and calm, for healthcare and services.
+ * Warm "sand" neutrals, a soft teal primary, large radii and comfortable controls.
+ *
+ * Every color is declared once as `light-dark(<light>, <dark>)`; `color-scheme` picks the side.
+ */
+@layer tessera.themes {
+  [data-tes-theme='care'] {
+    /* Surfaces and text */
+    --tes-color-bg: light-dark(var(--tes-palette-sand-50), var(--tes-palette-sand-950));
+    --tes-color-surface: light-dark(var(--tes-palette-white), var(--tes-palette-sand-900));
+    --tes-color-surface-raised: light-dark(var(--tes-palette-white), var(--tes-palette-sand-800));
+    --tes-color-surface-sunken: light-dark(
+      var(--tes-palette-sand-100),
+      var(--tes-palette-sand-950)
+    );
+    --tes-color-backdrop: light-dark(
+      color-mix(in oklch, var(--tes-palette-sand-950) 40%, transparent),
+      color-mix(in oklch, var(--tes-palette-sand-950) 70%, transparent)
+    );
+    --tes-color-text: light-dark(var(--tes-palette-sand-900), var(--tes-palette-sand-100));
+    --tes-color-text-muted: light-dark(var(--tes-palette-sand-600), var(--tes-palette-sand-400));
+    --tes-color-text-disabled: light-dark(var(--tes-palette-sand-400), var(--tes-palette-sand-600));
+    --tes-color-text-inverse: light-dark(var(--tes-palette-sand-50), var(--tes-palette-sand-900));
+    --tes-color-border: light-dark(var(--tes-palette-sand-200), var(--tes-palette-sand-700));
+    --tes-color-border-strong: light-dark(var(--tes-palette-sand-500), var(--tes-palette-sand-500));
+
+    /* Brand and interaction */
+    --tes-color-primary: light-dark(var(--tes-palette-teal-600), var(--tes-palette-teal-400));
+    --tes-color-primary-hover: light-dark(var(--tes-palette-teal-700), var(--tes-palette-teal-300));
+    --tes-color-primary-active: light-dark(
+      var(--tes-palette-teal-800),
+      var(--tes-palette-teal-200)
+    );
+    --tes-color-on-primary: light-dark(var(--tes-palette-white), var(--tes-palette-teal-950));
+    --tes-color-primary-subtle: light-dark(
+      var(--tes-palette-teal-100),
+      var(--tes-palette-teal-950)
+    );
+    --tes-color-on-primary-subtle: light-dark(
+      var(--tes-palette-teal-800),
+      var(--tes-palette-teal-200)
+    );
+    --tes-color-neutral-subtle: light-dark(
+      var(--tes-palette-sand-100),
+      var(--tes-palette-sand-800)
+    );
+    --tes-color-neutral-subtle-hover: light-dark(
+      var(--tes-palette-sand-200),
+      var(--tes-palette-sand-700)
+    );
+    --tes-color-hover: light-dark(
+      color-mix(in oklch, var(--tes-palette-sand-900) 6%, transparent),
+      color-mix(in oklch, var(--tes-palette-sand-100) 8%, transparent)
+    );
+    --tes-color-selected: light-dark(var(--tes-palette-teal-100), var(--tes-palette-teal-950));
+    --tes-color-focus: light-dark(var(--tes-palette-teal-600), var(--tes-palette-teal-400));
+
+    /* Status */
+    --tes-color-success: light-dark(var(--tes-palette-green-600), var(--tes-palette-green-400));
+    --tes-color-success-hover: light-dark(
+      var(--tes-palette-green-700),
+      var(--tes-palette-green-300)
+    );
+    --tes-color-on-success: light-dark(var(--tes-palette-white), var(--tes-palette-green-950));
+    --tes-color-success-subtle: light-dark(
+      var(--tes-palette-green-100),
+      var(--tes-palette-green-950)
+    );
+    --tes-color-success-text: light-dark(
+      var(--tes-palette-green-700),
+      var(--tes-palette-green-300)
+    );
+    --tes-color-warning: light-dark(var(--tes-palette-amber-500), var(--tes-palette-amber-400));
+    --tes-color-warning-hover: light-dark(
+      var(--tes-palette-amber-400),
+      var(--tes-palette-amber-300)
+    );
+    --tes-color-on-warning: light-dark(var(--tes-palette-sand-950), var(--tes-palette-amber-950));
+    --tes-color-warning-subtle: light-dark(
+      var(--tes-palette-amber-100),
+      var(--tes-palette-amber-950)
+    );
+    --tes-color-warning-text: light-dark(
+      var(--tes-palette-amber-700),
+      var(--tes-palette-amber-300)
+    );
+    --tes-color-danger: light-dark(var(--tes-palette-red-600), var(--tes-palette-red-400));
+    --tes-color-danger-hover: light-dark(var(--tes-palette-red-700), var(--tes-palette-red-300));
+    --tes-color-on-danger: light-dark(var(--tes-palette-white), var(--tes-palette-red-950));
+    --tes-color-danger-subtle: light-dark(var(--tes-palette-red-100), var(--tes-palette-red-950));
+    --tes-color-danger-text: light-dark(var(--tes-palette-red-700), var(--tes-palette-red-300));
+    --tes-color-info: light-dark(var(--tes-palette-sky-600), var(--tes-palette-sky-400));
+    --tes-color-info-hover: light-dark(var(--tes-palette-sky-700), var(--tes-palette-sky-300));
+    --tes-color-on-info: light-dark(var(--tes-palette-white), var(--tes-palette-sky-950));
+    --tes-color-info-subtle: light-dark(var(--tes-palette-sky-100), var(--tes-palette-sky-950));
+    --tes-color-info-text: light-dark(var(--tes-palette-sky-700), var(--tes-palette-sky-300));
+
+    /* Typography: Nunito's rounded terminals, a 16px base and generous leading */
+    --tes-font-sans:
+      'Nunito Variable', 'Nunito', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+      Arial, sans-serif;
+    --tes-font-mono:
+      ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+    --tes-text-xs: var(--tes-size-13);
+    --tes-text-sm: var(--tes-size-14);
+    --tes-text-md: var(--tes-size-16);
+    --tes-text-lg: var(--tes-size-18);
+    --tes-text-xl: var(--tes-size-22);
+    --tes-text-2xl: var(--tes-size-28);
+    --tes-text-3xl: var(--tes-size-36);
+    --tes-leading-tight: 1.3;
+    --tes-leading-normal: 1.6;
+    --tes-weight-regular: 400;
+    --tes-weight-medium: 500;
+    --tes-weight-semibold: 600;
+    --tes-weight-bold: 700;
+    --tes-numeric: normal;
+
+    /* Space: roomy steps */
+    --tes-space-1: var(--tes-size-4);
+    --tes-space-2: var(--tes-size-8);
+    --tes-space-3: var(--tes-size-12);
+    --tes-space-4: var(--tes-size-16);
+    --tes-space-5: var(--tes-size-24);
+    --tes-space-6: var(--tes-size-32);
+    --tes-space-7: var(--tes-size-40);
+    --tes-space-8: var(--tes-size-56);
+
+    /* Controls: comfortable density */
+    --tes-control-height-sm: var(--tes-size-32);
+    --tes-control-height-md: var(--tes-size-40);
+    --tes-control-height-lg: var(--tes-size-48);
+    --tes-control-padding-x: var(--tes-size-16);
+    --tes-control-gap: var(--tes-size-8);
+
+    /* Shape: large radii and a thicker focus ring */
+    --tes-radius-sm: var(--tes-size-8);
+    --tes-radius-md: var(--tes-size-12);
+    --tes-radius-lg: var(--tes-size-20);
+    --tes-radius-full: 9999px;
+    --tes-border-width: 1px;
+    --tes-focus-ring-width: 3px;
+    --tes-focus-ring-offset: 2px;
+
+    /* Elevation: soft, diffuse, warm-tinted shadows */
+    --tes-shadow-sm: 0 1px 3px
+      light-dark(
+        color-mix(in oklch, var(--tes-palette-sand-950) 8%, transparent),
+        color-mix(in oklch, var(--tes-palette-sand-950) 50%, transparent)
+      );
+    --tes-shadow-md: 0 6px 16px -4px
+      light-dark(
+        color-mix(in oklch, var(--tes-palette-sand-950) 10%, transparent),
+        color-mix(in oklch, var(--tes-palette-sand-950) 60%, transparent)
+      );
+    --tes-shadow-lg: 0 16px 40px -8px
+      light-dark(
+        color-mix(in oklch, var(--tes-palette-sand-950) 14%, transparent),
+        color-mix(in oklch, var(--tes-palette-sand-950) 70%, transparent)
+      );
+
+    /* Motion: calm and slightly slower */
+    --tes-duration-fast: var(--tes-time-150);
+    --tes-duration-normal: var(--tes-time-250);
+    --tes-duration-slow: var(--tes-time-400);
+    --tes-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --tes-easing-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
