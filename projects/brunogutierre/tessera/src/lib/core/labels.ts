@@ -19,6 +19,10 @@ export interface TesLabels {
   nextPage: string;
   lastPage: string;
   itemsPerPage: string;
+  pagination: string;
+  /** Spoken by a sortable column header: "Amount, sort ascending". */
+  sortAscending: string;
+  sortDescending: string;
   /** Paginator summary, e.g. "11–20 of 87". */
   pageRange: (first: number, last: number, total: number) => string;
   /** Accessible name of a removable tag's remove button. */
@@ -45,6 +49,9 @@ export const DEFAULT_LABELS: TesLabels = {
   nextPage: 'Next page',
   lastPage: 'Last page',
   itemsPerPage: 'Items per page',
+  pagination: 'Pagination',
+  sortAscending: 'sorted ascending',
+  sortDescending: 'sorted descending',
   pageRange: (first, last, total) =>
     total === 0 ? '0 of 0' : `${String(first)}–${String(last)} of ${String(total)}`,
   remove: (item) => `Remove ${item}`,

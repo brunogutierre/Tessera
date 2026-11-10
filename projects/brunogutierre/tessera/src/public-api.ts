@@ -58,3 +58,5 @@ export { TES_DIALOG_CONTEXT, TesDialog, TesDialogLayout } from './lib/dialog/dia
 export type { TesDialogContext, TesDialogOptions, TesDialogSize } from './lib/dialog/dialog';
 export { TesToastStack, TesToaster } from './lib/toast/toast';
 export type { TesToast, TesToastOptions, TesToastRef, TesToastTone } from './lib/toast/toast';
+export { TesSortHeader, TesTable, tesSortRows } from './lib/table/table';
+export type { TesSort, TesSortDirection } from './lib/table/table';
