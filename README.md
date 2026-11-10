@@ -94,6 +94,8 @@ Tokens come in three tiers:
 | Accordion    | `tes-accordion`, `tes-accordion-item`     | Aria       | One section at a time unless `multi`; lazy content          |
 | Toolbar      | `tes-toolbar`, `[tesToolbarItem]`         | Aria       | Single tab stop, arrow keys, separators                     |
 | Tree         | `tes-tree`                                | Aria       | Data-driven hierarchy; expand, collapse, typeahead, select  |
+| Dialog       | `TesDialog`, `tes-dialog`                 | CDK        | Modal or drawer; focus trap and return, `alertdialog`       |
+| Toast        | `TesToaster`                              | CDK        | Announced, pausable, optional action; never color alone     |
 
 ## Usage
 
@@ -144,6 +146,7 @@ Every built-in string (button names, screen-reader text, paginator summary) come
 - **Menus take their items as data.** `@angular/aria`'s trigger links to its menu through a template input, so `tes-menu` renders both the button and the panel and receives `TesMenuEntry[]`; apps never touch Aria types.
 - **Composite controls are `FormValueControl`s, with no `ControlValueAccessor`.** `tes-select` and `tes-listbox` expose `value` as a `model()` plus a `touch` output; Angular 22 binds that shape from Signal Forms (`[formField]`), Reactive Forms and `ngModel` alike.
 - **Containers host Aria directives with `hostDirectives`.** `tes-tabs`, `tes-accordion` and `tes-toolbar` carry Aria's group directive on their own element, so the panels, sections and items the app projects find their Aria parent through dependency injection, and apps never import Aria.
+- **Dialogs and toasts render at the page level.** They use the CDK Dialog and a global overlay, so they follow the page theme rather than a `tesTheme` scope; dialogs set `aria-modal`, trap and return focus, and toasts are announced through the CDK `LiveAnnouncer`, with countdowns that pause on hover or focus.
 - **Status is never color alone.** Alerts speak their tone first ("Warning: …"), stats speak the direction of a change ("increase"), and badges always carry text.
 - **Breadcrumbs take your own `<li>` markup** instead of an items array, so links can use `href`, `routerLink` or anything else without Tessera depending on the router. It is the one component that is not view-encapsulated: its styles must reach projected items, so every selector is scoped under `.tes-breadcrumbs`.
 - **Icons are drawn from a typed map in the template.** No icon font, no runtime registry, no `innerHTML`: unknown names fail at compile time and nothing needs sanitizing.
