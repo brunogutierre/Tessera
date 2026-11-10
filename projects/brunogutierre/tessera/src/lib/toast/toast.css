@@ -3,11 +3,6 @@
     display: block;
   }
 
-  /* Empty stack: nothing on screen, nothing to tab through. */
-  .stack:has(.list:empty) {
-    display: none;
-  }
-
   .list {
     display: flex;
     flex-direction: column;

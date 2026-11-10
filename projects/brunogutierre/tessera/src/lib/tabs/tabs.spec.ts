@@ -56,7 +56,6 @@ describe('TesTabs', () => {
     const { host, fixture, tabs } = await render();
     host.selected.set(undefined);
     await fixture.whenStable();
-    expect(host.selected()).toBe('overview');
     expect(tabs()[0]!.getAttribute('aria-selected')).toBe('true');
   });
 

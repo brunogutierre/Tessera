@@ -17,7 +17,7 @@ const meta: Meta<TesCard> = {
         <h3 tesCardHeader style="margin: 0; font-size: inherit">Invoice INV-2026-0184</h3>
         <p style="margin: 0">Acme Corp · due 30 Nov 2026</p>
         <p style="margin: 0; font-size: var(--tes-text-2xl); font-weight: var(--tes-weight-semibold)">$12,480.00</p>
-        <div tesCardFooter class="sb-row" style="inline-size: 100%">
+        <div tesCardFooter>
           <tes-badge tone="warning">Pending</tes-badge>
           <span style="flex: 1"></span>
           <button tes-button variant="ghost" size="sm">View</button>

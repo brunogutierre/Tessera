@@ -36,7 +36,7 @@
     --tes-icon-size: 1rem;
   }
 
-  .option:hover {
+  .option:hover:not([aria-disabled='true']) {
     background-color: var(--tes-color-neutral-subtle);
   }
 

@@ -108,10 +108,21 @@
     cursor: not-allowed;
   }
 
-  :host(:disabled) {
-    --_bg: var(--tes-color-neutral-subtle);
+  /* Unavailable (natively or soft-disabled, not loading): muted label and border. */
+  :host(:disabled),
+  :host([aria-disabled='true']:not([data-loading])) {
     --_fg: var(--tes-color-text-disabled);
     --_border: var(--tes-color-border);
+  }
+
+  /* Filled variants keep a neutral fill when unavailable; ghost and outline stay transparent. */
+  :host(
+    :is([data-variant='primary'], [data-variant='secondary'], [data-variant='danger']):is(
+      :disabled,
+      [aria-disabled='true']:not([data-loading])
+    )
+  ) {
+    --_bg: var(--tes-color-neutral-subtle);
   }
 
   .label {

@@ -6,7 +6,6 @@ import {
   Component,
   booleanAttribute,
   computed,
-  effect,
   inject,
   input,
   linkedSignal,
@@ -17,6 +16,7 @@ import {
 import type { FormValueControl } from '@angular/forms/signals';
 import { TES_LABELS } from '../core/labels';
 import { TES_DROPDOWN_POSITIONS } from '../core/overlay';
+import { TesFormField } from '../form-field/form-field';
 import { TesInput } from '../input/input';
 import type { TesOption } from '../select/select';
 
@@ -66,6 +66,7 @@ export const containsFilter: TesOptionFilter<unknown> = (option, query) => {
 })
 export class TesAutocomplete<V = string> implements FormValueControl<V | null> {
   protected readonly labels = inject(TES_LABELS);
+  protected readonly field = inject(TesFormField, { optional: true });
 
   /** Accessible name when the autocomplete is not inside a `tes-form-field`. */
   readonly label = input<string>();
@@ -85,22 +86,8 @@ export class TesAutocomplete<V = string> implements FormValueControl<V | null> {
   readonly #chosenLabel = computed(
     () => this.options().find((o) => o.value === this.value())?.label ?? '',
   );
-  /** Set while this component clears the value because the text stopped matching. */
-  #clearedByTyping = false;
-  /**
-   * What is typed in the field. It follows the chosen option's label when the value changes from
-   * outside (a form reset, a patch), but keeps the user's text when typing cleared the value.
-   */
-  protected readonly query = linkedSignal<string, string>({
-    source: () => this.#chosenLabel(),
-    computation: (label, previous) => {
-      if (this.#clearedByTyping && previous) {
-        this.#clearedByTyping = false;
-        return previous.value;
-      }
-      return label;
-    },
-  });
+  /** What is typed in the field; follows the chosen option's label when the value changes. */
+  protected readonly query = linkedSignal(() => this.#chosenLabel());
 
   protected readonly suggestions = computed(() => {
     const query = this.query();
@@ -113,15 +100,13 @@ export class TesAutocomplete<V = string> implements FormValueControl<V | null> {
     return value === null ? [] : [value];
   });
 
-  constructor() {
-    // Typing something that is no longer the chosen option's label clears the choice.
-    effect(() => {
-      const query = this.query();
-      if (this.value() !== null && query !== this.#chosenLabel()) {
-        this.#clearedByTyping = true;
-        this.value.set(null);
-      }
-    });
+  /**
+   * Typing that no longer matches the chosen option clears the choice. The text is set after the
+   * value, so the linked signal keeps what was typed instead of resetting to the empty label.
+   */
+  protected onQueryChange(text: string): void {
+    if (this.value() !== null && text !== this.#chosenLabel()) this.value.set(null);
+    this.query.set(text);
   }
 
   protected onSelectionChange(values: readonly V[]): void {

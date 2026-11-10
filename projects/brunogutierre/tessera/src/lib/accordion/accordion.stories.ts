@@ -30,7 +30,7 @@ const meta: Meta<TesAccordion> = {
       description: {
         component:
           'Accordion over `@angular/aria/accordion`: headings (level 3 by default) with buttons; Enter and Space ' +
-          'toggle, arrows, Home and End move. Opening one closes the others unless `multi`. Content is rendered ' +
+          'toggle, arrows, Home and End move. Opening one closes the others unless `multiple`. Content is rendered ' +
           'only while expanded.',
       },
     },
@@ -54,7 +54,7 @@ export const Default: Story = {
 export const Multiple: Story = {
   render: () => ({
     template: `
-      <tes-accordion multi style="max-inline-size: 36rem">
+      <tes-accordion multiple style="max-inline-size: 36rem">
         <tes-accordion-item heading="Allergies" [expanded]="true">Penicillin.</tes-accordion-item>
         <tes-accordion-item heading="Medications" [expanded]="true">Lisinopril 10 mg daily.</tes-accordion-item>
         <tes-accordion-item heading="Family history">Type 2 diabetes (father).</tes-accordion-item>

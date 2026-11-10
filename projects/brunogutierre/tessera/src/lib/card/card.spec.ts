@@ -60,6 +60,6 @@ describe('TesCard', () => {
 
     host.variant.set('filled');
     await fixture.whenStable();
-    expect(bg()).toEqual(resolveColor('--tes-color-surface-sunken', card));
+    expect(bg()).toEqual(resolveColor('--tes-color-neutral-subtle', card));
   });
 });

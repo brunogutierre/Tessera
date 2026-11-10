@@ -17,9 +17,13 @@
     box-shadow: var(--tes-shadow-md);
   }
 
+  /*
+   * Filled: a tinted surface. Not surface-sunken, which equals the page background in dark mode;
+   * sunken is for wells inside a surface, never directly on the page.
+   */
   :host([data-variant='filled']) {
     border-color: transparent;
-    background-color: var(--tes-color-surface-sunken);
+    background-color: var(--tes-color-neutral-subtle);
   }
 
   .header,

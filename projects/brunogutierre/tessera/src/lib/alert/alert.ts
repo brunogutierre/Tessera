@@ -8,13 +8,14 @@ import {
   output,
 } from '@angular/core';
 import { TES_LABELS } from '../core/labels';
+import type { TesStatusTone } from '../core/tones';
+import { TesButton } from '../button/button';
 import { TesIcon } from '../icon/icon';
 import type { TesIconName } from '../icon/icons';
 
-export type TesAlertTone = 'info' | 'success' | 'warning' | 'danger';
 export type TesAlertLive = 'off' | 'polite' | 'assertive';
 
-const ICONS: Record<TesAlertTone, TesIconName> = {
+const ICONS: Record<TesStatusTone, TesIconName> = {
   info: 'info',
   success: 'circle-check',
   warning: 'triangle-alert',
@@ -35,7 +36,7 @@ const ICONS: Record<TesAlertTone, TesIconName> = {
  */
 @Component({
   selector: 'tes-alert',
-  imports: [TesIcon],
+  imports: [TesButton, TesIcon],
   template: `
     <tes-icon class="icon" [name]="icon()" />
     <div class="content">
@@ -51,6 +52,10 @@ const ICONS: Record<TesAlertTone, TesIconName> = {
     @if (dismissible()) {
       <button
         type="button"
+        tes-button
+        variant="ghost"
+        size="sm"
+        iconOnly
         class="dismiss"
         [attr.aria-label]="labels.dismiss"
         (click)="dismissed.emit()"
@@ -70,7 +75,7 @@ const ICONS: Record<TesAlertTone, TesIconName> = {
 export class TesAlert {
   protected readonly labels = inject(TES_LABELS);
 
-  readonly tone = input<TesAlertTone>('info');
+  readonly tone = input<TesStatusTone>('info');
   readonly heading = input<string>();
   /** Announce the alert when it appears: `polite` → role `status`, `assertive` → role `alert`. */
   readonly live = input<TesAlertLive>('off');

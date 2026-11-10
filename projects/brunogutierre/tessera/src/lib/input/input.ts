@@ -1,11 +1,15 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ElementRef,
   HostAttributeToken,
+  afterNextRender,
+  booleanAttribute,
   computed,
   inject,
   input,
+  signal,
 } from '@angular/core';
 import { uniqueId } from '../core/id';
 import { TesFormField } from '../form-field/form-field';
@@ -35,7 +39,7 @@ export type TesInputSize = 'sm' | 'md' | 'lg';
     '[id]': 'id',
     '[attr.data-size]': 'size()',
     '[attr.aria-describedby]': 'describedBy()',
-    '[attr.aria-invalid]': 'field?.invalid() || staticInvalid',
+    '[attr.aria-invalid]': 'field?.invalid() || invalid() || staticInvalid',
   },
 })
 export class TesInput {
@@ -48,6 +52,8 @@ export class TesInput {
   });
 
   readonly size = input<TesInputSize>('md');
+  /** Marks the control invalid when it is not inside a `tes-form-field` (or in addition to it). */
+  readonly invalid = input(false, { transform: booleanAttribute });
 
   /** The control's id: the one written in the template, or a generated one. */
   readonly id = inject(new HostAttributeToken('id'), { optional: true }) ?? uniqueId('tes-input');
@@ -57,9 +63,27 @@ export class TesInput {
     return ids.length > 0 ? ids.join(' ') : null;
   });
 
+  /** Mirrors the native `required` attribute, which forms may toggle at any time. */
+  readonly #required = signal(false);
+
   constructor() {
     const element = inject<ElementRef<HTMLInputElement | HTMLTextAreaElement>>(ElementRef);
+    const destroyRef = inject(DestroyRef);
     this.field?.controlId.set(this.id);
     this.field?.control.set(element.nativeElement);
+    this.field?.controlRequiredOverride.set(() => this.#required());
+
+    // Browser only: observe the attribute instead of reading the DOM while rendering.
+    afterNextRender(() => {
+      const control = element.nativeElement;
+      this.#required.set(control.required);
+      const observer = new MutationObserver(() => {
+        this.#required.set(control.required);
+      });
+      observer.observe(control, { attributes: true, attributeFilter: ['required'] });
+      destroyRef.onDestroy(() => {
+        observer.disconnect();
+      });
+    });
   }
 }

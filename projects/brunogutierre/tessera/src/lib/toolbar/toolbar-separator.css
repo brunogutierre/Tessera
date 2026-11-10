@@ -5,4 +5,10 @@
     margin-inline: var(--tes-space-1);
     background-color: var(--tes-color-border);
   }
+
+  :host([aria-orientation='horizontal']) {
+    inline-size: auto;
+    block-size: var(--tes-border-width);
+    margin: var(--tes-space-1) 0;
+  }
 }

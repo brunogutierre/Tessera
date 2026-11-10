@@ -39,7 +39,6 @@ export default defineConfig({
       '@angular/aria/accordion',
       '@angular/aria/toolbar',
       '@angular/aria/tree',
-      '@angular/aria/grid',
       'storybook/test',
     ],
   },

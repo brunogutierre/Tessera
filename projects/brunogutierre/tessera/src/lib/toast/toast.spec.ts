@@ -26,6 +26,7 @@ describe('TesToaster', () => {
     await settle();
     const region = document.querySelector('section[aria-label="Notifications"]')!;
     expect(region).not.toBeNull();
+    expect(toaster.toasts()).toHaveLength(2);
     expect(
       toasts().map((t) => t.querySelector('.message')!.textContent.replace(/\s+/g, ' ').trim()),
     ).toEqual(['Success: Invoice sent', 'Error: Transfer failed']);
@@ -45,6 +46,8 @@ describe('TesToaster', () => {
     sticky.dismiss();
     await settle();
     expect(toasts()).toHaveLength(0);
+    // No empty landmark is left behind.
+    expect(document.querySelector('section[aria-label="Notifications"]')).toBeNull();
   });
 
   it('pauses every countdown while the pointer is on the stack', async () => {
@@ -59,6 +62,29 @@ describe('TesToaster', () => {
     await wait(600);
     await settle();
     expect(toasts()).toHaveLength(0);
+  });
+
+  it('stays paused while focus is inside, even after the pointer leaves', async () => {
+    const toaster = TestBed.inject(TesToaster);
+    toaster.show({ message: 'Focused', duration: 300 });
+    await settle();
+    toasts()[0]!.querySelector<HTMLElement>('.dismiss')!.focus();
+    await userEvent.hover(toasts()[0]!);
+    await userEvent.unhover(toasts()[0]!);
+    await wait(450);
+    await settle();
+    expect(toasts()).toHaveLength(1);
+  });
+
+  it('moves focus to the next toast when the focused one is dismissed', async () => {
+    const toaster = TestBed.inject(TesToaster);
+    toaster.show({ message: 'First', duration: 0 });
+    toaster.show({ message: 'Second', duration: 0 });
+    await settle();
+    const [first, second] = toasts();
+    first!.querySelector<HTMLElement>('.dismiss')!.click();
+    await settle();
+    expect(document.activeElement).toBe(second!.querySelector('.dismiss'));
   });
 
   it('runs its action, then closes, and never times out while it has one', async () => {

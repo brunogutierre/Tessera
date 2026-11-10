@@ -75,6 +75,26 @@ describe('TesFormField + TesInput', () => {
     expect(input.hasAttribute('aria-describedby')).toBe(false);
   });
 
+  it('follows a required state that changes after the first render', async () => {
+    @Component({
+      imports: [TesFormField, TesInput],
+      template: `<tes-form-field label="VAT number"
+        ><input tes-input [required]="required()"
+      /></tes-form-field>`,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+    })
+    class Conditional {
+      readonly required = signal(false);
+    }
+    const { el, fixture, host } = await render(Conditional);
+    expect(el.querySelector('.marker')).toBeNull();
+    host.required.set(true);
+    await fixture.whenStable();
+    await new Promise((resolve) => setTimeout(resolve));
+    await fixture.whenStable();
+    expect(el.querySelector('.marker')).not.toBeNull();
+  });
+
   it("keeps the app's own id and descriptions", async () => {
     const { el } = await render(Wiring);
     const textarea = el.querySelector('textarea')!;

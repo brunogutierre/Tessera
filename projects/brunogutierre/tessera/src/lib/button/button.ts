@@ -45,7 +45,7 @@ export type TesButtonSize = 'sm' | 'md' | 'lg';
     '[attr.data-size]': 'size()',
     '[attr.data-icon-only]': 'iconOnly() || null',
     '[attr.data-loading]': 'loading() || null',
-    '[attr.aria-disabled]': 'loading() || staticAriaDisabled',
+    '[attr.aria-disabled]': 'loading() || softDisabled() || staticAriaDisabled',
     '[attr.aria-busy]': 'loading() || null',
   },
 })
@@ -56,6 +56,11 @@ export class TesButton {
   readonly iconOnly = input(false, { transform: booleanAttribute });
   /** Shows a spinner, sets `aria-busy` and ignores clicks, without losing focus. */
   readonly loading = input(false, { transform: booleanAttribute });
+  /**
+   * Unavailable but still focusable (`aria-disabled`): use it for buttons that become unavailable
+   * right after being pressed (pagination ends), so keyboard focus is not thrown to the page.
+   */
+  readonly softDisabled = input(false, { transform: booleanAttribute });
 
   /** An `aria-disabled` written by the consumer is kept when the button is not loading. */
   protected readonly staticAriaDisabled = inject(new HostAttributeToken('aria-disabled'), {
@@ -67,7 +72,7 @@ export class TesButton {
 
     // A capture listener on the target runs before the consumer's (click) handler.
     const blockWhileLoading = (event: Event): void => {
-      if (this.loading()) {
+      if (this.loading() || this.softDisabled()) {
         event.preventDefault();
         event.stopImmediatePropagation();
       }

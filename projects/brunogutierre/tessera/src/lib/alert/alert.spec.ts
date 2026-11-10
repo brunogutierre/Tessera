@@ -4,7 +4,8 @@ import { contrast, toRgba } from '../../test-utils/color';
 import { loadTesseraStyles } from '../../test-utils/styles';
 import { provideTessera } from '../core/theme';
 import { TesAlert } from './alert';
-import type { TesAlertLive, TesAlertTone } from './alert';
+import type { TesStatusTone } from '../core/tones';
+import type { TesAlertLive } from './alert';
 
 @Component({
   imports: [TesAlert],
@@ -21,7 +22,7 @@ import type { TesAlertLive, TesAlertTone } from './alert';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class Host {
-  readonly tone = signal<TesAlertTone>('warning');
+  readonly tone = signal<TesStatusTone>('warning');
   readonly heading = signal<string | undefined>('Payment overdue');
   readonly live = signal<TesAlertLive>('off');
   readonly dismissible = signal(false);

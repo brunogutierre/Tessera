@@ -5,13 +5,15 @@
   cdkOverlayOrigin
   #origin="cdkOverlayOrigin"
   autocomplete="off"
-  [(value)]="query"
+  [value]="query()"
+  (valueChange)="onQueryChange($event)"
   [(expanded)]="expanded"
   [disabled]="disabled()"
+  [softDisabled]="false"
   [required]="required()"
-  [attr.aria-invalid]="invalid() || null"
+  [invalid]="invalid()"
   [placeholder]="placeholder()"
-  [attr.aria-label]="label() ?? null"
+  [attr.aria-label]="field ? null : (label() ?? null)"
   (blur)="touch.emit()"
 />
 
@@ -25,12 +27,13 @@
     [cdkConnectedOverlayMatchWidth]="true"
     cdkConnectedOverlayUsePopover="inline"
   >
-    <div class="panel">
+    <div class="panel" (mousedown)="$event.preventDefault()">
       <div
         ngComboboxWidget
         ngListbox
         #listbox="ngListbox"
         class="list"
+        tabindex="-1"
         selectionMode="explicit"
         focusMode="activedescendant"
         [softDisabled]="false"

@@ -6,24 +6,27 @@ import {
   createOverlayRef,
 } from '@angular/cdk/overlay';
 import type { OverlayRef } from '@angular/cdk/overlay';
+import type { ElementRef } from '@angular/core';
 import {
   ChangeDetectionStrategy,
   Component,
+  DOCUMENT,
   Injectable,
   Injector,
+  afterRenderEffect,
   inject,
   signal,
+  viewChild,
 } from '@angular/core';
 import { TES_LABELS } from '../core/labels';
+import type { TesStatusTone } from '../core/tones';
 import { TesButton } from '../button/button';
 import { TesIcon } from '../icon/icon';
 import type { TesIconName } from '../icon/icons';
 
-export type TesToastTone = 'info' | 'success' | 'warning' | 'danger';
-
 export interface TesToastOptions {
   message: string;
-  tone?: TesToastTone;
+  tone?: TesStatusTone;
   /** One action, such as "Undo". A toast with an action stays until it is used or dismissed. */
   action?: { label: string; run: () => void };
   /** Milliseconds before it disappears; 0 keeps it until dismissed. Default 5000. */
@@ -34,7 +37,7 @@ export interface TesToastOptions {
 export interface TesToast {
   readonly id: number;
   readonly message: string;
-  readonly tone: TesToastTone;
+  readonly tone: TesStatusTone;
   readonly action?: { label: string; run: () => void };
 }
 
@@ -43,7 +46,7 @@ export interface TesToastRef {
   dismiss(): void;
 }
 
-const ICONS: Record<TesToastTone, TesIconName> = {
+const ICONS: Record<TesStatusTone, TesIconName> = {
   info: 'info',
   success: 'circle-check',
   warning: 'triangle-alert',
@@ -74,12 +77,14 @@ export class TesToaster {
   readonly #announcer = inject(LiveAnnouncer);
   readonly #labels = inject(TES_LABELS);
   readonly #timers = new Map<number, Timer>();
+  readonly #toasts = signal<readonly TesToast[]>([]);
   #overlay: OverlayRef | null = null;
   #nextId = 0;
-  #paused = false;
+  #hovered = false;
+  #focused = false;
 
   /** The toasts on screen, oldest first. */
-  readonly toasts = signal<readonly TesToast[]>([]);
+  readonly toasts = this.#toasts.asReadonly();
 
   show(options: TesToastOptions): TesToastRef {
     const toast: TesToast = {
@@ -89,7 +94,7 @@ export class TesToaster {
       action: options.action,
     };
     this.#ensureStack();
-    this.toasts.update((list) => [...list, toast]);
+    this.#toasts.update((list) => [...list, toast]);
     void this.#announcer.announce(
       `${this.#labels.tones[toast.tone]}: ${toast.message}`,
       toast.tone === 'danger' ? 'assertive' : 'polite',
@@ -110,24 +115,40 @@ export class TesToaster {
   dismiss(id: number): void {
     clearTimeout(this.#timers.get(id)?.handle);
     this.#timers.delete(id);
-    this.toasts.update((list) => list.filter((t) => t.id !== id));
+    this.#toasts.update((list) => list.filter((t) => t.id !== id));
   }
 
-  /** Stops every countdown (pointer or focus on the stack). */
-  pause(): void {
-    this.#paused = true;
-    for (const timer of this.#timers.values()) {
-      clearTimeout(timer.handle);
-      timer.remaining -= Date.now() - timer.started;
+  /** Countdowns pause while the pointer is over the stack (WCAG 2.2.1). */
+  setHovered(hovered: boolean): void {
+    this.#setPaused(() => (this.#hovered = hovered));
+  }
+
+  /** Countdowns pause while keyboard focus is inside the stack. */
+  setFocused(focused: boolean): void {
+    this.#setPaused(() => (this.#focused = focused));
+  }
+
+  get #paused(): boolean {
+    return this.#hovered || this.#focused;
+  }
+
+  /** Applies a flag change and acts only when the paused state itself changes. */
+  #setPaused(change: () => void): void {
+    const before = this.#paused;
+    change();
+    if (before === this.#paused) return;
+    for (const [id, timer] of this.#timers) {
+      if (this.#paused) {
+        clearTimeout(timer.handle);
+        timer.remaining -= Date.now() - timer.started;
+      } else {
+        this.#start(id, timer);
+      }
     }
   }
 
-  resume(): void {
-    this.#paused = false;
-    for (const [id, timer] of this.#timers) this.#start(id, timer);
-  }
-
   #start(id: number, timer: Timer): void {
+    clearTimeout(timer.handle);
     timer.started = Date.now();
     timer.handle = setTimeout(
       () => {
@@ -138,7 +159,15 @@ export class TesToaster {
   }
 
   #ensureStack(): void {
-    if (this.#overlay) return;
+    if (this.#overlay) {
+      // Re-enter the top layer, so a toast raised while a dialog is open shows above it.
+      const host = this.#overlay.hostElement;
+      if (host.matches(':popover-open')) {
+        host.hidePopover();
+        host.showPopover();
+      }
+      return;
+    }
     this.#overlay = createOverlayRef(this.#injector, {
       positionStrategy: createGlobalPositionStrategy(this.#injector).bottom('1rem').end('1rem'),
       scrollStrategy: createNoopScrollStrategy(),
@@ -153,48 +182,52 @@ export class TesToaster {
   selector: 'tes-toast-stack',
   imports: [TesButton, TesIcon],
   template: `
-    <section
-      class="stack"
-      [attr.aria-label]="labels.notifications"
-      (mouseenter)="toaster.pause()"
-      (mouseleave)="toaster.resume()"
-      (focusin)="toaster.pause()"
-      (focusout)="toaster.resume()"
-    >
-      <ol class="list">
-        @for (toast of toaster.toasts(); track toast.id) {
-          <li class="toast" [attr.data-tone]="toast.tone">
-            <tes-icon class="icon" [name]="icons[toast.tone]" />
-            <p class="message">
-              <span class="tes-visually-hidden">{{ labels.tones[toast.tone] }}: </span>
-              {{ toast.message }}
-            </p>
-            @if (toast.action; as action) {
+    @if (toaster.toasts().length > 0) {
+      <section
+        #stack
+        class="stack"
+        [attr.aria-label]="labels.notifications"
+        (mouseenter)="toaster.setHovered(true)"
+        (mouseleave)="toaster.setHovered(false)"
+        (focusin)="toaster.setFocused(true)"
+        (focusout)="onFocusOut($event)"
+      >
+        <ol class="list">
+          @for (toast of toaster.toasts(); track toast.id) {
+            <li class="toast" [attr.data-tone]="toast.tone" [attr.data-id]="toast.id">
+              <tes-icon class="icon" [name]="icons[toast.tone]" />
+              <p class="message">
+                <span class="tes-visually-hidden">{{ labels.tones[toast.tone] }}: </span>
+                {{ toast.message }}
+              </p>
+              @if (toast.action; as action) {
+                <button
+                  tes-button
+                  variant="ghost"
+                  size="sm"
+                  type="button"
+                  (click)="run(toast.id, action.run)"
+                >
+                  {{ action.label }}
+                </button>
+              }
               <button
                 tes-button
                 variant="ghost"
                 size="sm"
+                iconOnly
                 type="button"
-                (click)="run(toast.id, action.run)"
+                class="dismiss"
+                [attr.aria-label]="labels.dismiss"
+                (click)="dismiss(toast.id)"
               >
-                {{ action.label }}
+                <tes-icon name="x" />
               </button>
-            }
-            <button
-              tes-button
-              variant="ghost"
-              size="sm"
-              iconOnly
-              type="button"
-              [attr.aria-label]="labels.dismiss"
-              (click)="toaster.dismiss(toast.id)"
-            >
-              <tes-icon name="x" />
-            </button>
-          </li>
-        }
-      </ol>
-    </section>
+            </li>
+          }
+        </ol>
+      </section>
+    }
   `,
   styleUrl: './toast.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -204,9 +237,41 @@ export class TesToastStack {
   protected readonly toaster = inject(TesToaster);
   protected readonly labels = inject(TES_LABELS);
   protected readonly icons = ICONS;
+  readonly #document = inject(DOCUMENT);
+  /** Toast to move focus to after the focused one is dismissed. */
+  #focusNext: number | null = null;
+  private readonly stack = viewChild<ElementRef<HTMLElement>>('stack');
+
+  constructor() {
+    // A removed element fires no focusout in every browser: check where focus is after each
+    // change, and move it to the next toast when the focused one was dismissed.
+    afterRenderEffect(() => {
+      this.toaster.toasts();
+      const stack = this.stack()?.nativeElement;
+      if (this.#focusNext !== null && stack) {
+        stack
+          .querySelector<HTMLElement>(`[data-id="${String(this.#focusNext)}"] .dismiss`)
+          ?.focus();
+        this.#focusNext = null;
+      }
+      if (!stack?.contains(this.#document.activeElement)) this.toaster.setFocused(false);
+    });
+  }
+
+  protected onFocusOut(event: FocusEvent): void {
+    const stack = event.currentTarget as HTMLElement;
+    if (!stack.contains(event.relatedTarget as Node | null)) this.toaster.setFocused(false);
+  }
+
+  protected dismiss(id: number): void {
+    const list = this.toaster.toasts();
+    const index = list.findIndex((t) => t.id === id);
+    this.#focusNext = (list[index + 1] ?? list[index - 1])?.id ?? null;
+    this.toaster.dismiss(id);
+  }
 
   protected run(id: number, action: () => void): void {
     action();
-    this.toaster.dismiss(id);
+    this.dismiss(id);
   }
 }

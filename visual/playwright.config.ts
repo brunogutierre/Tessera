@@ -21,7 +21,14 @@ export default defineConfig({
     deviceScaleFactor: 1,
   },
   expect: {
-    toHaveScreenshot: { maxDiffPixelRatio: 0.002, animations: 'disabled', caret: 'hide' },
+    // A tight per-pixel threshold: a design system must notice a subtle surface color change.
+    // Rendering in one container image leaves no noise to tolerate.
+    toHaveScreenshot: {
+      threshold: 0.02,
+      maxDiffPixelRatio: 0.001,
+      animations: 'disabled',
+      caret: 'hide',
+    },
   },
   webServer: {
     command: 'node visual/serve.mjs storybook-static 6108',

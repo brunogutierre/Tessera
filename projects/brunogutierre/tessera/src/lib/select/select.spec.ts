@@ -84,6 +84,23 @@ describe('TesSelect', () => {
     expect(host.model().country).toBe('ca');
     expect(trigger.getAttribute('aria-expanded')).toBe('false');
     expect(trigger.textContent.trim()).toBe('Canada');
+    // A click on an option does not move focus off the combobox.
+    expect(document.activeElement).toBe(trigger);
+  });
+
+  it('leaves and closes on Tab while open', async () => {
+    const { trigger, el, settle } = await render(SignalHost);
+    trigger.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await settle();
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
+    expect(el.querySelector('[role="listbox"]')!.getAttribute('tabindex')).toBe('-1');
+    await userEvent.tab();
+    await settle();
+    await new Promise((resolve) => setTimeout(resolve, 20));
+    await settle();
+    expect(el.contains(document.activeElement)).toBe(false);
+    expect(trigger.getAttribute('aria-expanded')).toBe('false');
   });
 
   it('works with the keyboard and skips disabled options', async () => {

@@ -3,8 +3,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   booleanAttribute,
+  computed,
   contentChildren,
-  effect,
   inject,
   input,
   model,
@@ -51,7 +51,8 @@ export class TesTabPanel {
     <div
       ngTabList
       class="list"
-      [(selectedTab)]="selected"
+      [selectedTab]="current()"
+      (selectedTabChange)="selected.set($event)"
       [attr.aria-label]="label() ?? null"
       [orientation]="'horizontal'"
     >
@@ -81,13 +82,12 @@ export class TesTabs {
   readonly label = input<string>();
 
   protected readonly panels = contentChildren(TesTabPanel);
-
-  constructor() {
-    // Without an explicit selection, show the first enabled panel.
-    effect(() => {
-      if (this.selected() !== undefined) return;
-      const first = this.panels().find((panel) => !panel.disabled());
-      if (first) this.selected.set(first.value());
-    });
-  }
+  /** The selected panel, or the first enabled one when nothing is selected. */
+  protected readonly current = computed(
+    () =>
+      this.selected() ??
+      this.panels()
+        .find((panel) => !panel.disabled())
+        ?.value(),
+  );
 }

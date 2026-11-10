@@ -93,7 +93,7 @@ Tokens come in three tiers:
 | Listbox      | `tes-listbox`                             | Aria       | Always-visible list, single (follows focus) or multiple        |
 | Autocomplete | `tes-autocomplete`                        | Aria + CDK | Editable combobox, accent-insensitive filter, "no results"     |
 | Tabs         | `tes-tabs`, `tes-tab-panel`               | Aria       | Tabs built from panel labels; hidden panels stay rendered      |
-| Accordion    | `tes-accordion`, `tes-accordion-item`     | Aria       | One section at a time unless `multi`; lazy content             |
+| Accordion    | `tes-accordion`, `tes-accordion-item`     | Aria       | One section at a time unless `multiple`; lazy content          |
 | Toolbar      | `tes-toolbar`, `[tesToolbarItem]`         | Aria       | Single tab stop, arrow keys, separators                        |
 | Tree         | `tes-tree`                                | Aria       | Data-driven hierarchy; expand, collapse, typeahead, select     |
 | Dialog       | `TesDialog`, `tes-dialog`                 | CDK        | Modal or drawer; focus trap and return, `alertdialog`          |

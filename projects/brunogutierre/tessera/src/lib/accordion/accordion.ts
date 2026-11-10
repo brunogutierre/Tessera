@@ -75,14 +75,14 @@ export class TesAccordionItem {
  * Stacked sections that expand and collapse.
  *
  * ```html
- * <tes-accordion multi>
+ * <tes-accordion multiple>
  *   <tes-accordion-item heading="Shipping">…</tes-accordion-item>
  *   <tes-accordion-item heading="Returns" [expanded]="true">…</tes-accordion-item>
  * </tes-accordion>
  * ```
  *
  * Keyboard and ARIA from `@angular/aria/accordion`: Enter and Space toggle, the arrow keys, Home and
- * End move between headers. Without `multi`, opening a section closes the others.
+ * End move between headers. Without `multiple`, opening a section closes the others.
  */
 @Component({
   selector: 'tes-accordion',
@@ -95,13 +95,13 @@ export class TesAccordionItem {
 })
 export class TesAccordion {
   /** Allows several sections open at once. */
-  readonly multi = input(false, { transform: booleanAttribute });
+  readonly multiple = input(false, { transform: booleanAttribute });
 
   private readonly items = contentChildren(TesAccordionItem);
 
   /** Called when a section opens: in single mode, the others close. */
   collapseOthers(opened: TesAccordionItem): void {
-    if (this.multi()) return;
+    if (this.multiple()) return;
     for (const item of this.items()) {
       if (item !== opened) item.expanded.set(false);
     }

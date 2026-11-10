@@ -40,7 +40,7 @@
     cursor: pointer;
   }
 
-  .option:hover,
+  .option:hover:not([aria-disabled='true']),
   .option[data-active='true'] {
     background-color: var(--tes-color-neutral-subtle);
   }

@@ -2,12 +2,14 @@ import { Listbox, Option } from '@angular/aria/listbox';
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   booleanAttribute,
   computed,
   inject,
   input,
   model,
   output,
+  viewChild,
 } from '@angular/core';
 import type { FormValueControl } from '@angular/forms/signals';
 import { uniqueId } from '../core/id';
@@ -32,6 +34,7 @@ import type { TesOption, TesSelectValue } from '../select/select';
   template: `
     <div
       ngListbox
+      #list
       class="list"
       [id]="id"
       [multi]="multiple()"
@@ -44,7 +47,7 @@ import type { TesOption, TesSelectValue } from '../select/select';
       [attr.aria-describedby]="describedBy()"
       [attr.aria-invalid]="isInvalid() || null"
       [attr.aria-required]="required() || null"
-      (focusout)="touch.emit()"
+      (focusout)="onFocusOut($event)"
     >
       @for (option of options(); track option.value) {
         <div
@@ -91,9 +94,20 @@ export class TesListbox<V = string> implements FormValueControl<TesSelectValue<V
     return ids.length > 0 ? ids.join(' ') : null;
   });
 
+  private readonly list = viewChild.required('list', { read: ElementRef });
+
   constructor() {
     this.field?.controlId.set(this.id);
     this.field?.controlRequiredOverride.set(() => this.required());
+    this.field?.focusControl.set(() => {
+      (this.list().nativeElement as HTMLElement).focus();
+    });
+  }
+
+  /** Touched once focus leaves the whole list, not when it moves between options. */
+  protected onFocusOut(event: FocusEvent): void {
+    const list = event.currentTarget as HTMLElement;
+    if (!list.contains(event.relatedTarget as Node | null)) this.touch.emit();
   }
 
   protected onSelectionChange(values: readonly V[]): void {
