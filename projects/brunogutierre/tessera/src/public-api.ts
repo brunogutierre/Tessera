@@ -54,3 +54,7 @@ export { TesAccordion, TesAccordionItem } from './lib/accordion/accordion';
 export { TesToolbar, TesToolbarItem, TesToolbarSeparator } from './lib/toolbar/toolbar';
 export { TesTree } from './lib/tree/tree';
 export type { TesTreeNode } from './lib/tree/tree';
+export { TES_DIALOG_CONTEXT, TesDialog, TesDialogLayout } from './lib/dialog/dialog';
+export type { TesDialogContext, TesDialogOptions, TesDialogSize } from './lib/dialog/dialog';
+export { TesToastStack, TesToaster } from './lib/toast/toast';
+export type { TesToast, TesToastOptions, TesToastRef, TesToastTone } from './lib/toast/toast';
