@@ -1,0 +1,56 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "packageManager": "npm",
+    "schematicCollections": ["angular-eslint"],
+    "analytics": false
+  },
+  "newProjectRoot": "projects",
+  "projects": {
+    "@brunogutierre/tessera": {
+      "projectType": "library",
+      "root": "projects/brunogutierre/tessera",
+      "sourceRoot": "projects/brunogutierre/tessera/src",
+      "prefix": "tes",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/brunogutierre/tessera/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/brunogutierre/tessera/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/brunogutierre/tessera/tsconfig.spec.json",
+            "browsers": ["chromiumHeadless"],
+            "coverageThresholds": {
+              "statements": 80,
+              "branches": 80,
+              "functions": 80,
+              "lines": 80
+            },
+            "coverageExclude": ["**/*.stories.ts", "**/public-api.ts"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/brunogutierre/tessera/**/*.ts",
+              "projects/brunogutierre/tessera/**/*.html"
+            ],
+            "eslintConfig": "projects/brunogutierre/tessera/eslint.config.js"
+          }
+        }
+      }
+    }
+  }
+}
