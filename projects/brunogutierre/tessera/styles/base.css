@@ -1,0 +1,33 @@
+/*
+ * Base styles: paint every Tessera scope with its theme. Nothing here resets consumer elements.
+ *
+ * `[data-tes-mode]` is listed on purpose: `color` and `background-color` resolve `light-dark()`
+ * on the element that declares them and inherit as plain colors, so a subtree that only switches
+ * mode must declare them again to get its own text and background.
+ */
+@layer tessera.base {
+  :where(:root),
+  [data-tes-theme],
+  [data-tes-mode] {
+    color: var(--tes-color-text);
+    background-color: var(--tes-color-bg);
+    font-family: var(--tes-font-sans);
+    font-size: var(--tes-text-md);
+    line-height: var(--tes-leading-normal);
+    font-variant-numeric: var(--tes-numeric);
+    accent-color: var(--tes-color-primary);
+  }
+
+  /*
+   * Windows High Contrast and other forced color modes replace author colors with system colors.
+   * System colors set by the author are kept, so focus rings use the system highlight color.
+   * Components handle their own states (selection, borders) with system colors where needed.
+   */
+  @media (forced-colors: active) {
+    :where(:root),
+    [data-tes-theme],
+    [data-tes-mode] {
+      --tes-color-focus: Highlight;
+    }
+  }
+}
