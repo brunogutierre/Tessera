@@ -1,0 +1,179 @@
+/*
+ * Enterprise theme: dense and sober, for ERPs and back offices.
+ * Cool neutral greys, a calm corporate blue, small radii and compact controls.
+ *
+ * It is also the default theme. `:where(:root)` has zero specificity, so an explicit
+ * `data-tes-theme` attribute (on the root or on any subtree) always wins.
+ * Every color is declared once as `light-dark(<light>, <dark>)`; `color-scheme` picks the side.
+ */
+@layer tessera.themes {
+  :where(:root),
+  [data-tes-theme='enterprise'] {
+    /* Surfaces and text */
+    --tes-color-bg: light-dark(var(--tes-palette-slate-50), var(--tes-palette-slate-950));
+    --tes-color-surface: light-dark(var(--tes-palette-white), var(--tes-palette-slate-900));
+    --tes-color-surface-raised: light-dark(var(--tes-palette-white), var(--tes-palette-slate-800));
+    --tes-color-surface-sunken: light-dark(
+      var(--tes-palette-slate-100),
+      var(--tes-palette-slate-950)
+    );
+    --tes-color-backdrop: light-dark(
+      color-mix(in oklch, var(--tes-palette-slate-950) 45%, transparent),
+      color-mix(in oklch, var(--tes-palette-slate-950) 70%, transparent)
+    );
+    --tes-color-text: light-dark(var(--tes-palette-slate-900), var(--tes-palette-slate-50));
+    --tes-color-text-muted: light-dark(var(--tes-palette-slate-600), var(--tes-palette-slate-400));
+    --tes-color-text-disabled: light-dark(
+      var(--tes-palette-slate-400),
+      var(--tes-palette-slate-600)
+    );
+    --tes-color-text-inverse: light-dark(var(--tes-palette-slate-50), var(--tes-palette-slate-900));
+    --tes-color-border: light-dark(var(--tes-palette-slate-200), var(--tes-palette-slate-700));
+    --tes-color-border-strong: light-dark(
+      var(--tes-palette-slate-500),
+      var(--tes-palette-slate-500)
+    );
+
+    /* Brand and interaction */
+    --tes-color-primary: light-dark(var(--tes-palette-blue-600), var(--tes-palette-blue-400));
+    --tes-color-primary-hover: light-dark(var(--tes-palette-blue-700), var(--tes-palette-blue-300));
+    --tes-color-primary-active: light-dark(
+      var(--tes-palette-blue-800),
+      var(--tes-palette-blue-200)
+    );
+    --tes-color-on-primary: light-dark(var(--tes-palette-white), var(--tes-palette-blue-950));
+    --tes-color-primary-subtle: light-dark(
+      var(--tes-palette-blue-100),
+      var(--tes-palette-blue-950)
+    );
+    --tes-color-on-primary-subtle: light-dark(
+      var(--tes-palette-blue-800),
+      var(--tes-palette-blue-200)
+    );
+    --tes-color-neutral-subtle: light-dark(
+      var(--tes-palette-slate-100),
+      var(--tes-palette-slate-800)
+    );
+    --tes-color-neutral-subtle-hover: light-dark(
+      var(--tes-palette-slate-200),
+      var(--tes-palette-slate-700)
+    );
+    --tes-color-hover: light-dark(
+      color-mix(in oklch, var(--tes-palette-slate-900) 6%, transparent),
+      color-mix(in oklch, var(--tes-palette-slate-50) 8%, transparent)
+    );
+    --tes-color-selected: light-dark(var(--tes-palette-blue-100), var(--tes-palette-blue-950));
+    --tes-color-focus: light-dark(var(--tes-palette-blue-600), var(--tes-palette-blue-400));
+
+    /* Status */
+    --tes-color-success: light-dark(var(--tes-palette-green-600), var(--tes-palette-green-400));
+    --tes-color-success-hover: light-dark(
+      var(--tes-palette-green-700),
+      var(--tes-palette-green-300)
+    );
+    --tes-color-on-success: light-dark(var(--tes-palette-white), var(--tes-palette-green-950));
+    --tes-color-success-subtle: light-dark(
+      var(--tes-palette-green-100),
+      var(--tes-palette-green-950)
+    );
+    --tes-color-success-text: light-dark(
+      var(--tes-palette-green-700),
+      var(--tes-palette-green-300)
+    );
+    --tes-color-warning: light-dark(var(--tes-palette-amber-500), var(--tes-palette-amber-400));
+    --tes-color-warning-hover: light-dark(
+      var(--tes-palette-amber-400),
+      var(--tes-palette-amber-300)
+    );
+    --tes-color-on-warning: light-dark(var(--tes-palette-slate-950), var(--tes-palette-amber-950));
+    --tes-color-warning-subtle: light-dark(
+      var(--tes-palette-amber-100),
+      var(--tes-palette-amber-950)
+    );
+    --tes-color-warning-text: light-dark(
+      var(--tes-palette-amber-700),
+      var(--tes-palette-amber-300)
+    );
+    --tes-color-danger: light-dark(var(--tes-palette-red-600), var(--tes-palette-red-400));
+    --tes-color-danger-hover: light-dark(var(--tes-palette-red-700), var(--tes-palette-red-300));
+    --tes-color-on-danger: light-dark(var(--tes-palette-white), var(--tes-palette-red-950));
+    --tes-color-danger-subtle: light-dark(var(--tes-palette-red-100), var(--tes-palette-red-950));
+    --tes-color-danger-text: light-dark(var(--tes-palette-red-700), var(--tes-palette-red-300));
+    --tes-color-info: light-dark(var(--tes-palette-sky-600), var(--tes-palette-sky-400));
+    --tes-color-info-hover: light-dark(var(--tes-palette-sky-700), var(--tes-palette-sky-300));
+    --tes-color-on-info: light-dark(var(--tes-palette-white), var(--tes-palette-sky-950));
+    --tes-color-info-subtle: light-dark(var(--tes-palette-sky-100), var(--tes-palette-sky-950));
+    --tes-color-info-text: light-dark(var(--tes-palette-sky-700), var(--tes-palette-sky-300));
+
+    /* Typography: IBM Plex Sans, a compact 14px base */
+    --tes-font-sans:
+      'IBM Plex Sans Variable', 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto,
+      'Helvetica Neue', Arial, sans-serif;
+    --tes-font-mono:
+      ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+    --tes-text-xs: var(--tes-size-12);
+    --tes-text-sm: var(--tes-size-13);
+    --tes-text-md: var(--tes-size-14);
+    --tes-text-lg: var(--tes-size-16);
+    --tes-text-xl: var(--tes-size-18);
+    --tes-text-2xl: var(--tes-size-22);
+    --tes-text-3xl: var(--tes-size-28);
+    --tes-leading-tight: 1.25;
+    --tes-leading-normal: 1.43;
+    --tes-weight-regular: 400;
+    --tes-weight-medium: 500;
+    --tes-weight-semibold: 600;
+    --tes-weight-bold: 700;
+    --tes-numeric: normal;
+
+    /* Space: tight 2px-based steps */
+    --tes-space-1: var(--tes-size-2);
+    --tes-space-2: var(--tes-size-4);
+    --tes-space-3: var(--tes-size-6);
+    --tes-space-4: var(--tes-size-8);
+    --tes-space-5: var(--tes-size-12);
+    --tes-space-6: var(--tes-size-16);
+    --tes-space-7: var(--tes-size-24);
+    --tes-space-8: var(--tes-size-32);
+
+    /* Controls: compact density, still 24px minimum target size */
+    --tes-control-height-sm: var(--tes-size-24);
+    --tes-control-height-md: var(--tes-size-32);
+    --tes-control-height-lg: var(--tes-size-40);
+    --tes-control-padding-x: var(--tes-size-10);
+    --tes-control-gap: var(--tes-size-6);
+
+    /* Shape */
+    --tes-radius-sm: var(--tes-size-2);
+    --tes-radius-md: var(--tes-size-4);
+    --tes-radius-lg: var(--tes-size-6);
+    --tes-radius-full: 9999px;
+    --tes-border-width: 1px;
+    --tes-focus-ring-width: 2px;
+    --tes-focus-ring-offset: 2px;
+
+    /* Elevation: short, low-contrast shadows; dark mode relies more on lighter surfaces */
+    --tes-shadow-sm: 0 1px 2px
+      light-dark(
+        color-mix(in oklch, var(--tes-palette-slate-950) 8%, transparent),
+        color-mix(in oklch, var(--tes-palette-slate-950) 50%, transparent)
+      );
+    --tes-shadow-md: 0 4px 12px -2px
+      light-dark(
+        color-mix(in oklch, var(--tes-palette-slate-950) 12%, transparent),
+        color-mix(in oklch, var(--tes-palette-slate-950) 60%, transparent)
+      );
+    --tes-shadow-lg: 0 12px 32px -4px
+      light-dark(
+        color-mix(in oklch, var(--tes-palette-slate-950) 16%, transparent),
+        color-mix(in oklch, var(--tes-palette-slate-950) 70%, transparent)
+      );
+
+    /* Motion: quick and plain */
+    --tes-duration-fast: var(--tes-time-100);
+    --tes-duration-normal: var(--tes-time-150);
+    --tes-duration-slow: var(--tes-time-250);
+    --tes-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+    --tes-easing-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+  }
+}
