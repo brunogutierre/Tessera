@@ -1,0 +1,40 @@
+{
+  "name": "@brunogutierre/tessera",
+  "version": "0.0.0",
+  "description": "Angular design system: accessible components with Enterprise, Fintech and Care themes in light and dark modes.",
+  "keywords": [
+    "angular",
+    "design-system",
+    "components",
+    "ui",
+    "design-tokens",
+    "theming",
+    "accessibility",
+    "angular-aria"
+  ],
+  "license": "MIT",
+  "author": "Bruno Gutierre",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunogutierre/Tessera.git",
+    "directory": "projects/brunogutierre/tessera"
+  },
+  "homepage": "https://brunogutierre.github.io/Tessera/",
+  "bugs": {
+    "url": "https://github.com/brunogutierre/Tessera/issues"
+  },
+  "peerDependencies": {
+    "@angular/aria": "^22.2.0",
+    "@angular/cdk": "^22.2.0",
+    "@angular/common": "^22.2.0",
+    "@angular/core": "^22.2.0",
+    "@angular/forms": "^22.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}
