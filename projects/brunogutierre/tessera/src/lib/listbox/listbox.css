@@ -1,0 +1,67 @@
+@layer tessera.components {
+  :host {
+    display: block;
+    min-inline-size: 0;
+  }
+
+  .list {
+    box-sizing: border-box;
+    max-block-size: var(--tes-listbox-max-height, 16rem);
+    overflow-y: auto;
+    padding: var(--tes-space-1);
+    border: var(--tes-border-width) solid var(--tes-color-border-strong);
+    border-radius: var(--tes-radius-md);
+    background-color: var(--tes-color-surface);
+    color: var(--tes-color-text);
+  }
+
+  .list[aria-invalid='true'] {
+    border-color: var(--tes-color-danger);
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: var(--tes-space-2);
+    min-block-size: max(var(--tes-control-height-sm), 1.75rem);
+    padding-inline: var(--tes-space-2) var(--tes-space-3);
+    border-radius: var(--tes-radius-sm);
+    cursor: pointer;
+    outline: none;
+  }
+
+  .check {
+    visibility: hidden;
+    color: var(--tes-color-primary);
+    --tes-icon-size: 1rem;
+  }
+
+  .option:hover {
+    background-color: var(--tes-color-neutral-subtle);
+  }
+
+  /* Selection: tinted background plus a check mark, never color alone. */
+  .option[aria-selected='true'] {
+    background-color: var(--tes-color-selected);
+  }
+
+  .option[aria-selected='true'] .check {
+    visibility: visible;
+  }
+
+  .option:focus-visible {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: calc(-1 * var(--tes-focus-ring-width));
+  }
+
+  .option[aria-disabled='true'] {
+    color: var(--tes-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    .option[aria-selected='true'] {
+      outline: 1px solid Highlight;
+    }
+  }
+}

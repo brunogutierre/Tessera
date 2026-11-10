@@ -46,3 +46,4 @@ export { TesMenu } from './lib/menu/menu';
 export type { TesMenuEntry, TesMenuItem } from './lib/menu/menu';
 export { TesSelect } from './lib/select/select';
 export type { TesOption, TesSelectValue } from './lib/select/select';
+export { TesListbox } from './lib/listbox/listbox';
