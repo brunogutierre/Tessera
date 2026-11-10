@@ -26,3 +26,5 @@ export { TesSkeleton } from './lib/skeleton/skeleton';
 export type { TesSkeletonShape } from './lib/skeleton/skeleton';
 export { TesAlert } from './lib/alert/alert';
 export type { TesAlertLive, TesAlertTone } from './lib/alert/alert';
+export { TesProgress } from './lib/progress/progress';
+export type { TesProgressSize, TesProgressTone } from './lib/progress/progress';
