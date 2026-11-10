@@ -1,0 +1,124 @@
+/* Not encapsulated: every rule is scoped under .tes-table to reach the app's cells. */
+@layer tessera.components {
+  .tes-table {
+    inline-size: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: var(--tes-color-text);
+    font-size: var(--tes-text-sm);
+    font-variant-numeric: var(--tes-numeric);
+  }
+
+  .tes-table caption {
+    padding-block-end: var(--tes-space-3);
+    font-size: var(--tes-text-md);
+    font-weight: var(--tes-weight-semibold);
+    text-align: start;
+  }
+
+  .tes-table :is(th, td) {
+    padding: var(--tes-space-2) var(--tes-space-3);
+    border-block-end: var(--tes-border-width) solid var(--tes-color-border);
+    text-align: start;
+    vertical-align: middle;
+  }
+
+  .tes-table thead th {
+    background-color: var(--tes-color-surface-sunken);
+    color: var(--tes-color-text-muted);
+    font-size: var(--tes-text-xs);
+    font-weight: var(--tes-weight-semibold);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .tes-table[data-sticky] thead th {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+  }
+
+  .tes-table tbody tr:hover {
+    background-color: var(--tes-color-hover);
+  }
+
+  .tes-table[data-striped] tbody tr:nth-child(even) {
+    background-color: var(--tes-color-surface-sunken);
+  }
+
+  /*
+   * Selected rows (data-selected): tinted background plus a start bar. aria-selected is not valid
+   * on rows of a plain table, so pair it with a checkbox that carries the state for assistive tech.
+   */
+  .tes-table tbody tr[data-selected] {
+    background-color: var(--tes-color-selected);
+  }
+
+  .tes-table tbody tr[data-selected] > :first-child {
+    box-shadow: inset 3px 0 0 var(--tes-color-primary);
+  }
+
+  .tes-table [data-type='number'] {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Sortable headers: the whole cell is a button. */
+  .tes-table th[scope='col']:has(.tes-sort-button) {
+    padding: 0;
+  }
+
+  .tes-table .tes-sort-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--tes-space-1);
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-block-size: 2.25rem;
+    margin: 0;
+    padding: var(--tes-space-2) var(--tes-space-3);
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+  }
+
+  .tes-table [data-type='number'] .tes-sort-button {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+  }
+
+  .tes-table .tes-sort-button:hover {
+    color: var(--tes-color-text);
+  }
+
+  .tes-table .tes-sort-button:focus-visible {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: calc(-1 * var(--tes-focus-ring-width));
+  }
+
+  .tes-table .tes-sort-icon {
+    --tes-icon-size: 0.875rem;
+    opacity: 0.6;
+  }
+
+  .tes-table th[data-sorted] {
+    color: var(--tes-color-text);
+  }
+
+  .tes-table th[data-sorted] .tes-sort-icon {
+    opacity: 1;
+    color: var(--tes-color-primary);
+  }
+
+  @media (forced-colors: active) {
+    .tes-table tbody tr[data-selected] {
+      outline: 1px solid Highlight;
+    }
+  }
+}

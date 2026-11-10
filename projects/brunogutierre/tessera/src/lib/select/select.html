@@ -8,6 +8,7 @@
   [(expanded)]="expanded"
   [disabled]="disabled()"
   [attr.aria-labelledby]="field ? field.labelId : null"
+  [attr.aria-label]="field ? null : (label() ?? null)"
   [attr.aria-describedby]="describedBy()"
   [attr.aria-invalid]="isInvalid() || null"
   [attr.aria-required]="required() || null"

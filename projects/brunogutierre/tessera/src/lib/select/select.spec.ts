@@ -127,8 +127,8 @@ describe('TesSelect', () => {
 @Component({
   imports: [TesSelect, ReactiveFormsModule, FormsModule],
   template: `
-    <tes-select aria-label="Region" [options]="regions" [formControl]="region" />
-    <tes-select aria-label="Tags" class="tags" [options]="regions" multiple [(ngModel)]="tags" />
+    <tes-select label="Region" [options]="regions" [formControl]="region" />
+    <tes-select label="Tags" class="tags" [options]="regions" multiple [(ngModel)]="tags" />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -146,6 +146,7 @@ describe('TesSelect forms interop', () => {
   it('binds Reactive Forms without a value accessor', async () => {
     const { el, host, settle, fixture } = await render(InteropHost);
     const trigger = el.querySelector<HTMLElement>('[role="combobox"]')!;
+    expect(trigger.getAttribute('aria-label')).toBe('Region');
     expect(trigger.textContent.trim()).toBe('APAC');
     host.region.setValue('amer');
     await fixture.whenStable();

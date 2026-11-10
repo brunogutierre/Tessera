@@ -63,39 +63,41 @@ Tokens come in three tiers:
 
 ## Components
 
-| Component    | Selector                                  | Built on   | Notes                                                       |
-| ------------ | ----------------------------------------- | ---------- | ----------------------------------------------------------- |
-| Button       | `button[tes-button]`, `a[tes-button]`     | native     | 5 variants, 3 sizes, icon-only, loading (stays focusable)   |
-| Icon         | `tes-icon`                                | inline SVG | 35 icons adapted from Lucide; decorative unless labelled    |
-| Spinner      | `tes-spinner`                             | native     | Indeterminate progressbar; pulses with reduced motion       |
-| Badge        | `tes-badge`                               | native     | 6 tones, subtle or solid; text always states the status     |
-| Tag          | `tes-tag`                                 | native     | Optional remove button named "Remove {text}"                |
-| Avatar       | `tes-avatar`                              | native     | Picture or initials; falls back when the picture fails      |
-| Card         | `tes-card`, `article[tes-card]`           | native     | Outlined, elevated or filled; optional header and footer    |
-| Skeleton     | `tes-skeleton`                            | native     | Text lines, rectangle or circle; always `aria-hidden`       |
-| Alert        | `tes-alert`                               | native     | 4 tones spoken first ("Warning: …"); optional live region   |
-| Progress     | `tes-progress`                            | native     | Determinate or indeterminate progressbar, localized value   |
-| Stat         | `tes-stat`                                | native     | KPI with localized change; `positive` picks the color       |
-| Breadcrumbs  | `tes-breadcrumbs`                         | native     | `nav > ol` over your own `<li>` links (any router)          |
-| Form field   | `tes-form-field`                          | native     | Label, hint and error wired to the control by itself        |
-| Input        | `input[tes-input]`, `textarea[tes-input]` | native     | Native value and validation; textareas grow with content    |
-| Checkbox     | `input[type=checkbox][tes-checkbox]`      | native     | Checked, indeterminate; mark cut out with a CSS mask        |
-| Radio        | `input[type=radio][tes-radio]`            | native     | Browser arrow keys and single tab stop                      |
-| Switch       | `input[type=checkbox][tes-switch]`        | native     | `role="switch"`; knob mirrors in RTL                        |
-| Slider       | `input[type=range][tes-slider]`           | native     | Filled track follows the value, even when set by a form     |
-| Choice       | `label[tes-choice]`                       | native     | Clickable label for a checkbox, radio or switch             |
-| Fieldset     | `fieldset[tes-fieldset]`                  | native     | Legend, hint and error for a group of choices               |
-| Tooltip      | `[tesTooltip]`                            | CDK        | WCAG 1.4.13: dismissible, hoverable; always the description |
-| Menu         | `tes-menu`                                | Aria + CDK | Menu button with data-driven items, separators, danger      |
-| Select       | `tes-select`                              | Aria + CDK | Single or multiple; a Signal Forms `FormValueControl`       |
-| Listbox      | `tes-listbox`                             | Aria       | Always-visible list, single (follows focus) or multiple     |
-| Autocomplete | `tes-autocomplete`                        | Aria + CDK | Editable combobox, accent-insensitive filter, "no results"  |
-| Tabs         | `tes-tabs`, `tes-tab-panel`               | Aria       | Tabs built from panel labels; hidden panels stay rendered   |
-| Accordion    | `tes-accordion`, `tes-accordion-item`     | Aria       | One section at a time unless `multi`; lazy content          |
-| Toolbar      | `tes-toolbar`, `[tesToolbarItem]`         | Aria       | Single tab stop, arrow keys, separators                     |
-| Tree         | `tes-tree`                                | Aria       | Data-driven hierarchy; expand, collapse, typeahead, select  |
-| Dialog       | `TesDialog`, `tes-dialog`                 | CDK        | Modal or drawer; focus trap and return, `alertdialog`       |
-| Toast        | `TesToaster`                              | CDK        | Announced, pausable, optional action; never color alone     |
+| Component    | Selector                                  | Built on   | Notes                                                          |
+| ------------ | ----------------------------------------- | ---------- | -------------------------------------------------------------- |
+| Button       | `button[tes-button]`, `a[tes-button]`     | native     | 5 variants, 3 sizes, icon-only, loading (stays focusable)      |
+| Icon         | `tes-icon`                                | inline SVG | 35 icons adapted from Lucide; decorative unless labelled       |
+| Spinner      | `tes-spinner`                             | native     | Indeterminate progressbar; pulses with reduced motion          |
+| Badge        | `tes-badge`                               | native     | 6 tones, subtle or solid; text always states the status        |
+| Tag          | `tes-tag`                                 | native     | Optional remove button named "Remove {text}"                   |
+| Avatar       | `tes-avatar`                              | native     | Picture or initials; falls back when the picture fails         |
+| Card         | `tes-card`, `article[tes-card]`           | native     | Outlined, elevated or filled; optional header and footer       |
+| Skeleton     | `tes-skeleton`                            | native     | Text lines, rectangle or circle; always `aria-hidden`          |
+| Alert        | `tes-alert`                               | native     | 4 tones spoken first ("Warning: …"); optional live region      |
+| Progress     | `tes-progress`                            | native     | Determinate or indeterminate progressbar, localized value      |
+| Stat         | `tes-stat`                                | native     | KPI with localized change; `positive` picks the color          |
+| Breadcrumbs  | `tes-breadcrumbs`                         | native     | `nav > ol` over your own `<li>` links (any router)             |
+| Form field   | `tes-form-field`                          | native     | Label, hint and error wired to the control by itself           |
+| Input        | `input[tes-input]`, `textarea[tes-input]` | native     | Native value and validation; textareas grow with content       |
+| Checkbox     | `input[type=checkbox][tes-checkbox]`      | native     | Checked, indeterminate; mark cut out with a CSS mask           |
+| Radio        | `input[type=radio][tes-radio]`            | native     | Browser arrow keys and single tab stop                         |
+| Switch       | `input[type=checkbox][tes-switch]`        | native     | `role="switch"`; knob mirrors in RTL                           |
+| Slider       | `input[type=range][tes-slider]`           | native     | Filled track follows the value, even when set by a form        |
+| Choice       | `label[tes-choice]`                       | native     | Clickable label for a checkbox, radio or switch                |
+| Fieldset     | `fieldset[tes-fieldset]`                  | native     | Legend, hint and error for a group of choices                  |
+| Tooltip      | `[tesTooltip]`                            | CDK        | WCAG 1.4.13: dismissible, hoverable; always the description    |
+| Menu         | `tes-menu`                                | Aria + CDK | Menu button with data-driven items, separators, danger         |
+| Select       | `tes-select`                              | Aria + CDK | Single or multiple; a Signal Forms `FormValueControl`          |
+| Listbox      | `tes-listbox`                             | Aria       | Always-visible list, single (follows focus) or multiple        |
+| Autocomplete | `tes-autocomplete`                        | Aria + CDK | Editable combobox, accent-insensitive filter, "no results"     |
+| Tabs         | `tes-tabs`, `tes-tab-panel`               | Aria       | Tabs built from panel labels; hidden panels stay rendered      |
+| Accordion    | `tes-accordion`, `tes-accordion-item`     | Aria       | One section at a time unless `multi`; lazy content             |
+| Toolbar      | `tes-toolbar`, `[tesToolbarItem]`         | Aria       | Single tab stop, arrow keys, separators                        |
+| Tree         | `tes-tree`                                | Aria       | Data-driven hierarchy; expand, collapse, typeahead, select     |
+| Dialog       | `TesDialog`, `tes-dialog`                 | CDK        | Modal or drawer; focus trap and return, `alertdialog`          |
+| Toast        | `TesToaster`                              | CDK        | Announced, pausable, optional action; never color alone        |
+| Table        | `table[tes-table]`, `th[tes-sort-header]` | native     | Native table, sortable headers with `aria-sort`, `tesSortRows` |
+| Paginator    | `tes-paginator`                           | native     | Page size select, announced range, first to last buttons       |
 
 ## Usage
 
@@ -147,6 +149,7 @@ Every built-in string (button names, screen-reader text, paginator summary) come
 - **Composite controls are `FormValueControl`s, with no `ControlValueAccessor`.** `tes-select` and `tes-listbox` expose `value` as a `model()` plus a `touch` output; Angular 22 binds that shape from Signal Forms (`[formField]`), Reactive Forms and `ngModel` alike.
 - **Containers host Aria directives with `hostDirectives`.** `tes-tabs`, `tes-accordion` and `tes-toolbar` carry Aria's group directive on their own element, so the panels, sections and items the app projects find their Aria parent through dependency injection, and apps never import Aria.
 - **Dialogs and toasts render at the page level.** They use the CDK Dialog and a global overlay, so they follow the page theme rather than a `tesTheme` scope; dialogs set `aria-modal`, trap and return focus, and toasts are announced through the CDK `LiveAnnouncer`, with countdowns that pause on hover or focus.
+- **Tables stay native HTML.** `table[tes-table]` styles the app's own markup and holds the sort state; `th[tes-sort-header]` adds the sort button and `aria-sort`. Row selection is shown with `data-selected` plus a checkbox, because `aria-selected` is only valid on grid rows. The Aria grid was not used: a read-only data table is not an interactive grid.
 - **Status is never color alone.** Alerts speak their tone first ("Warning: …"), stats speak the direction of a change ("increase"), and badges always carry text.
 - **Breadcrumbs take your own `<li>` markup** instead of an items array, so links can use `href`, `routerLink` or anything else without Tessera depending on the router. It is the one component that is not view-encapsulated: its styles must reach projected items, so every selector is scoped under `.tes-breadcrumbs`.
 - **Icons are drawn from a typed map in the template.** No icon font, no runtime registry, no `innerHTML`: unknown names fail at compile time and nothing needs sanitizing.

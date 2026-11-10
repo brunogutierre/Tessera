@@ -67,6 +67,8 @@ export const containsFilter: TesOptionFilter<unknown> = (option, query) => {
 export class TesAutocomplete<V = string> implements FormValueControl<V | null> {
   protected readonly labels = inject(TES_LABELS);
 
+  /** Accessible name when the autocomplete is not inside a `tes-form-field`. */
+  readonly label = input<string>();
   readonly options = input.required<readonly TesOption<V>[]>();
   readonly value = model<V | null>(null);
   readonly placeholder = input('');

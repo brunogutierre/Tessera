@@ -126,7 +126,7 @@ describe('TesAutocomplete', () => {
 
 @Component({
   imports: [TesAutocomplete, ReactiveFormsModule],
-  template: `<tes-autocomplete aria-label="City" [options]="cities" [formControl]="city" />`,
+  template: `<tes-autocomplete label="City" [options]="cities" [formControl]="city" />`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class ReactiveHost {
