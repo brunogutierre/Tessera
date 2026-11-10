@@ -28,8 +28,17 @@
     font-size: var(--tes-text-md);
   }
 
-  /* Text for assistive technology only. Also available to apps. */
-  .tes-visually-hidden {
+  /* Dialog backdrop (rendered by the CDK at the page level, outside any component). */
+  .tes-dialog-backdrop {
+    background-color: var(--tes-color-backdrop);
+  }
+
+  /*
+   * Text for assistive technology only. Also available to apps. The CDK class is included because
+   * Tessera relies on LiveAnnouncer and AriaDescriber, whose elements use it.
+   */
+  .tes-visually-hidden,
+  .cdk-visually-hidden {
     position: absolute;
     inline-size: 1px;
     block-size: 1px;
