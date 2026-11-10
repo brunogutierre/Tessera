@@ -39,3 +39,4 @@ export { TesCheckbox } from './lib/checkbox/checkbox';
 export { TesFieldset } from './lib/fieldset/fieldset';
 export { TesRadio } from './lib/radio/radio';
 export { TesSwitch } from './lib/switch/switch';
+export { TesSlider } from './lib/slider/slider';
