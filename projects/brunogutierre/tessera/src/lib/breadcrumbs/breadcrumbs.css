@@ -1,0 +1,56 @@
+/* Not encapsulated: every rule is scoped under .tes-breadcrumbs to reach projected items. */
+@layer tessera.components {
+  .tes-breadcrumbs {
+    display: block;
+    font-size: var(--tes-text-sm);
+  }
+
+  .tes-breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--tes-space-1) var(--tes-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tes-breadcrumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--tes-space-2);
+    color: var(--tes-color-text-muted);
+  }
+
+  /* Separator: decorative, so its alternative text is empty. */
+  .tes-breadcrumbs li + li::before {
+    content: '/' / '';
+    color: var(--tes-color-text-muted);
+  }
+
+  .tes-breadcrumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 1.5rem;
+    border-radius: var(--tes-radius-sm);
+    color: var(--tes-color-primary);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .tes-breadcrumbs a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .tes-breadcrumbs a:focus-visible {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: var(--tes-focus-ring-offset);
+  }
+
+  .tes-breadcrumbs [aria-current='page'] {
+    color: var(--tes-color-text);
+    font-weight: var(--tes-weight-medium);
+    text-decoration: none;
+  }
+}

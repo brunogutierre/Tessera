@@ -30,3 +30,4 @@ export { TesProgress } from './lib/progress/progress';
 export type { TesProgressSize, TesProgressTone } from './lib/progress/progress';
 export { TesStat } from './lib/stat/stat';
 export type { TesStatTrend } from './lib/stat/stat';
+export { TesBreadcrumbs } from './lib/breadcrumbs/breadcrumbs';
