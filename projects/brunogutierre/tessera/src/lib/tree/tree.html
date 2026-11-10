@@ -1,0 +1,56 @@
+<ul
+  ngTree
+  #tree="ngTree"
+  class="tree"
+  [multi]="multiple()"
+  selectionMode="explicit"
+  [softDisabled]="false"
+  [value]="selectedValues()"
+  (valueChange)="onValueChange($event)"
+  [attr.aria-label]="label()"
+>
+  <ng-container
+    [ngTemplateOutlet]="branch"
+    [ngTemplateOutletContext]="{ $implicit: { nodes: nodes(), parent: tree } }"
+  />
+</ul>
+
+<!-- One level of the tree, rendered recursively for each node's children. -->
+<ng-template #branch let-context>
+  @let level_ = level(context);
+  @for (node of level_.nodes; track node.value) {
+    <li
+      ngTreeItem
+      #item="ngTreeItem"
+      class="item"
+      [parent]="level_.parent"
+      [value]="node.value"
+      [label]="node.label"
+      [disabled]="!!node.disabled"
+      [expanded]="!!node.expanded"
+      [attr.aria-label]="node.label"
+    >
+      <span class="row">
+        @if (node.children?.length) {
+          <tes-icon name="chevron-right" class="twisty" />
+        } @else {
+          <span class="twisty"></span>
+        }
+        @if (node.icon) {
+          <tes-icon [name]="node.icon" class="node-icon" />
+        }
+        <span class="text">{{ node.label }}</span>
+      </span>
+      @if (node.children?.length) {
+        <ul role="group" class="group">
+          <ng-template ngTreeItemGroup [ownedBy]="item" #group="ngTreeItemGroup">
+            <ng-container
+              [ngTemplateOutlet]="branch"
+              [ngTemplateOutletContext]="{ $implicit: { nodes: node.children, parent: group } }"
+            />
+          </ng-template>
+        </ul>
+      }
+    </li>
+  }
+</ng-template>
