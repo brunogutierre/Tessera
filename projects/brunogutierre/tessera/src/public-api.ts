@@ -40,3 +40,5 @@ export { TesFieldset } from './lib/fieldset/fieldset';
 export { TesRadio } from './lib/radio/radio';
 export { TesSwitch } from './lib/switch/switch';
 export { TesSlider } from './lib/slider/slider';
+export { TES_DROPDOWN_POSITIONS, TES_TOOLTIP_POSITIONS } from './lib/core/overlay';
+export { TesTooltip, TesTooltipPanel } from './lib/tooltip/tooltip';
