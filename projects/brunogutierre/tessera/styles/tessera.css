@@ -1,0 +1,15 @@
+/*
+ * Tessera styles entry point: tokens, themes and base, in cascade layers.
+ *
+ * The layer order is declared once, here. Consumer styles outside any layer always win over
+ * Tessera, and inside Tessera themes override primitives, base reads themes and components read
+ * everything.
+ */
+@layer tessera.tokens, tessera.themes, tessera.base, tessera.components;
+
+@import './tokens/primitives.css';
+@import './themes/modes.css';
+@import './themes/enterprise.css';
+@import './themes/fintech.css';
+@import './themes/care.css';
+@import './base.css';
