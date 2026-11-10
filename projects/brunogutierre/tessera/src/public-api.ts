@@ -18,3 +18,4 @@ export { TesButton } from './lib/button/button';
 export type { TesButtonSize, TesButtonVariant } from './lib/button/button';
 export { TesBadge } from './lib/badge/badge';
 export type { TesBadgeVariant, TesTone } from './lib/badge/badge';
+export { TesTag } from './lib/tag/tag';
