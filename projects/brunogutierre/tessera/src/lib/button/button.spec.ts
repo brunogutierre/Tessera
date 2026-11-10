@@ -94,12 +94,30 @@ describe('TesButton', () => {
     expect(button.getAttribute('aria-busy')).toBe('true');
     expect(button.disabled).toBe(false);
     expect(button.querySelector('tes-spinner')!.getAttribute('aria-hidden')).toBe('true');
+    expect(getComputedStyle(button.querySelector('.label')!).opacity).toBe('0');
 
     host.loading.set(false);
     await fixture.whenStable();
     button.click();
     expect(host.clicks).toBe(2);
     expect(button.hasAttribute('aria-disabled')).toBe(false);
+  });
+
+  it('keeps an aria-disabled written by the consumer', async () => {
+    @Component({
+      imports: [TesButton],
+      template: `<button tes-button aria-disabled="true" [loading]="loading()">Pay</button>`,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+    })
+    class Static {
+      readonly loading = signal(true);
+    }
+    const fixture = TestBed.createComponent(Static);
+    await fixture.whenStable();
+    fixture.componentInstance.loading.set(false);
+    await fixture.whenStable();
+    const button = (fixture.nativeElement as HTMLElement).querySelector('button')!;
+    expect(button.getAttribute('aria-disabled')).toBe('true');
   });
 
   it('uses disabled tokens for natively disabled buttons', async () => {

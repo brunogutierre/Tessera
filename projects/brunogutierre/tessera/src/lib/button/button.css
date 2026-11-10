@@ -7,6 +7,7 @@
     --_fg: var(--tes-color-text);
     --_border: transparent;
     --_height: var(--tes-control-height-md);
+    --_padding-x: var(--tes-control-padding-x);
 
     position: relative;
     display: inline-flex;
@@ -17,7 +18,7 @@
     min-block-size: var(--_height);
     min-inline-size: var(--_height);
     padding-block: 0;
-    padding-inline: var(--tes-button-padding-x, var(--tes-control-padding-x));
+    padding-inline: var(--tes-button-padding-x, var(--_padding-x));
     border: var(--tes-border-width) solid var(--_border);
     border-radius: var(--tes-button-radius, var(--tes-radius-md));
     background-color: var(--_bg);
@@ -87,14 +88,14 @@
   /* Sizes */
   :host([data-size='sm']) {
     --_height: var(--tes-control-height-sm);
+    --_padding-x: calc(var(--tes-control-padding-x) * 0.75);
     font-size: var(--tes-text-sm);
-    padding-inline: calc(var(--tes-control-padding-x) * 0.75);
   }
 
   :host([data-size='lg']) {
     --_height: var(--tes-control-height-lg);
+    --_padding-x: calc(var(--tes-control-padding-x) * 1.5);
     font-size: var(--tes-text-lg);
-    padding-inline: calc(var(--tes-control-padding-x) * 1.5);
   }
 
   :host([data-icon-only]) {
@@ -113,9 +114,22 @@
     --_border: var(--tes-color-border);
   }
 
-  /* Loading: keep the width, hide the label, show the spinner in the label color. */
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: inherit;
+  }
+
+  /*
+   * Loading: keep the width, hide the label (opacity also works in forced-colors mode, where
+   * color: transparent would be replaced), show the spinner in the label color.
+   */
   :host([data-loading]) {
-    color: transparent;
+    cursor: progress;
+  }
+
+  :host([data-loading]) .label {
+    opacity: 0;
   }
 
   .spinner {

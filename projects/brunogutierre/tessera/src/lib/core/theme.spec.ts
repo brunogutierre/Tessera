@@ -131,6 +131,19 @@ class Host {
 }
 
 describe('TesThemeScope', () => {
+  it('keeps a static data-tes-mode when tesMode is not bound', async () => {
+    @Component({
+      imports: [TesThemeScope],
+      template: `<section tesTheme="care" data-tes-mode="dark"></section>`,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+    })
+    class Static {}
+    const fixture = TestBed.createComponent(Static);
+    await fixture.whenStable();
+    const section = (fixture.nativeElement as HTMLElement).querySelector('section')!;
+    expect(section.dataset['tesMode']).toBe('dark');
+  });
+
   it('sets the theme on its host and the mode only when given', async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
