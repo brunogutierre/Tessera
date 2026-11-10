@@ -1,0 +1,86 @@
+@layer tessera.components {
+  :host {
+    --_bg: var(--tes-color-neutral-subtle);
+    --_fg: var(--tes-color-text);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--tes-space-1);
+    box-sizing: border-box;
+    min-block-size: 1.25rem;
+    padding-inline: var(--tes-space-2);
+    border-radius: var(--tes-badge-radius, var(--tes-radius-full));
+    background-color: var(--_bg);
+    color: var(--_fg);
+    font-size: var(--tes-text-xs);
+    font-weight: var(--tes-weight-semibold);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    vertical-align: middle;
+    --tes-icon-size: 0.875rem;
+  }
+
+  /* Subtle: tinted background, status text color. */
+  :host([data-tone='primary']) {
+    --_bg: var(--tes-color-primary-subtle);
+    --_fg: var(--tes-color-on-primary-subtle);
+  }
+
+  :host([data-tone='success']) {
+    --_bg: var(--tes-color-success-subtle);
+    --_fg: var(--tes-color-success-text);
+  }
+
+  :host([data-tone='warning']) {
+    --_bg: var(--tes-color-warning-subtle);
+    --_fg: var(--tes-color-warning-text);
+  }
+
+  :host([data-tone='danger']) {
+    --_bg: var(--tes-color-danger-subtle);
+    --_fg: var(--tes-color-danger-text);
+  }
+
+  :host([data-tone='info']) {
+    --_bg: var(--tes-color-info-subtle);
+    --_fg: var(--tes-color-info-text);
+  }
+
+  /* Solid: strong fill, "on" text color. */
+  :host([data-variant='solid']) {
+    --_bg: var(--tes-color-text);
+    --_fg: var(--tes-color-bg);
+  }
+
+  :host([data-variant='solid'][data-tone='primary']) {
+    --_bg: var(--tes-color-primary);
+    --_fg: var(--tes-color-on-primary);
+  }
+
+  :host([data-variant='solid'][data-tone='success']) {
+    --_bg: var(--tes-color-success);
+    --_fg: var(--tes-color-on-success);
+  }
+
+  :host([data-variant='solid'][data-tone='warning']) {
+    --_bg: var(--tes-color-warning);
+    --_fg: var(--tes-color-on-warning);
+  }
+
+  :host([data-variant='solid'][data-tone='danger']) {
+    --_bg: var(--tes-color-danger);
+    --_fg: var(--tes-color-on-danger);
+  }
+
+  :host([data-variant='solid'][data-tone='info']) {
+    --_bg: var(--tes-color-info);
+    --_fg: var(--tes-color-on-info);
+  }
+
+  @media (forced-colors: active) {
+    :host {
+      border: 1px solid CanvasText;
+    }
+  }
+}
