@@ -62,7 +62,7 @@ Tokens come in three tiers:
 - **Cascade layers** (`tessera.tokens`, `tessera.themes`, `tessera.base`, `tessera.components`). Any unlayered app CSS wins over Tessera regardless of specificity, so overrides never need `!important`.
 - **Prefixed attributes** (`data-tes-theme`, `data-tes-mode`) instead of `data-theme`, which many apps and libraries already use.
 - **Dark mode puts dark text on bright fills.** One `primary` token must work as link text on dark surfaces and as a button fill; a mid-tone fill with white text cannot pass both contrast checks.
-- **Contrast is tested, not eyeballed.** Unit tests resolve every token in Chromium and check 45 foreground and background pairs in all six theme and mode combinations: 4.5:1 for text and 3:1 for borders, focus rings and icons.
+- **Contrast is tested, not eyeballed.** Unit tests resolve every token in Chromium and check 44 foreground and background pairs in all six theme and mode combinations: 4.5:1 for text and 3:1 for borders, focus rings and icons.
 - **Coverage gate of 80%** on statements, branches, functions and lines; stories and the public API barrel are excluded.
 
 ## Development
