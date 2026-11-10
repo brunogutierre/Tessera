@@ -28,6 +28,23 @@
     font-size: var(--tes-text-md);
   }
 
+  /*
+   * Action rows the app marks inside a card or dialog. The elements are the app's own, so the
+   * components' encapsulated styles cannot lay out their children.
+   */
+  [tesCardFooter],
+  [tesDialogFooter] {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--tes-space-2);
+    inline-size: 100%;
+  }
+
+  [tesDialogFooter] {
+    justify-content: flex-end;
+  }
+
   /* Dialog backdrop (rendered by the CDK at the page level, outside any component). */
   .tes-dialog-backdrop {
     background-color: var(--tes-color-backdrop);

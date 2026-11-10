@@ -102,7 +102,7 @@ export class TesDialog {
   selector: 'tes-dialog',
   imports: [TesButton, TesIcon],
   template: `
-    <header class="header">
+    <div class="header">
       <h2 class="title" [id]="context?.titleId ?? null">{{ heading() }}</h2>
       @if (context?.dismissible ?? true) {
         <button
@@ -117,9 +117,9 @@ export class TesDialog {
           <tes-icon name="x" />
         </button>
       }
-    </header>
+    </div>
     <div class="body"><ng-content /></div>
-    <footer class="footer"><ng-content select="[tesDialogFooter]" /></footer>
+    <div class="footer"><ng-content select="[tesDialogFooter]" /></div>
   `,
   styleUrl: './dialog.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
