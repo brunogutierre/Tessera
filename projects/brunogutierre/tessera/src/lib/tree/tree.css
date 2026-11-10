@@ -1,0 +1,107 @@
+@layer tessera.components {
+  :host {
+    display: block;
+  }
+
+  .tree,
+  .group {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tree {
+    padding: var(--tes-space-1);
+    border-radius: var(--tes-radius-md);
+  }
+
+  .tree:focus-visible {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: var(--tes-focus-ring-offset);
+  }
+
+  .item {
+    outline: none;
+  }
+
+  /* Collapsed groups are inert (out of the accessibility tree); hide them too. */
+  .item[aria-expanded='false'] > .group,
+  .group:empty {
+    display: none;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: var(--tes-space-2);
+    min-block-size: max(var(--tes-control-height-sm), 1.75rem);
+    padding-inline: var(--tes-space-2) var(--tes-space-3);
+    border-radius: var(--tes-radius-md);
+    color: var(--tes-color-text);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  /* Each nested level is indented by one step. */
+  .group {
+    padding-inline-start: 1.25rem;
+  }
+
+  .twisty {
+    flex-shrink: 0;
+    inline-size: 1rem;
+    color: var(--tes-color-text-muted);
+    transition: rotate var(--tes-duration-fast) var(--tes-easing-standard);
+    --tes-icon-size: 1rem;
+  }
+
+  .item[aria-expanded='true'] > .row > .twisty {
+    rotate: 90deg;
+  }
+
+  :host(:dir(rtl)) .item[aria-expanded='true'] > .row > .twisty {
+    rotate: -90deg;
+  }
+
+  .node-icon {
+    color: var(--tes-color-text-muted);
+    --tes-icon-size: 1.125rem;
+  }
+
+  .text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .row:hover {
+    background-color: var(--tes-color-neutral-subtle);
+  }
+
+  .item[aria-selected='true'] > .row {
+    background-color: var(--tes-color-selected);
+    box-shadow: inset 3px 0 0 var(--tes-color-primary);
+    font-weight: var(--tes-weight-medium);
+  }
+
+  :host(:dir(rtl)) .item[aria-selected='true'] > .row {
+    box-shadow: inset -3px 0 0 var(--tes-color-primary);
+  }
+
+  .item:focus-visible > .row,
+  .item[data-active='true']:focus-visible > .row {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: calc(-1 * var(--tes-focus-ring-width));
+  }
+
+  .item[aria-disabled='true'] > .row {
+    color: var(--tes-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    .item[aria-selected='true'] > .row {
+      outline: 1px solid Highlight;
+    }
+  }
+}

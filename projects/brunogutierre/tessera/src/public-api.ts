@@ -52,3 +52,5 @@ export type { TesOptionFilter } from './lib/autocomplete/autocomplete';
 export { TesTabPanel, TesTabs } from './lib/tabs/tabs';
 export { TesAccordion, TesAccordionItem } from './lib/accordion/accordion';
 export { TesToolbar, TesToolbarItem, TesToolbarSeparator } from './lib/toolbar/toolbar';
+export { TesTree } from './lib/tree/tree';
+export type { TesTreeNode } from './lib/tree/tree';
