@@ -1,0 +1,94 @@
+@layer tessera.components {
+  :host {
+    display: inline-block;
+  }
+
+  .chevron {
+    --tes-icon-size: 1rem;
+    margin-inline-end: calc(-1 * var(--tes-space-1));
+  }
+
+  /* The panel resets inherited text styles: it renders in the top layer, next to its origin. */
+  .panel {
+    box-sizing: border-box;
+    min-inline-size: 11rem;
+    max-inline-size: 20rem;
+    max-block-size: min(24rem, 70vh);
+    overflow-y: auto;
+    padding: var(--tes-space-1);
+    border: var(--tes-border-width) solid var(--tes-color-border);
+    border-radius: var(--tes-menu-radius, var(--tes-radius-lg));
+    background-color: var(--tes-color-surface-raised);
+    box-shadow: var(--tes-shadow-md);
+    color: var(--tes-color-text);
+    font-family: var(--tes-font-sans);
+    font-size: var(--tes-text-md);
+    font-weight: var(--tes-weight-regular);
+    line-height: var(--tes-leading-tight);
+    text-align: start;
+    white-space: normal;
+    transition:
+      opacity var(--tes-duration-fast) var(--tes-easing-standard),
+      translate var(--tes-duration-fast) var(--tes-easing-standard);
+  }
+
+  @starting-style {
+    .panel {
+      opacity: 0;
+      translate: 0 -0.25rem;
+    }
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: var(--tes-space-2);
+    min-block-size: max(var(--tes-control-height-sm), 1.75rem);
+    padding-inline: var(--tes-space-3);
+    border-radius: var(--tes-radius-md);
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    --tes-icon-size: 1.125rem;
+  }
+
+  .item-label {
+    flex: 1;
+  }
+
+  /* Roving focus: the focused item gets the hover color and the focus ring. */
+  .item:hover,
+  .item[data-active='true'] {
+    background-color: var(--tes-color-neutral-subtle);
+  }
+
+  .item:focus-visible {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: calc(-1 * var(--tes-focus-ring-width));
+  }
+
+  .item[data-danger] {
+    color: var(--tes-color-danger-text);
+  }
+
+  .item[aria-disabled='true'] {
+    color: var(--tes-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .separator {
+    block-size: var(--tes-border-width);
+    margin-block: var(--tes-space-1);
+    background-color: var(--tes-color-border);
+  }
+
+  @media (forced-colors: active) {
+    .panel {
+      border-color: CanvasText;
+    }
+
+    .item[data-active='true'] {
+      outline: 2px solid Highlight;
+    }
+  }
+}
