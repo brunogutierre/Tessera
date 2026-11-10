@@ -47,3 +47,5 @@ export type { TesMenuEntry, TesMenuItem } from './lib/menu/menu';
 export { TesSelect } from './lib/select/select';
 export type { TesOption, TesSelectValue } from './lib/select/select';
 export { TesListbox } from './lib/listbox/listbox';
+export { TesAutocomplete, containsFilter } from './lib/autocomplete/autocomplete';
+export type { TesOptionFilter } from './lib/autocomplete/autocomplete';

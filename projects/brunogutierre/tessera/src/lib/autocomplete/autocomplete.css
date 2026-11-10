@@ -1,0 +1,74 @@
+@layer tessera.components {
+  :host {
+    display: block;
+    min-inline-size: 0;
+  }
+
+  /* Panel: resets inherited text styles, since it renders in the top layer. */
+  .panel {
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-block-size: min(18rem, 60vh);
+    overflow-y: auto;
+    padding: var(--tes-space-1);
+    border: var(--tes-border-width) solid var(--tes-color-border);
+    border-radius: var(--tes-radius-lg);
+    background-color: var(--tes-color-surface-raised);
+    box-shadow: var(--tes-shadow-md);
+    color: var(--tes-color-text);
+    font-family: var(--tes-font-sans);
+    font-size: var(--tes-text-md);
+    line-height: var(--tes-leading-tight);
+    text-align: start;
+    white-space: normal;
+  }
+
+  .list {
+    outline: none;
+  }
+
+  .list:empty {
+    display: none;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    min-block-size: max(var(--tes-control-height-sm), 1.75rem);
+    padding-inline: var(--tes-space-3);
+    border-radius: var(--tes-radius-md);
+    cursor: pointer;
+  }
+
+  .option:hover,
+  .option[data-active='true'] {
+    background-color: var(--tes-color-neutral-subtle);
+  }
+
+  /* Active descendant: the input keeps focus, the active option shows the ring. */
+  .option[data-active='true'] {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: calc(-1 * var(--tes-focus-ring-width));
+  }
+
+  .option[aria-selected='true'] {
+    font-weight: var(--tes-weight-medium);
+  }
+
+  .option[aria-disabled='true'] {
+    color: var(--tes-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .empty {
+    margin: 0;
+    padding: var(--tes-space-2) var(--tes-space-3);
+    color: var(--tes-color-text-muted);
+  }
+
+  @media (forced-colors: active) {
+    .panel {
+      border-color: CanvasText;
+    }
+  }
+}
