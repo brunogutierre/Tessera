@@ -21,3 +21,5 @@ export type { TesBadgeVariant, TesTone } from './lib/badge/badge';
 export { TesTag } from './lib/tag/tag';
 export { TesAvatar, initials } from './lib/avatar/avatar';
 export type { TesAvatarSize } from './lib/avatar/avatar';
+export { TesCard } from './lib/card/card';
+export type { TesCardVariant } from './lib/card/card';

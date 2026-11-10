@@ -1,0 +1,66 @@
+@layer tessera.components {
+  :host {
+    --_padding: var(--tes-card-padding, var(--tes-space-5));
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    border: var(--tes-border-width) solid var(--tes-color-border);
+    border-radius: var(--tes-card-radius, var(--tes-radius-lg));
+    background-color: var(--tes-color-surface);
+    color: var(--tes-color-text);
+  }
+
+  :host([data-variant='elevated']) {
+    border-color: transparent;
+    background-color: var(--tes-color-surface-raised);
+    box-shadow: var(--tes-shadow-md);
+  }
+
+  :host([data-variant='filled']) {
+    border-color: transparent;
+    background-color: var(--tes-color-surface-sunken);
+  }
+
+  .header,
+  .body,
+  .footer {
+    padding-inline: var(--_padding);
+  }
+
+  .body {
+    flex: 1;
+    padding-block: var(--_padding);
+  }
+
+  .header {
+    padding-block-start: var(--_padding);
+    font-size: var(--tes-text-lg);
+    font-weight: var(--tes-weight-semibold);
+  }
+
+  .header + .body {
+    padding-block-start: var(--tes-space-3);
+  }
+
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--tes-space-2);
+    padding-block: var(--tes-space-3);
+    border-block-start: var(--tes-border-width) solid var(--tes-color-border);
+  }
+
+  /* Empty regions take no space (no header, no footer). */
+  .header:empty,
+  .footer:empty {
+    display: none;
+  }
+
+  @media (forced-colors: active) {
+    :host {
+      border-color: CanvasText;
+    }
+  }
+}
