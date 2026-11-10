@@ -19,7 +19,7 @@
     "check:package": "npm run build && publint dist/brunogutierre/tessera && cd dist/brunogutierre/tessera && attw --pack . --profile esm-only && npm pack --dry-run",
     "storybook": "ng run @brunogutierre/tessera:storybook",
     "build-storybook": "ng run @brunogutierre/tessera:build-storybook",
-    "test:stories": "vitest run --config vitest.storybook.config.mts"
+    "test:stories": "node scripts/test-stories.mjs"
   },
   "dependencies": {
     "@angular/aria": "22.2.6",
