@@ -1,0 +1,54 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# Tessera
+
+Tessera is an Angular design system: accessible components, three professional themes and two color modes, all driven by design tokens.
+
+| Theme          | Built for                    | Character                                                   |
+| -------------- | ---------------------------- | ----------------------------------------------------------- |
+| **Enterprise** | ERP, back office, admin      | Dense and sober: small radii, compact controls              |
+| **Fintech**    | Trading, banking, dashboards | High contrast and data first: dark-first, tabular numbers   |
+| **Care**       | Healthcare and services      | Soft and calm: generous spacing, large radii, warm neutrals |
+
+Use the **Theme**, **Mode** and **Direction** menus in the toolbar to see every story in any combination.
+
+## Install
+
+```bash
+npm install @brunogutierre/tessera @angular/cdk @angular/aria
+```
+
+Add the styles once, for example in `angular.json`:
+
+```json
+"styles": ["node_modules/@brunogutierre/tessera/styles/tessera.css", "src/styles.css"]
+```
+
+Set the initial theme in `index.html`, so the first paint is already themed:
+
+```html
+<html lang="en" data-tes-theme="enterprise" data-tes-mode="system"></html>
+```
+
+Then provide Tessera and import the components you use:
+
+```ts
+bootstrapApplication(App, { providers: [provideTessera()] });
+```
+
+```ts
+@Component({
+  imports: [TesButton],
+  template: `<button tes-button variant="primary">Save</button>`,
+})
+export class Toolbar {}
+```
+
+## Principles
+
+- **Accessible by default.** Keyboard support follows the WAI-ARIA Authoring Practices, contrast meets WCAG 2.2 AA in all six theme and mode combinations, and every story runs axe in CI.
+- **Native first.** Components that enhance a native element are attributes on that element (`button[tes-button]`, `input[tes-input]`), so forms, links and ARIA keep working.
+- **Themes are only tokens.** Components read semantic tokens; a theme is a set of values. Adding a theme means writing one CSS file.
+- **Your CSS wins.** All Tessera styles live in CSS cascade layers, so any unlayered rule in your app overrides them, whatever its specificity.
