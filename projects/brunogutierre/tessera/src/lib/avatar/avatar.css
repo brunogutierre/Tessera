@@ -1,0 +1,39 @@
+@layer tessera.components {
+  :host {
+    --_size: 2.5rem;
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    inline-size: var(--tes-avatar-size, var(--_size));
+    block-size: var(--tes-avatar-size, var(--_size));
+    overflow: hidden;
+    border-radius: var(--tes-avatar-radius, var(--tes-radius-full));
+    background-color: var(--tes-color-primary-subtle);
+    color: var(--tes-color-on-primary-subtle);
+    font-size: calc(var(--tes-avatar-size, var(--_size)) * 0.4);
+    font-weight: var(--tes-weight-semibold);
+    line-height: 1;
+    user-select: none;
+    vertical-align: middle;
+  }
+
+  :host([data-size='sm']) {
+    --_size: 1.75rem;
+  }
+
+  :host([data-size='lg']) {
+    --_size: 3.5rem;
+  }
+
+  img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  @media (forced-colors: active) {
+    :host {
+      border: 1px solid CanvasText;
+    }
+  }
+}

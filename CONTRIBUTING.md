@@ -22,7 +22,7 @@ Then export it from `src/public-api.ts` and add it to the README component table
 - **Names.** Classes are `Tes<Name>` with no `Component` suffix; files are `<name>.ts`.
 - **Signals only.** `input()` / `input.required()`, `model()` for two-way state (`value`, `checked`, `expanded`), `output()`; `booleanAttribute` for flags so `<button tes-button loading>` works.
 - **Host metadata, not decorators.** Use the `host` object: a static `class: 'tes-<name>'` plus `data-*` attributes for state (`[attr.data-variant]`, `[attr.data-size]`), which the CSS selects with `:host([data-variant='primary'])`.
-- **Private state** uses ES `#fields`, so it never reaches the public typings or the Storybook props table.
+- **Private state** uses ES `#fields`, so it never reaches the public typings or the Storybook props table. Signal queries (`viewChild`, `contentChildren`) are the exception: Angular cannot read ES private fields, so they are TypeScript `private`.
 - **Strings** that users or assistive technology see come from `TES_LABELS`, never hard-coded English.
 - **Accessible names are required.** If a component cannot be named by its content (icon-only button), it warns in dev mode.
 

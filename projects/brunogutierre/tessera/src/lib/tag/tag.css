@@ -1,0 +1,64 @@
+@layer tessera.components {
+  :host {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--tes-space-1);
+    box-sizing: border-box;
+    min-block-size: var(--tes-control-height-sm);
+    max-inline-size: 100%;
+    padding-inline: var(--tes-space-2);
+    border: var(--tes-border-width) solid var(--tes-color-border-strong);
+    border-radius: var(--tes-tag-radius, var(--tes-radius-sm));
+    background-color: var(--tes-color-surface);
+    color: var(--tes-color-text);
+    font-size: var(--tes-text-sm);
+    line-height: var(--tes-leading-tight);
+    vertical-align: middle;
+  }
+
+  .label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* 24px target inside a 24px+ tag; the negative margin keeps the visual padding even. */
+  .remove {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    margin-inline-end: calc(-1 * var(--tes-space-1));
+    padding: 0;
+    border: 0;
+    border-radius: var(--tes-radius-sm);
+    background: transparent;
+    color: var(--tes-color-text-muted);
+    cursor: pointer;
+    --tes-icon-size: 1rem;
+  }
+
+  .remove:hover:not(:disabled) {
+    background-color: var(--tes-color-hover);
+    color: var(--tes-color-text);
+  }
+
+  .remove:focus-visible {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: calc(-1 * var(--tes-focus-ring-width));
+  }
+
+  .remove:disabled {
+    cursor: not-allowed;
+  }
+
+  /* Muted rather than disabled text: the label stays readable (4.5:1) for low-vision users. */
+  :host([data-disabled]) {
+    border-color: var(--tes-color-border);
+    color: var(--tes-color-text-muted);
+  }
+
+  :host([data-disabled]) .remove {
+    color: var(--tes-color-text-disabled);
+  }
+}
