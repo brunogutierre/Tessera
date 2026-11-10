@@ -64,6 +64,8 @@ export type TesSelectValue<V> = V | readonly V[] | null;
 export class TesSelect<V = string> implements FormValueControl<TesSelectValue<V>> {
   protected readonly field = inject(TesFormField, { optional: true });
 
+  /** Accessible name when the select is not inside a `tes-form-field`. */
+  readonly label = input<string>();
   readonly options = input.required<readonly TesOption<V>[]>();
   readonly value = model<TesSelectValue<V>>(null);
   readonly placeholder = input('');
