@@ -49,7 +49,7 @@ import type { TesOption, TesSelectValue } from '../select/select';
           iconOnly
           type="button"
           [attr.aria-label]="labels.firstPage"
-          [disabled]="isFirst()"
+          [softDisabled]="isFirst()"
           (click)="pageIndex.set(0)"
         >
           <tes-icon name="chevrons-left" />
@@ -61,8 +61,8 @@ import type { TesOption, TesSelectValue } from '../select/select';
           iconOnly
           type="button"
           [attr.aria-label]="labels.previousPage"
-          [disabled]="isFirst()"
-          (click)="pageIndex.set(pageIndex() - 1)"
+          [softDisabled]="isFirst()"
+          (click)="pageIndex.set(page() - 1)"
         >
           <tes-icon name="chevron-left" />
         </button>
@@ -73,8 +73,8 @@ import type { TesOption, TesSelectValue } from '../select/select';
           iconOnly
           type="button"
           [attr.aria-label]="labels.nextPage"
-          [disabled]="isLast()"
-          (click)="pageIndex.set(pageIndex() + 1)"
+          [softDisabled]="isLast()"
+          (click)="pageIndex.set(page() + 1)"
         >
           <tes-icon name="chevron-right" />
         </button>
@@ -85,7 +85,7 @@ import type { TesOption, TesSelectValue } from '../select/select';
           iconOnly
           type="button"
           [attr.aria-label]="labels.lastPage"
-          [disabled]="isLast()"
+          [softDisabled]="isLast()"
           (click)="pageIndex.set(pageCount() - 1)"
         >
           <tes-icon name="chevrons-right" />
@@ -110,12 +110,16 @@ export class TesPaginator {
   protected readonly pageCount = computed(() =>
     Math.max(1, Math.ceil(this.length() / Math.max(1, this.pageSize()))),
   );
-  protected readonly isFirst = computed(() => this.pageIndex() <= 0);
-  protected readonly isLast = computed(() => this.pageIndex() >= this.pageCount() - 1);
+  /** The page shown: the requested index, clamped when the list shrinks below it. */
+  protected readonly page = computed(() =>
+    Math.min(Math.max(this.pageIndex(), 0), this.pageCount() - 1),
+  );
+  protected readonly isFirst = computed(() => this.page() <= 0);
+  protected readonly isLast = computed(() => this.page() >= this.pageCount() - 1);
   protected readonly range = computed(() => {
     const total = this.length();
-    const first = total === 0 ? 0 : this.pageIndex() * this.pageSize() + 1;
-    const last = Math.min(total, (this.pageIndex() + 1) * this.pageSize());
+    const first = total === 0 ? 0 : this.page() * this.pageSize() + 1;
+    const last = Math.min(total, (this.page() + 1) * this.pageSize());
     return this.labels.pageRange(first, last, total);
   });
   protected readonly sizeOptions = computed<TesOption<number>[]>(() =>
@@ -125,7 +129,7 @@ export class TesPaginator {
   /** Keeps the first visible item on screen when the page size changes. */
   protected setPageSize(value: TesSelectValue<number>): void {
     if (typeof value !== 'number') return;
-    const firstItem = this.pageIndex() * this.pageSize();
+    const firstItem = this.page() * this.pageSize();
     this.pageSize.set(value);
     this.pageIndex.set(Math.floor(firstItem / value));
   }
