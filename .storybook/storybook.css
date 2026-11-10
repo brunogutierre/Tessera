@@ -1,0 +1,23 @@
+/* Storybook-only helpers for documentation stories. Not part of the package. */
+.sb-show-main {
+  background-color: var(--tes-color-bg);
+}
+
+/* Stories that compare several themes side by side. */
+.sb-grid {
+  display: grid;
+  gap: var(--tes-space-4);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+}
+
+.sb-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--tes-space-3);
+}
+
+.sb-stack {
+  display: grid;
+  gap: var(--tes-space-3);
+}

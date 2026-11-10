@@ -41,3 +41,27 @@ jobs:
 
       - name: Build and check the package
         run: npm run check:package
+
+  stories:
+    name: Story and accessibility tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium for browser tests
+        run: npx playwright install --with-deps chromium-headless-shell
+
+      # Every story must render, pass its play function and have no axe violations.
+      - name: Story tests
+        run: npm run test:stories
+
+      - name: Build Storybook
+        run: npm run build-storybook

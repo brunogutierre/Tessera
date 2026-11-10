@@ -16,7 +16,10 @@
     "lint": "ng lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check:package": "npm run build && publint dist/brunogutierre/tessera && cd dist/brunogutierre/tessera && attw --pack . --profile esm-only && npm pack --dry-run"
+    "check:package": "npm run build && publint dist/brunogutierre/tessera && cd dist/brunogutierre/tessera && attw --pack . --profile esm-only && npm pack --dry-run",
+    "storybook": "ng run @brunogutierre/tessera:storybook",
+    "build-storybook": "ng run @brunogutierre/tessera:build-storybook",
+    "test:stories": "vitest run --config vitest.storybook.config.mts"
   },
   "dependencies": {
     "@angular/aria": "22.2.6",
@@ -30,11 +33,21 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@analogjs/vite-plugin-angular": "2.9.6",
     "@angular/build": "^22.2.6",
     "@angular/cli": "^22.2.6",
     "@angular/compiler-cli": "^22.2.5",
     "@arethetypeswrong/cli": "^0.18.5",
     "@eslint/js": "^10.0.1",
+    "@fontsource-variable/ibm-plex-sans": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/nunito": "^5.3.0",
+    "@storybook/addon-a11y": "10.6.6",
+    "@storybook/addon-docs": "10.6.6",
+    "@storybook/addon-vitest": "10.6.6",
+    "@storybook/angular-vite": "10.6.6",
+    "@vitest/browser": "^5.1.0",
     "@vitest/browser-playwright": "^5.1.0",
     "@vitest/coverage-v8": "^5.1.0",
     "angular-eslint": "22.6.0",
@@ -43,8 +56,10 @@
     "playwright": "1.64.1",
     "prettier": "^3.9.10",
     "publint": "^0.3.25",
+    "storybook": "10.6.6",
     "typescript": "~6.0.2",
     "typescript-eslint": "8.72.2",
+    "vite": "^8.3.7",
     "vitest": "^5.1.0"
   }
 }

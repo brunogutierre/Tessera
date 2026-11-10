@@ -15,7 +15,11 @@ module.exports = defineConfig([
     extends: [tseslint.configs.strictTypeChecked, tseslint.configs.stylisticTypeChecked],
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.lib.json', './tsconfig.spec.json'],
+        project: [
+          './tsconfig.lib.json',
+          './tsconfig.spec.json',
+          '../../../.storybook/tsconfig.json',
+        ],
         tsconfigRootDir: __dirname,
       },
     },

@@ -49,6 +49,26 @@
             ],
             "eslintConfig": "projects/brunogutierre/tessera/eslint.config.js"
           }
+        },
+        "storybook": {
+          "builder": "@storybook/angular-vite:start-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "tsConfig": ".storybook/tsconfig.json",
+            "compodoc": false,
+            "zoneless": true,
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular-vite:build-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "tsConfig": ".storybook/tsconfig.json",
+            "compodoc": false,
+            "zoneless": true,
+            "outputDir": "storybook-static"
+          }
         }
       }
     }

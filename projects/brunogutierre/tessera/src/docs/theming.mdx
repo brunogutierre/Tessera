@@ -1,0 +1,60 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Theming" />
+
+# Theming
+
+A theme is a set of values for the semantic tokens (`--tes-color-primary`, `--tes-radius-md`, `--tes-control-height-md`, …). Components only read those tokens, so switching themes is a matter of changing two attributes.
+
+## Theme and mode attributes
+
+| Attribute        | Values                          | Default              |
+| ---------------- | ------------------------------- | -------------------- |
+| `data-tes-theme` | `enterprise`, `fintech`, `care` | `enterprise`         |
+| `data-tes-mode`  | `light`, `dark`, `system`       | `system` (OS choice) |
+
+Modes use the CSS `color-scheme` property and `light-dark()`: each theme defines each color once, as a light and a dark value, and the browser picks one. `system` needs no JavaScript.
+
+## At runtime
+
+```ts
+const theme = inject(TesseraTheme);
+
+theme.theme.set('care'); // WritableSignal<'enterprise' | 'fintech' | 'care'>
+theme.mode.set('dark'); // WritableSignal<'light' | 'dark' | 'system'>
+theme.resolvedMode(); // Signal<'light' | 'dark'>, with system resolved
+```
+
+`TesseraTheme` writes the attributes on `<html>`. It starts from the attributes already there, then from `provideTessera({ theme, mode })`.
+
+To remember the user's choice, persist the signals yourself:
+
+```ts
+effect(() => localStorage.setItem('theme', theme.theme()));
+```
+
+## Scoped themes
+
+Any subtree can use another theme or mode:
+
+```html
+<aside tesTheme="enterprise" tesMode="light">…</aside>
+```
+
+Popovers anchored inside the subtree (menus, selects, tooltips) keep the scoped theme. Dialogs and toasts render at the page level, so they follow the page theme.
+
+## Customizing
+
+All styles live in cascade layers (`tessera.tokens`, `tessera.themes`, `tessera.base`, `tessera.components`), so your own unlayered CSS always wins:
+
+```css
+/* Change a semantic token for the whole Care theme */
+[data-tes-theme='care'] {
+  --tes-color-primary: oklch(0.52 0.12 160);
+}
+
+/* Change one component only, through its component token */
+.checkout button[tes-button] {
+  --tes-button-radius: 999px;
+}
+```
