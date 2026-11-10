@@ -1,0 +1,17 @@
+@layer tessera.components {
+  :host {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--tes-space-1);
+    padding: var(--tes-space-1);
+    border: var(--tes-border-width) solid var(--tes-color-border);
+    border-radius: var(--tes-radius-lg);
+    background-color: var(--tes-color-surface);
+  }
+
+  :host([aria-orientation='vertical']) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
