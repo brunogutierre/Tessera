@@ -131,6 +131,30 @@ describe('TesButton', () => {
     );
   });
 
+  it('looks unavailable but stays focusable and blocks clicks when soft-disabled', async () => {
+    @Component({
+      imports: [TesButton],
+      template: `<button tes-button variant="ghost" softDisabled (click)="clicks = clicks + 1">
+        Next
+      </button>`,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+    })
+    class Soft {
+      clicks = 0;
+    }
+    const fixture = TestBed.createComponent(Soft);
+    await fixture.whenStable();
+    const button = (fixture.nativeElement as HTMLElement).querySelector('button')!;
+    button.click();
+    expect(fixture.componentInstance.clicks).toBe(0);
+    expect(button.getAttribute('aria-disabled')).toBe('true');
+    expect(button.disabled).toBe(false);
+    expect(toRgba(getComputedStyle(button).color)).toEqual(
+      resolveColor('--tes-color-text-disabled', button),
+    );
+    expect(getComputedStyle(button).backgroundColor).toBe('rgba(0, 0, 0, 0)');
+  });
+
   it('warns in dev mode when an icon-only button has no accessible name', async () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
     const { el } = await render();
