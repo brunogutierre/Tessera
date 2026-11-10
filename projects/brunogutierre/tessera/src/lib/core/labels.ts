@@ -23,6 +23,11 @@ export interface TesLabels {
   pageRange: (first: number, last: number, total: number) => string;
   /** Accessible name of a removable tag's remove button. */
   remove: (item: string) => string;
+  /** Spoken before an alert's content, so its tone never depends on color or icon alone. */
+  tones: { info: string; success: string; warning: string; danger: string };
+  /** Spoken after a stat's change, e.g. "+12.5% increase". */
+  increase: string;
+  decrease: string;
 }
 
 export const DEFAULT_LABELS: TesLabels = {
@@ -43,6 +48,9 @@ export const DEFAULT_LABELS: TesLabels = {
   pageRange: (first, last, total) =>
     total === 0 ? '0 of 0' : `${String(first)}–${String(last)} of ${String(total)}`,
   remove: (item) => `Remove ${item}`,
+  tones: { info: 'Information', success: 'Success', warning: 'Warning', danger: 'Error' },
+  increase: 'increase',
+  decrease: 'decrease',
 };
 
 /** The labels in use. Components inject this token; apps set it through `provideTessera()`. */

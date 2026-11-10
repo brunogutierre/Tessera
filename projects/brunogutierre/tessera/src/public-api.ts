@@ -24,3 +24,5 @@ export { TesCard } from './lib/card/card';
 export type { TesCardVariant } from './lib/card/card';
 export { TesSkeleton } from './lib/skeleton/skeleton';
 export type { TesSkeletonShape } from './lib/skeleton/skeleton';
+export { TesAlert } from './lib/alert/alert';
+export type { TesAlertLive, TesAlertTone } from './lib/alert/alert';
