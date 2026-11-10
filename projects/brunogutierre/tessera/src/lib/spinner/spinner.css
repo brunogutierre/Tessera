@@ -1,0 +1,59 @@
+@layer tessera.components {
+  :host {
+    --_size: var(--tes-spinner-size, 1.5rem);
+    display: inline-flex;
+    flex-shrink: 0;
+    inline-size: var(--_size);
+    block-size: var(--_size);
+    color: var(--tes-spinner-color, var(--tes-color-primary));
+    vertical-align: middle;
+  }
+
+  :host([data-size='sm']) {
+    --_size: var(--tes-spinner-size, 1em);
+  }
+
+  :host([data-size='lg']) {
+    --_size: var(--tes-spinner-size, 2.5rem);
+  }
+
+  svg {
+    inline-size: 100%;
+    block-size: 100%;
+    animation: tes-spin 0.8s linear infinite;
+  }
+
+  circle {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3;
+  }
+
+  .track {
+    opacity: 0.2;
+  }
+
+  .arc {
+    stroke-linecap: round;
+    stroke-dasharray: 40 60;
+  }
+
+  /* Still show activity, but as a slow pulse instead of a spin. */
+  @media (prefers-reduced-motion: reduce) {
+    svg {
+      animation: tes-pulse 2s ease-in-out infinite;
+    }
+  }
+
+  @keyframes tes-spin {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  @keyframes tes-pulse {
+    50% {
+      opacity: 0.4;
+    }
+  }
+}

@@ -12,3 +12,5 @@ export { TesThemeScope } from './lib/core/theme-scope';
 export { TesIcon } from './lib/icon/icon';
 export { TES_ICONS } from './lib/icon/icons';
 export type { TesIconName } from './lib/icon/icons';
+export { TesSpinner } from './lib/spinner/spinner';
+export type { TesSpinnerSize } from './lib/spinner/spinner';
