@@ -1,0 +1,91 @@
+<div class="page">
+  <header class="page-header">
+    <h1>Book an appointment</h1>
+    <p style="margin: 0; color: var(--tes-color-text-muted)">
+      It takes about two minutes. You can change it later.
+    </p>
+  </header>
+
+  <div class="columns">
+    <form class="stack" novalidate (submit)="send($event)">
+      <fieldset tes-fieldset legend="How would you like to meet?" orientation="horizontal">
+        <label tes-choice
+          ><input type="radio" tes-radio name="visit" value="clinic" [formField]="booking.visit" />
+          In the clinic</label
+        >
+        <label tes-choice
+          ><input type="radio" tes-radio name="visit" value="video" [formField]="booking.visit" />
+          Video call</label
+        >
+        <label tes-choice
+          ><input type="radio" tes-radio name="visit" value="phone" [formField]="booking.visit" />
+          Phone</label
+        >
+      </fieldset>
+
+      <tes-form-field label="Specialty" [error]="errorOf('specialty')">
+        <tes-select
+          [options]="specialties"
+          placeholder="Choose a specialty"
+          [formField]="booking.specialty"
+        />
+      </tes-form-field>
+
+      <tes-form-field label="Doctor" hint="Leave empty for the first available doctor" optional>
+        <tes-autocomplete
+          [options]="doctors"
+          placeholder="Search by name"
+          [formField]="booking.doctor"
+        />
+      </tes-form-field>
+
+      <tes-form-field label="Preferred date" [error]="errorOf('date')">
+        <input tes-input type="date" [formField]="booking.date" />
+      </tes-form-field>
+
+      <tes-form-field label="Anything we should know?" optional>
+        <textarea tes-input [formField]="booking.notes"></textarea>
+      </tes-form-field>
+
+      <fieldset tes-fieldset legend="Privacy" [error]="errorOf('consent')">
+        <label tes-choice>
+          <input type="checkbox" tes-checkbox [formField]="booking.consent" />
+          I agree that my health data is used to schedule this visit
+        </label>
+      </fieldset>
+
+      <div class="row">
+        <button tes-button variant="primary" size="lg" type="submit">Request appointment</button>
+      </div>
+    </form>
+
+    <div class="stack">
+      <tes-card variant="filled">
+        <h2 tesCardHeader>Your care team</h2>
+        @if (doctorName(); as name) {
+          <div class="doctor">
+            <tes-avatar [name]="name" decorative size="lg" />
+            <div>
+              <strong>{{ name }}</strong>
+              <p>Usually answers within a day</p>
+            </div>
+          </div>
+        } @else {
+          <p style="margin: 0">We will match you with the first available doctor.</p>
+        }
+      </tes-card>
+      <tes-accordion>
+        <tes-accordion-item heading="Is a video visit covered by my plan?" [level]="2">
+          Most plans cover video visits like clinic visits. Check your card or call the number on
+          its back.
+        </tes-accordion-item>
+        <tes-accordion-item heading="How do I prepare?" [level]="2">
+          Have your ID card and a list of current medications ready.
+        </tes-accordion-item>
+        <tes-accordion-item heading="Can I bring someone with me?" [level]="2">
+          Yes. One companion can join you in the clinic or on the call.
+        </tes-accordion-item>
+      </tes-accordion>
+    </div>
+  </div>
+</div>

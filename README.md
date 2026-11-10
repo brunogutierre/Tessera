@@ -2,7 +2,7 @@
 
 An Angular design system: 30 accessible components, three professional themes (Enterprise, Fintech and Care), each with light and dark modes, documented in Storybook.
 
-**Live Storybook:** https://brunogutierre.github.io/Tessera/
+**Live Storybook:** https://brunogutierre.github.io/Tessera/ — start with the **Showcase** pages: a purchase-order back office (Enterprise), a portfolio dashboard (Fintech) and an appointment booking form (Care), built only from Tessera components.
 
 > Work in progress. Sections are filled in as each part of the system lands.
 
