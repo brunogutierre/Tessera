@@ -1,0 +1,59 @@
+@layer tessera.components {
+  :host {
+    display: grid;
+    gap: var(--tes-space-2);
+    inline-size: var(--_width, 100%);
+  }
+
+  .bone {
+    display: block;
+    block-size: var(--_height, 1em);
+    border-radius: var(--tes-radius-sm);
+    background-color: var(--tes-color-neutral-subtle);
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--tes-color-hover) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    background-repeat: no-repeat;
+    animation: tes-shimmer 1.6s ease-in-out infinite;
+  }
+
+  /* A paragraph's last line is shorter. */
+  .bone:last-child:not(:first-child) {
+    inline-size: 60%;
+  }
+
+  :host([data-shape='rect']) .bone {
+    block-size: var(--_height, 6rem);
+    border-radius: var(--tes-radius-md);
+  }
+
+  :host([data-shape='circle']) {
+    inline-size: var(--_width, var(--_height, 2.5rem));
+  }
+
+  :host([data-shape='circle']) .bone {
+    block-size: auto;
+    aspect-ratio: 1;
+    border-radius: var(--tes-radius-full);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bone {
+      animation: none;
+      background-image: none;
+    }
+  }
+
+  @keyframes tes-shimmer {
+    from {
+      background-position: 150% 0;
+    }
+    to {
+      background-position: -50% 0;
+    }
+  }
+}
