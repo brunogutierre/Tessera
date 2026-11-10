@@ -1,73 +1,38 @@
 # Tessera
 
-An Angular design system: 30 accessible components, three professional themes (Enterprise, Fintech and Care), each with light and dark modes, documented in Storybook.
+An Angular design system: 33 accessible components, three professional themes (Enterprise, Fintech and Care), each with light and dark modes, documented and tested in Storybook.
 
-**Live Storybook:** https://brunogutierre.github.io/Tessera/ — start with the **Showcase** pages: a purchase-order back office (Enterprise), a portfolio dashboard (Fintech) and an appointment booking form (Care), built only from Tessera components.
+**Live Storybook:** https://brunogutierre.github.io/Tessera/. Start with the **Showcase** pages: a purchase-order back office (Enterprise), a portfolio dashboard (Fintech) and an appointment booking form (Care), built only from Tessera components.
 
-> Work in progress. Sections are filled in as each part of the system lands.
+| Enterprise · light                                                                                        | Fintech · dark                                                                             | Care · light                                                                                      |
+| --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| ![Enterprise purchase orders](visual/__screenshots__/showcase-light-showcase--enterprise-back-office.png) | ![Fintech portfolio](visual/__screenshots__/showcase-dark-showcase--fintech-dashboard.png) | ![Care appointment booking](visual/__screenshots__/showcase-light-showcase--care-appointment.png) |
 
 ## Goal
 
-Show how a production-grade design system is built with modern Angular: design tokens as CSS custom properties, runtime theming, headless accessibility primitives (`@angular/aria` + Angular CDK) with fully custom visuals, and documentation that doubles as a test suite.
+Show how a production-grade design system is built with modern Angular: design tokens as CSS custom properties, runtime theming, headless accessibility primitives (`@angular/aria` and the Angular CDK) with fully custom visuals, and documentation that doubles as a test suite.
 
 ## Stack
 
-| Area            | Choice                                                                     |
-| --------------- | -------------------------------------------------------------------------- |
-| Framework       | Angular 22 (standalone components, signals, OnPush, zoneless-ready)        |
-| Styling         | Plain CSS: custom properties, `oklch()`, `light-dark()`, cascade layers    |
-| Behavior        | `@angular/aria` (headless APG widgets) and Angular CDK (overlay, a11y)     |
-| Packaging       | ng-packagr (Angular Package Format), single entry point                    |
-| Documentation   | Storybook 10 (`@storybook/angular-vite`), deployed to GitHub Pages         |
-| Unit tests      | Vitest 5 via `@angular/build:unit-test`, browser mode in headless Chromium |
-| Lint and format | angular-eslint (type-checked rules), Prettier                              |
-| Visual tests    | Playwright `toHaveScreenshot` in the official Playwright container         |
-| Story tests     | `@storybook/addon-vitest` + `@storybook/addon-a11y` (axe, WCAG 2.2 AA)     |
-| Package checks  | publint, `@arethetypeswrong/cli`, `npm pack --dry-run`                     |
-
-## Repository layout
-
-```
-projects/brunogutierre/tessera/   the library (@brunogutierre/tessera)
-  styles/                         design tokens and themes (shipped as @brunogutierre/tessera/styles/*)
-    tessera.css                   entry point: layer order + imports
-    tokens/primitives.css         oklch palettes, size and time scales
-    themes/                       modes.css, enterprise.css, fintech.css, care.css
-    base.css                      text and background of themed subtrees
-  src/lib/core/                   shared utilities (ids, tokens, theme, labels)
-  src/public-api.ts               everything the package exports
-.storybook/                      Storybook config: globals for theme, mode and direction; fonts
-  src/docs/                       MDX pages and foundation stories
-visual/                           Playwright visual regression of the built Storybook, with baselines
-vitest.storybook.config.mts       runs every story as a browser test
-scripts/test-stories.mjs          runs the story tests once per theme and mode
-.github/workflows/ci.yml          format, lint, unit tests, package checks, story tests
-.github/workflows/pages.yml       deploys Storybook to GitHub Pages on every push to main
-```
-
-## Themes and design tokens
-
-| Theme          | Built for                    | Character                                             |
-| -------------- | ---------------------------- | ----------------------------------------------------- |
-| **Enterprise** | ERP, back office, admin      | Dense and sober: IBM Plex Sans, small radii, compact  |
-| **Fintech**    | Trading, banking, dashboards | High contrast, dark-first: Inter with tabular numbers |
-| **Care**       | Healthcare and services      | Soft and calm: Nunito, large radii, roomy spacing     |
-
-Tokens come in three tiers:
-
-1. **Primitives** (`--tes-palette-blue-600`, `--tes-size-16`): raw values, never used by components.
-2. **Semantic tokens** (`--tes-color-primary`, `--tes-control-height-md`): what components read. Every theme defines the same set, listed in `SEMANTIC_TOKENS`.
-3. **Component tokens** (`--tes-button-radius`): optional overrides that fall back to semantic tokens.
-
-```html
-<html data-tes-theme="fintech" data-tes-mode="dark"></html>
-```
+| Area            | Choice                                                                         |
+| --------------- | ------------------------------------------------------------------------------ |
+| Framework       | Angular 22 (standalone components, signals, OnPush, zoneless-ready)            |
+| Styling         | Plain CSS: custom properties, `oklch()`, `light-dark()`, cascade layers        |
+| Behavior        | `@angular/aria` (headless APG widgets) and Angular CDK (overlay, dialog, a11y) |
+| Forms           | Signal Forms `FormValueControl`; works with Reactive Forms and `ngModel`       |
+| Packaging       | ng-packagr (Angular Package Format), single entry point plus `styles/*`        |
+| Documentation   | Storybook 10 (`@storybook/angular-vite`), deployed to GitHub Pages             |
+| Unit tests      | Vitest 5 via `@angular/build:unit-test`, browser mode in headless Chromium     |
+| Story tests     | `@storybook/addon-vitest` + `@storybook/addon-a11y` (axe, WCAG 2.2 AA)         |
+| Visual tests    | Playwright `toHaveScreenshot` in the official Playwright container             |
+| Lint and format | angular-eslint (type-checked rules), Prettier                                  |
+| Package checks  | publint, `@arethetypeswrong/cli`, `npm pack --dry-run`                         |
 
 ## Components
 
 | Component    | Selector                                  | Built on   | Notes                                                          |
 | ------------ | ----------------------------------------- | ---------- | -------------------------------------------------------------- |
-| Button       | `button[tes-button]`, `a[tes-button]`     | native     | 5 variants, 3 sizes, icon-only, loading (stays focusable)      |
+| Button       | `button[tes-button]`, `a[tes-button]`     | native     | 5 variants, 3 sizes, icon-only, loading, soft-disabled         |
 | Icon         | `tes-icon`                                | inline SVG | 35 icons adapted from Lucide; decorative unless labelled       |
 | Spinner      | `tes-spinner`                             | native     | Indeterminate progressbar; pulses with reduced motion          |
 | Badge        | `tes-badge`                               | native     | 6 tones, subtle or solid; text always states the status        |
@@ -101,6 +66,20 @@ Tokens come in three tiers:
 | Table        | `table[tes-table]`, `th[tes-sort-header]` | native     | Native table, sortable headers with `aria-sort`, `tesSortRows` |
 | Paginator    | `tes-paginator`                           | native     | Page size select, announced range, first to last buttons       |
 
+## Themes and design tokens
+
+| Theme          | Built for                    | Character                                             |
+| -------------- | ---------------------------- | ----------------------------------------------------- |
+| **Enterprise** | ERP, back office, admin      | Dense and sober: IBM Plex Sans, small radii, compact  |
+| **Fintech**    | Trading, banking, dashboards | High contrast, dark-first: Inter with tabular numbers |
+| **Care**       | Healthcare and services      | Soft and calm: Nunito, large radii, roomy spacing     |
+
+Tokens come in three tiers:
+
+1. **Primitives** (`--tes-palette-blue-600`, `--tes-size-16`): raw values, never used by components.
+2. **Semantic tokens** (`--tes-color-primary`, `--tes-control-height-md`): what components read. Every theme defines the same set, listed in `SEMANTIC_TOKENS`.
+3. **Component tokens** (`--tes-button-radius`): optional overrides that fall back to semantic tokens.
+
 ## Usage
 
 ```bash
@@ -108,13 +87,20 @@ npm install @brunogutierre/tessera @angular/cdk @angular/aria
 ```
 
 1. Add `node_modules/@brunogutierre/tessera/styles/tessera.css` to the `styles` of your `angular.json`.
-2. Set the first theme in `index.html` so the first paint is already themed: `<html data-tes-theme="enterprise" data-tes-mode="system">`.
-3. Provide Tessera:
+2. Set the first theme in `index.html`, so the first paint is already themed: `<html data-tes-theme="enterprise" data-tes-mode="system">`.
+3. Provide Tessera and import the components you use:
 
 ```ts
 bootstrapApplication(App, {
   providers: [provideTessera({ theme: 'fintech', mode: 'dark', labels: { close: 'Fechar' } })],
 });
+```
+
+```html
+<tes-form-field label="Country" [error]="countryError()">
+  <tes-select [options]="countries" [formField]="address.country" />
+</tes-form-field>
+<button tes-button variant="primary" type="submit">Save</button>
 ```
 
 Switch at runtime with signals, or theme a subtree with a directive:
@@ -130,44 +116,63 @@ theme.resolvedMode(); // 'light' | 'dark'
 <aside tesTheme="enterprise" tesMode="light">…</aside>
 ```
 
-Every built-in string (button names, screen-reader text, paginator summary) comes from `TES_LABELS`, in English by default and overridable through `provideTessera({ labels })`.
+Every built-in string (button names, screen-reader text, the paginator summary) comes from `TES_LABELS`, in English by default and overridable through `provideTessera({ labels })`. Any unlayered CSS in your app overrides Tessera, so customizing never needs `!important`.
 
-## Decisions
+## Architecture and decisions
 
-- **Library-only workspace.** Storybook is the documentation and the playground, so there is no separate demo app to build, deploy and keep in sync.
-- **Storybook on Vite (`@storybook/angular-vite`) instead of Webpack.** It is the only Angular framework that runs stories as Vitest tests, and it matches Angular's own esbuild/Vite toolchain. It is still marked preview, so versions are pinned exactly; the fallback is `@storybook/angular`.
-- **Every story is a test, in every theme.** `npm run test:stories` renders each story in Chromium, runs its play function and fails on any axe violation (`a11y.test: 'error'`), once per theme and mode (six runs, sequential to keep memory low).
-- **Fonts only in Storybook.** The package ships no fonts and its tokens end in system stacks; Storybook loads OFL fonts locally (`@fontsource-variable/*`) so pages and screenshots never depend on a CDN.
-- **Visual baselines are rendered in the official Playwright container,** locally (podman) and in CI, because screenshots are only comparable with the same browser build and system fonts. Coverage is deliberately small: the first story of every component in Enterprise light and Fintech dark, plus the three showcase pages in both modes (66 images, about 1.3 MB).
-- **Unit tests run in a real browser (Chromium) instead of jsdom.** Components rely on the Popover API, focus management, `:focus-visible`, `matchMedia` and the CSS cascade to resolve tokens; jsdom fakes or lacks all of these.
-- **Theme state is two attributes on `<html>`.** `TesseraTheme` only writes `data-tes-theme` and `data-tes-mode`; the CSS does the rest. It adopts attributes already present in `index.html`, so server-rendered or static pages never flash the wrong theme.
-- **Built-in strings are injectable, and the ones with numbers are functions** (`pageRange(first, last, total)`), because word order and plurals differ between languages.
-- **Native elements stay native.** Components that enhance a native element are attributes on it (`<button tes-button>`), so `type="submit"`, `href`, `disabled` and ARIA attributes work as usual. A wrapper element (`<tes-button>`) would have to re-implement or forward all of them.
-- **`loading` uses `aria-disabled`, not `disabled`.** A disabled button loses focus, so keyboard users would be thrown back to the top of the page while a form saves.
-- **Form controls stay native.** `input[tes-input]` is a component on the `<input>` itself, so Signal Forms (`[formField]`), Reactive Forms and `ngModel` bind it with their built-in accessors: no `ControlValueAccessor` to maintain. The surrounding `tes-form-field` wires `for`, `aria-describedby` and `aria-invalid` through dependency injection.
-- **Checkboxes, radios, switches and sliders are native inputs too.** `@angular/aria` has no such widgets, and the native ones bring keyboard support, forms binding, RTL and forced-colors rendering for free. The check mark is cut out of the filled box with `mask-composite: exclude`, so it shows whatever surface is behind it, with no image per theme; a second, enlarged mask layer keeps the focus ring visible.
-- **The app decides when an error shows.** `tes-form-field` takes the message (`[error]`), not a validation rule, so the same field works with any form library and any "show after blur or submit" policy.
-- **Anchored panels are inline popovers.** Menus, selects and tooltips use the CDK Overlay with the browser Popover API, placed next to their origin: they render in the top layer (no z-index, never clipped) yet stay in the DOM subtree, so a scoped `tesTheme` and encapsulated styles still apply.
-- **Menus take their items as data.** `@angular/aria`'s trigger links to its menu through a template input, so `tes-menu` renders both the button and the panel and receives `TesMenuEntry[]`; apps never touch Aria types.
-- **Composite controls are `FormValueControl`s, with no `ControlValueAccessor`.** `tes-select` and `tes-listbox` expose `value` as a `model()` plus a `touch` output; Angular 22 binds that shape from Signal Forms (`[formField]`), Reactive Forms and `ngModel` alike.
-- **Containers host Aria directives with `hostDirectives`.** `tes-tabs`, `tes-accordion` and `tes-toolbar` carry Aria's group directive on their own element, so the panels, sections and items the app projects find their Aria parent through dependency injection, and apps never import Aria.
-- **Dialogs and toasts render at the page level.** They use the CDK Dialog and a global overlay, so they follow the page theme rather than a `tesTheme` scope; dialogs set `aria-modal`, trap and return focus, and toasts are announced through the CDK `LiveAnnouncer`, with countdowns that pause on hover or focus.
-- **Tables stay native HTML.** `table[tes-table]` styles the app's own markup and holds the sort state; `th[tes-sort-header]` adds the sort button and `aria-sort`. Row selection is shown with `data-selected` plus a checkbox, because `aria-selected` is only valid on grid rows. The Aria grid was not used: a read-only data table is not an interactive grid.
-- **Status is never color alone.** Alerts speak their tone first ("Warning: …"), stats speak the direction of a change ("increase"), and badges always carry text.
-- **Breadcrumbs take your own `<li>` markup** instead of an items array, so links can use `href`, `routerLink` or anything else without Tessera depending on the router. It is the one component that is not view-encapsulated: its styles must reach projected items, so every selector is scoped under `.tes-breadcrumbs`.
-- **Icons are drawn from a typed map in the template.** No icon font, no runtime registry, no `innerHTML`: unknown names fail at compile time and nothing needs sanitizing.
-- **Lint enforces the component conventions.** Selectors must use the `tes` prefix (`<tes-select>`, `button[tes-button]`, `[tesTooltip]`), components must be OnPush and prefer signals, so reviews can focus on behavior.
-- **Plain CSS tokens, no Sass and no token pipeline.** Custom properties switch at runtime and cross component boundaries; a pipeline such as Style Dictionary only pays off when tokens must also reach native apps or design tools.
+### Styling and theming
+
+- **Plain CSS tokens, no Sass and no token pipeline.** Custom properties switch at runtime and cross component boundaries. A pipeline such as Style Dictionary only pays off when tokens must also reach native apps or design tools.
 - **`light-dark()` with `color-scheme` for modes.** Each theme defines each color once, `system` mode needs no JavaScript, and a subtree can switch mode by setting one attribute.
-- **Cascade layers** (`tessera.tokens`, `tessera.themes`, `tessera.base`, `tessera.components`). Any unlayered app CSS wins over Tessera regardless of specificity, so overrides never need `!important`.
-- **Prefixed attributes** (`data-tes-theme`, `data-tes-mode`) instead of `data-theme`, which many apps and libraries already use.
-- **Dark mode puts dark text on bright fills.** One `primary` token must work as link text on dark surfaces and as a button fill; a mid-tone fill with white text cannot pass both contrast checks.
-- **Contrast is tested, not eyeballed.** Unit tests resolve every token in Chromium and check 44 foreground and background pairs in all six theme and mode combinations: 4.5:1 for text and 3:1 for borders, focus rings and icons.
-- **Coverage gate of 80%** on statements, branches, functions and lines; stories and the public API barrel are excluded.
+- **Cascade layers** (`tessera.tokens`, `tessera.themes`, `tessera.base`, `tessera.components`). Any unlayered app CSS wins over Tessera regardless of specificity.
+- **Theme state is two attributes on `<html>`** (`data-tes-theme`, `data-tes-mode`, prefixed so they never clash with an app's `data-theme`). `TesseraTheme` only writes them and the CSS does the rest. It adopts attributes already in `index.html`, so static or server-rendered pages never flash the wrong theme.
+- **Contrast is tested, not eyeballed.** Unit tests resolve every token in Chromium and check 49 foreground/background pairs in all six theme and mode combinations: 4.5:1 for text, 3:1 for borders, focus rings and icons. Dark mode puts dark text on bright fills, because one `primary` token must work both as link text and as a button fill.
+- **The root font size is left to the browser.** Tokens are in rem; setting a root size once shrank every control below the 24px target size, until a review caught it.
+- **Fonts only in Storybook.** The package ships no fonts and its tokens end in system stacks. Storybook loads OFL fonts locally (`@fontsource-variable/*`), so pages and screenshots never depend on a CDN.
+
+### Components and accessibility
+
+- **Native elements stay native.** Components that enhance a native element are attributes on it (`<button tes-button>`, `<input tes-input>`), so `type="submit"`, `href`, `disabled`, ARIA attributes and form bindings work as usual.
+- **Behavior comes from `@angular/aria` and the CDK; the visuals are ours.** Containers host Aria's directives with `hostDirectives`, so the panels and items an app projects find their Aria parent through dependency injection, and apps never import Aria. Menus take their items as data, because Aria links a trigger to its menu through a template input.
+- **Anchored panels are inline popovers.** Menus, selects and tooltips use the CDK Overlay with the browser Popover API, placed next to their origin. They render in the top layer (no z-index, never clipped), yet stay in the DOM subtree, so a scoped `tesTheme` and encapsulated styles still apply. Dialogs and toasts render at the page level and follow the page theme.
+- **Attributes have one owner.** Host bindings merge, never replace, what the app writes (`id`, `aria-describedby`, `aria-invalid`, `aria-disabled`), read through `HostAttributeToken`.
+- **Status is never color alone.** Alerts and toasts speak their tone first ("Warning: …"), stats speak the direction of a change, badges carry text, selected rows add a start bar.
+- **Disabled has two meanings.** Form controls are natively disabled. Items of composite widgets and buttons that become unavailable right after being pressed are soft-disabled (focusable, `aria-disabled`), so keyboard focus is never thrown to the page.
+- **Tables stay native HTML.** A read-only data table is not an interactive grid. `th[tes-sort-header]` adds the sort button and `aria-sort`. Row selection uses a checkbox, since `aria-selected` is only valid on grid rows.
+- **Icons are drawn from a typed map in the template.** There is no icon font, no runtime registry and no `innerHTML`: unknown names fail at compile time and nothing needs sanitizing.
+
+### Forms
+
+- **No `ControlValueAccessor` anywhere.** Native controls bind through each form library's own accessors. Composite controls (`tes-select`, `tes-listbox`, `tes-autocomplete`) are Signal Forms `FormValueControl`s (`value` as a `model()` plus a `touch` output); Angular 22 binds that shape from `[formField]`, Reactive Forms and `ngModel` alike, and tests cover all three.
+- **The app decides when an error shows.** `tes-form-field` takes the message, not a validation rule, so it works with any form library and any "after blur or submit" policy. The control registers with the field, which wires `for`/`aria-labelledby`, `aria-describedby` and `aria-invalid`.
+
+### Documentation and tests
+
+- **Library-only workspace.** Storybook is the documentation and the playground, so there is no demo app to keep in sync.
+- **Storybook on Vite (`@storybook/angular-vite`).** It is the only Angular framework that runs stories as Vitest tests. It is still marked preview, so versions are pinned exactly; the fallback is `@storybook/angular`.
+- **Every story is a test, in every theme.** `npm run test:stories` renders each story in Chromium, runs its play function and fails on any axe violation, once per theme and mode, sequentially to keep memory low.
+- **Unit tests run in a real browser.** Components rely on the Popover API, focus, `:focus-visible`, `matchMedia` and the CSS cascade; jsdom fakes or lacks all of them. Coverage gate: 80% (currently about 98% of lines).
+- **Visual baselines are rendered in the official Playwright container,** locally with podman and in CI, because screenshots only compare reliably with the same browser build and fonts. The per-pixel tolerance is tight (0.02), so a subtle surface color change is caught. The suite holds 70 images: every component in Enterprise light and Fintech dark, open overlays, and the showcase pages in both modes.
+- **Lint enforces the conventions.** It checks the `tes` selector prefix, OnPush and signals, so reviews can focus on behavior. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Repository layout
+
+```
+projects/brunogutierre/tessera/   the library (@brunogutierre/tessera)
+  styles/                         tokens and themes, shipped as @brunogutierre/tessera/styles/*
+  src/lib/<component>/            component, styles, spec and stories side by side
+  src/lib/core/                   tokens, theme service, labels, overlay defaults
+  src/docs/                       MDX pages, foundation stories and the showcase pages
+  src/test-utils/                 test helpers (stylesheet loader, color and contrast)
+.storybook/                       Storybook config: theme, mode and direction toolbar; fonts
+visual/                           Playwright visual regression and its baselines
+scripts/test-stories.mjs          runs the story tests once per theme and mode
+.github/workflows/                ci.yml (checks), pages.yml (Storybook deploy)
+```
 
 ## Development
 
-Requirements: Node 24 and npm 11. Browser tests need Chromium: `npx playwright install chromium-headless-shell` (once).
+Requirements: Node 24 and npm 11. Browser tests need Chromium: `npx playwright install chromium-headless-shell` (once). Visual tests need podman or Docker.
 
 ```bash
 npm ci
@@ -177,21 +182,23 @@ npm test
 | Command                         | What it does                                                            |
 | ------------------------------- | ----------------------------------------------------------------------- |
 | `npm test`                      | Unit tests in headless Chromium                                         |
-| `npm run test:watch`            | Unit tests in watch mode                                                |
 | `npm run test:coverage`         | Unit tests with coverage thresholds (80%)                               |
+| `npm run test:stories`          | Every story as a browser test with axe, in 6 theme/mode runs            |
+| `npm run build-storybook`       | Static Storybook in `storybook-static/`                                 |
+| `npm run test:visual:container` | Visual regression in the Playwright container (after `build-storybook`) |
+| `npm run storybook`             | Storybook at http://localhost:6006                                      |
 | `npm run lint`                  | ESLint (TypeScript and templates)                                       |
 | `npm run format:check`          | Prettier check (`npm run format` fixes)                                 |
 | `npm run build`                 | Builds the library into `dist/`                                         |
-| `npm run storybook`             | Storybook at http://localhost:6006                                      |
-| `npm run test:stories`          | Every story as a browser test, with axe                                 |
-| `npm run test:visual:container` | Visual regression in the Playwright container (needs `build-storybook`) |
-| `npm run build-storybook`       | Static Storybook in `storybook-static/`                                 |
 | `npm run check:package`         | Build, then publint, attw and `npm pack --dry-run`                      |
 
-## Contributing
+To accept an intended visual change: `npm run build-storybook && npm run test:visual:container -- --update-snapshots`.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the component checklist, API and styling conventions.
+## Roadmap
+
+- A date picker on the `@angular/aria` grid (cut from this first version; native `input[type=date][tes-input]` is themed meanwhile).
+- Storybook 11 once it ships stable (`@storybook/angular-vite` leaves preview).
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE). Icons adapted from [Lucide](https://lucide.dev) (ISC), see `THIRD-PARTY-NOTICES.md`.
