@@ -3,6 +3,7 @@ import {
   Component,
   DestroyRef,
   ElementRef,
+  HostAttributeToken,
   afterNextRender,
   booleanAttribute,
   inject,
@@ -31,7 +32,7 @@ export type TesButtonSize = 'sm' | 'md' | 'lg';
   selector: 'button[tes-button], a[tes-button]',
   imports: [TesSpinner],
   template: `
-    <ng-content />
+    <span class="label"><ng-content /></span>
     @if (loading()) {
       <tes-spinner class="spinner" size="sm" decorative />
     }
@@ -44,7 +45,7 @@ export type TesButtonSize = 'sm' | 'md' | 'lg';
     '[attr.data-size]': 'size()',
     '[attr.data-icon-only]': 'iconOnly() || null',
     '[attr.data-loading]': 'loading() || null',
-    '[attr.aria-disabled]': 'loading() || null',
+    '[attr.aria-disabled]': 'loading() || staticAriaDisabled',
     '[attr.aria-busy]': 'loading() || null',
   },
 })
@@ -55,6 +56,11 @@ export class TesButton {
   readonly iconOnly = input(false, { transform: booleanAttribute });
   /** Shows a spinner, sets `aria-busy` and ignores clicks, without losing focus. */
   readonly loading = input(false, { transform: booleanAttribute });
+
+  /** An `aria-disabled` written by the consumer is kept when the button is not loading. */
+  protected readonly staticAriaDisabled = inject(new HostAttributeToken('aria-disabled'), {
+    optional: true,
+  });
 
   constructor() {
     const host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
@@ -73,7 +79,9 @@ export class TesButton {
 
     if (isDevMode()) {
       afterNextRender(() => {
-        const named = ['aria-label', 'aria-labelledby', 'title'].some((a) => host.hasAttribute(a));
+        const named =
+          ['aria-label', 'aria-labelledby', 'title'].some((a) => host.hasAttribute(a)) ||
+          host.textContent.trim() !== ''; // e.g. visually hidden text next to the icon
         if (this.iconOnly() && !named) {
           console.warn('tes-button: an iconOnly button needs aria-label or aria-labelledby.', host);
         }

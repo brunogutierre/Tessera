@@ -5,6 +5,7 @@
     "entryFile": "src/public-api.ts"
   },
   "assets": [
+    "THIRD-PARTY-NOTICES.md",
     {
       "input": "styles",
       "glob": "**/*.css",

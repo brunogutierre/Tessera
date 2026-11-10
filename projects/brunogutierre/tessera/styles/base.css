@@ -4,6 +4,8 @@
  * `[data-tes-mode]` is listed on purpose: `color` and `background-color` resolve `light-dark()`
  * on the element that declares them and inherit as plain colors, so a subtree that only switches
  * mode must declare them again to get its own text and background.
+ *
+ * The root font size is left to the browser and the user's settings.
  */
 @layer tessera.base {
   :where(:root),
@@ -12,10 +14,18 @@
     color: var(--tes-color-text);
     background-color: var(--tes-color-bg);
     font-family: var(--tes-font-sans);
-    font-size: var(--tes-text-md);
     line-height: var(--tes-leading-normal);
     font-variant-numeric: var(--tes-numeric);
     accent-color: var(--tes-color-primary);
+  }
+
+  /*
+   * Never on the root element: every token is in rem, so changing the root font size would shrink
+   * spacing, control heights and touch targets with it (14px root → 21px "24px" targets).
+   */
+  :where(body),
+  :not(:root):is([data-tes-theme], [data-tes-mode]) {
+    font-size: var(--tes-text-md);
   }
 
   /*

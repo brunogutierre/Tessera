@@ -1,4 +1,4 @@
-import { Directive, input } from '@angular/core';
+import { Directive, HostAttributeToken, inject, input } from '@angular/core';
 import type { TesMode, TesThemeName } from './tokens';
 
 /**
@@ -15,10 +15,15 @@ import type { TesMode, TesThemeName } from './tokens';
   selector: '[tesTheme]',
   host: {
     '[attr.data-tes-theme]': 'tesTheme()',
-    '[attr.data-tes-mode]': 'tesMode() ?? null',
+    '[attr.data-tes-mode]': 'tesMode() ?? staticMode',
   },
 })
 export class TesThemeScope {
   readonly tesTheme = input.required<TesThemeName>();
   readonly tesMode = input<TesMode>();
+
+  /** A plain `data-tes-mode` written in the template is kept when `tesMode` is not bound. */
+  protected readonly staticMode = inject(new HostAttributeToken('data-tes-mode'), {
+    optional: true,
+  });
 }

@@ -18,12 +18,15 @@ const TEXT_PAIRS: readonly (readonly [string, string])[] = [
   ['text', 'neutral-subtle-hover'],
   ['text-muted', 'bg'],
   ['text-muted', 'surface'],
+  ['text-muted', 'surface-raised'],
+  ['text-muted', 'surface-sunken'],
   ['on-primary', 'primary'],
   ['on-primary', 'primary-hover'],
   ['on-primary', 'primary-active'],
   ['on-primary-subtle', 'primary-subtle'],
   ['primary', 'surface'],
   ['primary', 'bg'],
+  ['primary', 'surface-raised'],
   ...STATUSES.flatMap((s) => [
     [`on-${s}`, s] as const,
     [`on-${s}`, `${s}-hover`] as const,
@@ -37,6 +40,8 @@ const TEXT_PAIRS: readonly (readonly [string, string])[] = [
 const UI_PAIRS: readonly (readonly [string, string])[] = [
   ['border-strong', 'surface'],
   ['border-strong', 'bg'],
+  ['border-strong', 'surface-raised'],
+  ['border-strong', 'surface-sunken'],
   ['focus', 'bg'],
   ['focus', 'surface'],
   ['focus', 'surface-raised'],
@@ -118,6 +123,17 @@ describe('design tokens', () => {
       );
       expect(toRgba(getComputedStyle(el).color)).toEqual(resolveColor('--tes-color-text', el));
     });
+  });
+
+  it('leaves the root font size to the browser, so rem tokens keep their size', () => {
+    document.documentElement.dataset['tesTheme'] = 'enterprise';
+    try {
+      expect(getComputedStyle(document.documentElement).fontSize).toBe('16px');
+      expect(getComputedStyle(document.body).fontSize).toBe('14px'); // Enterprise text-md
+      expect(getComputedStyle(scope('care')).fontSize).toBe('16px'); // Care text-md
+    } finally {
+      delete document.documentElement.dataset['tesTheme'];
+    }
   });
 
   it('maps modes to color-scheme, with system following the OS', () => {

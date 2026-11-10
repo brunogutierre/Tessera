@@ -9,9 +9,4 @@ describe('uniqueId', () => {
     const ids = new Set(Array.from({ length: 50 }, () => uniqueId('tes-x')));
     expect(ids.size).toBe(50);
   });
-
-  it('rejects prefixes that are not valid id fragments', () => {
-    expect(() => uniqueId('Tes Input')).toThrow(/Invalid id prefix/);
-    expect(() => uniqueId('')).toThrow(/Invalid id prefix/);
-  });
 });

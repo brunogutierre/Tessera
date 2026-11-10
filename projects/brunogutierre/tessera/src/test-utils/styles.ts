@@ -18,15 +18,8 @@ export async function bundleTesseraStyles(): Promise<string> {
   return entry.replace(IMPORT, () => parts[index++] ?? '');
 }
 
-/**
- * Test-only adjustments:
- * - the Vitest runner page sets a 14px root font size, browsers default to 16px (rem tokens);
- * - transitions are disabled so computed colors are final values, not mid-transition frames.
- */
-const TEST_ENVIRONMENT = `
-  :root { font-size: 16px; }
-  *, ::before, ::after { transition-duration: 0s !important; }
-`;
+/** Test-only: transitions are disabled so computed colors are final values, not mid-transition. */
+const TEST_ENVIRONMENT = `*, ::before, ::after { transition-duration: 0s !important; }`;
 
 /** Adds the full Tessera stylesheet (tokens, themes, base) to the test document once. */
 export async function loadTesseraStyles(): Promise<void> {
