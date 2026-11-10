@@ -25,10 +25,13 @@ Then export it from `src/public-api.ts` and add it to the README component table
 - **Attribute ownership.** Never bind `null` to an attribute the consumer can also write: Angular would remove theirs. Merge the static value read with `HostAttributeToken` (see `TesButton.staticAriaDisabled`), or expose an input. Id lists such as `aria-describedby` are merged, never replaced.
 - **Host metadata, not decorators.** Use the `host` object: a static `class: 'tes-<name>'` plus `data-*` attributes for visual options (`[attr.data-variant]`, `[attr.data-size]`), which the CSS selects with `:host([data-variant='primary'])`. Interactive state is styled from ARIA attributes first (`aria-expanded`, `aria-selected`, `aria-current`, `aria-invalid`), which `@angular/aria` already maintains.
 - **Visibility.** Private state uses ES `#fields`, so it never reaches the public typings or the Storybook props table. Members read by templates or host bindings are `protected` (templates cannot read `#` fields), and signal queries (`viewChild`, `contentChildren`) are TypeScript `private` (Angular cannot read ES private fields either).
-- **Behavior comes from `@angular/aria` and the CDK**, as host directives or in the template; never re-implement their keyboard handling. Read direction from the CDK `Directionality` in TypeScript, and use logical properties and `:dir()` in CSS. No `:host-context()` and no `::ng-deep`. The one exception to view encapsulation is a component whose job is to style the consumer's markup (Breadcrumbs): it uses `ViewEncapsulation.None` with every selector under its host class, still inside `@layer tessera.components`.
-- **Icons are projected.** Public APIs take icons through content projection, never a `TesIconName` input, so apps can use their own icon set.
+- **Behavior comes from `@angular/aria` and the CDK**, as host directives or in the template; never re-implement their keyboard handling. Read direction from the CDK `Directionality` in TypeScript, and use logical properties and `:dir()` in CSS. No `:host-context()` and no `::ng-deep`. Components whose job is to style the consumer's markup (Breadcrumbs, Table) use `ViewEncapsulation.None` with every selector under their host class, still inside `@layer tessera.components`. Layout of attribute-marked app elements (`[tesCardFooter]`, `[tesDialogFooter]`) lives in `base.css`.
+- **Icons are projected.** Public APIs take icons through content projection, so apps can use their own icon set. The exception is data-driven item models (`TesMenuEntry`, `TesTreeNode`), where an optional `icon: TesIconName` keeps the data plain.
 - **Strings** that users or assistive technology see come from `TES_LABELS`, never hard-coded English. Screen-reader-only text uses the global `.tes-visually-hidden` class; keep a space inside it when it sits next to other text.
-- **Accessible names are required.** If a component cannot be named by its content (icon-only button), it warns in dev mode.
+- **Accessible names are required.** Native `aria-label` when the named role is the host itself (toolbar, icon-only button); a `label` input when the named role is an element inside the template (select, autocomplete, listbox, tree), because an `aria-label` on a generic host element is ignored. Inside a `tes-form-field`, the field's label wins. Icon-only buttons warn in dev mode when unnamed.
+- **Disabled.** Form-like controls (input, select, autocomplete, listbox) are natively disabled: not focusable, like the HTML controls they replace. Items of composite widgets (tabs, menu, toolbar, tree) are soft-disabled (focusable, `aria-disabled`), as the APG recommends. A button that becomes unavailable right after being pressed uses `softDisabled`, so focus stays on it.
+- **Touched.** Controls emit `touch` when focus leaves the whole control, not when it moves inside it.
+- **Naming.** Multiple selection is `multiple`; status tones are `TesStatusTone`.
 - **Server rendering.** No DOM reads outside `afterNextRender`, `afterRenderEffect` or event handlers; inject `DOCUMENT` instead of using `document` or `window`.
 
 ## Styles
@@ -43,6 +46,7 @@ Then export it from `src/public-api.ts` and add it to the README component table
 - **Borders that identify a control** use `--tes-color-border-strong` (3:1). Decorative borders use `--tes-color-border`.
 - **Target size** stays at 24px or more, including `sm` sizes in the dense Enterprise theme.
 - **Never set `font-size` on the root element.** Tokens are in rem; Tessera leaves the root size to the browser and the user.
+- **`surface-sunken` is for wells inside a surface** (table headers, inputs read-only), never directly on the page: in dark mode it equals the page background.
 - **Motion** uses `--tes-duration-*`, which drop to `0ms` with reduced motion. Never wait for `transitionend`.
 - Add a `forced-colors` block when a component relies on backgrounds to show its shape.
 
