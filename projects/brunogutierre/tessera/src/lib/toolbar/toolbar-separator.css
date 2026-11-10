@@ -1,0 +1,8 @@
+@layer tessera.components {
+  :host {
+    align-self: stretch;
+    inline-size: var(--tes-border-width);
+    margin-inline: var(--tes-space-1);
+    background-color: var(--tes-color-border);
+  }
+}

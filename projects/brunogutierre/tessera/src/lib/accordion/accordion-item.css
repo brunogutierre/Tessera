@@ -1,0 +1,68 @@
+@layer tessera.components {
+  :host {
+    display: block;
+  }
+
+  :host + :host {
+    border-block-start: var(--tes-border-width) solid var(--tes-color-border);
+  }
+
+  .heading {
+    margin: 0;
+  }
+
+  .trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--tes-space-3);
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-block-size: var(--tes-control-height-lg);
+    margin: 0;
+    padding: var(--tes-space-3) var(--tes-space-4);
+    border: 0;
+    background: transparent;
+    color: var(--tes-color-text);
+    font: inherit;
+    font-size: var(--tes-text-md);
+    font-weight: var(--tes-weight-semibold);
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .trigger:hover:not([aria-disabled='true']) {
+    background-color: var(--tes-color-hover);
+  }
+
+  .trigger:focus-visible {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: calc(-1 * var(--tes-focus-ring-width));
+  }
+
+  .trigger[aria-disabled='true'] {
+    color: var(--tes-color-text-muted);
+    cursor: not-allowed;
+  }
+
+  .title {
+    flex: 1;
+  }
+
+  .chevron {
+    color: var(--tes-color-text-muted);
+    transition: rotate var(--tes-duration-normal) var(--tes-easing-standard);
+  }
+
+  .trigger[aria-expanded='true'] .chevron {
+    rotate: 180deg;
+  }
+
+  .panel[inert] {
+    display: none;
+  }
+
+  .content {
+    padding: 0 var(--tes-space-4) var(--tes-space-4);
+    color: var(--tes-color-text);
+  }
+}

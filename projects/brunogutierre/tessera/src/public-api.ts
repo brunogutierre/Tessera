@@ -49,3 +49,6 @@ export type { TesOption, TesSelectValue } from './lib/select/select';
 export { TesListbox } from './lib/listbox/listbox';
 export { TesAutocomplete, containsFilter } from './lib/autocomplete/autocomplete';
 export type { TesOptionFilter } from './lib/autocomplete/autocomplete';
+export { TesTabPanel, TesTabs } from './lib/tabs/tabs';
+export { TesAccordion, TesAccordionItem } from './lib/accordion/accordion';
+export { TesToolbar, TesToolbarItem, TesToolbarSeparator } from './lib/toolbar/toolbar';

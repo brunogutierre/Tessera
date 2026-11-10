@@ -90,6 +90,9 @@ Tokens come in three tiers:
 | Select       | `tes-select`                              | Aria + CDK | Single or multiple; a Signal Forms `FormValueControl`       |
 | Listbox      | `tes-listbox`                             | Aria       | Always-visible list, single (follows focus) or multiple     |
 | Autocomplete | `tes-autocomplete`                        | Aria + CDK | Editable combobox, accent-insensitive filter, "no results"  |
+| Tabs         | `tes-tabs`, `tes-tab-panel`               | Aria       | Tabs built from panel labels; hidden panels stay rendered   |
+| Accordion    | `tes-accordion`, `tes-accordion-item`     | Aria       | One section at a time unless `multi`; lazy content          |
+| Toolbar      | `tes-toolbar`, `[tesToolbarItem]`         | Aria       | Single tab stop, arrow keys, separators                     |
 
 ## Usage
 
@@ -139,6 +142,7 @@ Every built-in string (button names, screen-reader text, paginator summary) come
 - **Anchored panels are inline popovers.** Menus, selects and tooltips use the CDK Overlay with the browser Popover API, placed next to their origin: they render in the top layer (no z-index, never clipped) yet stay in the DOM subtree, so a scoped `tesTheme` and encapsulated styles still apply.
 - **Menus take their items as data.** `@angular/aria`'s trigger links to its menu through a template input, so `tes-menu` renders both the button and the panel and receives `TesMenuEntry[]`; apps never touch Aria types.
 - **Composite controls are `FormValueControl`s, with no `ControlValueAccessor`.** `tes-select` and `tes-listbox` expose `value` as a `model()` plus a `touch` output; Angular 22 binds that shape from Signal Forms (`[formField]`), Reactive Forms and `ngModel` alike.
+- **Containers host Aria directives with `hostDirectives`.** `tes-tabs`, `tes-accordion` and `tes-toolbar` carry Aria's group directive on their own element, so the panels, sections and items the app projects find their Aria parent through dependency injection, and apps never import Aria.
 - **Status is never color alone.** Alerts speak their tone first ("Warning: …"), stats speak the direction of a change ("increase"), and badges always carry text.
 - **Breadcrumbs take your own `<li>` markup** instead of an items array, so links can use `href`, `routerLink` or anything else without Tessera depending on the router. It is the one component that is not view-encapsulated: its styles must reach projected items, so every selector is scoped under `.tes-breadcrumbs`.
 - **Icons are drawn from a typed map in the template.** No icon font, no runtime registry, no `innerHTML`: unknown names fail at compile time and nothing needs sanitizing.

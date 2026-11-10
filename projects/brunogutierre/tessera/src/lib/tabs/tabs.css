@@ -1,0 +1,67 @@
+@layer tessera.components {
+  :host {
+    display: block;
+  }
+
+  .list {
+    display: flex;
+    gap: var(--tes-space-1);
+    overflow-x: auto;
+    border-block-end: var(--tes-border-width) solid var(--tes-color-border);
+    scrollbar-width: thin;
+  }
+
+  .tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    min-block-size: var(--tes-control-height-md);
+    margin: 0;
+    padding-inline: var(--tes-control-padding-x);
+    border: 0;
+    border-radius: var(--tes-radius-md) var(--tes-radius-md) 0 0;
+    background: transparent;
+    color: var(--tes-color-text-muted);
+    font: inherit;
+    font-size: var(--tes-text-md);
+    font-weight: var(--tes-weight-medium);
+    cursor: pointer;
+  }
+
+  .tab:hover:not([aria-disabled='true']) {
+    background-color: var(--tes-color-hover);
+    color: var(--tes-color-text);
+  }
+
+  /* The selected tab: text color plus an underline bar, so it is not color alone. */
+  .tab[aria-selected='true'] {
+    color: var(--tes-color-text);
+  }
+
+  .tab[aria-selected='true']::after {
+    content: '';
+    position: absolute;
+    inset-inline: var(--tes-space-2);
+    inset-block-end: calc(-1 * var(--tes-border-width));
+    block-size: 3px;
+    border-radius: var(--tes-radius-full);
+    background-color: var(--tes-color-primary);
+  }
+
+  .tab:focus-visible {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: calc(-1 * var(--tes-focus-ring-width));
+  }
+
+  .tab[aria-disabled='true'] {
+    color: var(--tes-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    .tab[aria-selected='true']::after {
+      background-color: Highlight;
+    }
+  }
+}
