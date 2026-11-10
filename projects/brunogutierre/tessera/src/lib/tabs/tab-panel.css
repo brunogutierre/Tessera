@@ -1,0 +1,17 @@
+@layer tessera.components {
+  :host {
+    display: block;
+    padding-block: var(--tes-space-4);
+  }
+
+  /* Hidden panels are inert (out of the accessibility tree); also take them out of the layout. */
+  :host([inert]) {
+    display: none;
+  }
+
+  :host(:focus-visible) {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: var(--tes-focus-ring-offset);
+    border-radius: var(--tes-radius-sm);
+  }
+}
