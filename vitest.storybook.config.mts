@@ -30,11 +30,22 @@ export default defineConfig({
       '@angular/cdk/a11y',
       '@angular/cdk/bidi',
       '@angular/cdk/overlay',
+      '@angular/cdk/portal',
+      '@angular/aria/menu',
+      '@angular/aria/listbox',
+      '@angular/aria/combobox',
+      '@angular/aria/tabs',
+      '@angular/aria/accordion',
+      '@angular/aria/toolbar',
+      '@angular/aria/tree',
+      '@angular/aria/grid',
       'storybook/test',
     ],
   },
   test: {
     name: `${theme}-${mode}`,
+    // One story file at a time: parallel iframes crash Chromium on machines short of memory.
+    fileParallelism: false,
     browser: {
       enabled: true,
       headless: true,
