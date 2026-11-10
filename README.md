@@ -68,6 +68,11 @@ Tokens come in three tiers:
 | Button    | `button[tes-button]`, `a[tes-button]` | native     | 5 variants, 3 sizes, icon-only, loading (stays focusable) |
 | Icon      | `tes-icon`                            | inline SVG | 35 icons adapted from Lucide; decorative unless labelled  |
 | Spinner   | `tes-spinner`                         | native     | Indeterminate progressbar; pulses with reduced motion     |
+| Badge     | `tes-badge`                           | native     | 6 tones, subtle or solid; text always states the status   |
+| Tag       | `tes-tag`                             | native     | Optional remove button named "Remove {text}"              |
+| Avatar    | `tes-avatar`                          | native     | Picture or initials; falls back when the picture fails    |
+| Card      | `tes-card`, `article[tes-card]`       | native     | Outlined, elevated or filled; optional header and footer  |
+| Skeleton  | `tes-skeleton`                        | native     | Text lines, rectangle or circle; always `aria-hidden`     |
 
 ## Usage
 
