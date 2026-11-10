@@ -14,3 +14,5 @@ export { TES_ICONS } from './lib/icon/icons';
 export type { TesIconName } from './lib/icon/icons';
 export { TesSpinner } from './lib/spinner/spinner';
 export type { TesSpinnerSize } from './lib/spinner/spinner';
+export { TesButton } from './lib/button/button';
+export type { TesButtonSize, TesButtonVariant } from './lib/button/button';

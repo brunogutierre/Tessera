@@ -1,0 +1,133 @@
+@layer tessera.components {
+  :host {
+    /* Variant colors, set per variant below. */
+    --_bg: transparent;
+    --_bg-hover: var(--_bg);
+    --_bg-active: var(--_bg-hover);
+    --_fg: var(--tes-color-text);
+    --_border: transparent;
+    --_height: var(--tes-control-height-md);
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--tes-control-gap);
+    box-sizing: border-box;
+    min-block-size: var(--_height);
+    min-inline-size: var(--_height);
+    padding-block: 0;
+    padding-inline: var(--tes-button-padding-x, var(--tes-control-padding-x));
+    border: var(--tes-border-width) solid var(--_border);
+    border-radius: var(--tes-button-radius, var(--tes-radius-md));
+    background-color: var(--_bg);
+    color: var(--_fg);
+    font: inherit;
+    font-size: var(--tes-text-md);
+    font-weight: var(--tes-button-font-weight, var(--tes-weight-medium));
+    line-height: var(--tes-leading-tight);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color var(--tes-duration-fast) var(--tes-easing-standard),
+      border-color var(--tes-duration-fast) var(--tes-easing-standard),
+      color var(--tes-duration-fast) var(--tes-easing-standard);
+  }
+
+  :host(:focus-visible) {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: var(--tes-focus-ring-offset);
+  }
+
+  /* Variants */
+  :host([data-variant='primary']) {
+    --_bg: var(--tes-color-primary);
+    --_bg-hover: var(--tes-color-primary-hover);
+    --_bg-active: var(--tes-color-primary-active);
+    --_fg: var(--tes-color-on-primary);
+  }
+
+  :host([data-variant='secondary']) {
+    --_bg: var(--tes-color-neutral-subtle);
+    --_bg-hover: var(--tes-color-neutral-subtle-hover);
+  }
+
+  :host([data-variant='outline']) {
+    --_bg: var(--tes-color-surface);
+    --_border: var(--tes-color-border-strong);
+  }
+
+  :host([data-variant='ghost']) {
+    --_fg: var(--tes-color-primary);
+  }
+
+  :host([data-variant='danger']) {
+    --_bg: var(--tes-color-danger);
+    --_bg-hover: var(--tes-color-danger-hover);
+    --_fg: var(--tes-color-on-danger);
+  }
+
+  /* Interaction feedback, never on disabled or loading buttons. */
+  :host(:hover:not(:disabled, [aria-disabled='true'])) {
+    background-color: var(--_bg-hover);
+  }
+
+  :host(:active:not(:disabled, [aria-disabled='true'])) {
+    background-color: var(--_bg-active);
+  }
+
+  /* Translucent state layer for transparent variants: works on any surface. */
+  :host([data-variant='outline']:hover:not(:disabled, [aria-disabled='true'])),
+  :host([data-variant='ghost']:hover:not(:disabled, [aria-disabled='true'])) {
+    background-image: linear-gradient(var(--tes-color-hover), var(--tes-color-hover));
+  }
+
+  /* Sizes */
+  :host([data-size='sm']) {
+    --_height: var(--tes-control-height-sm);
+    font-size: var(--tes-text-sm);
+    padding-inline: calc(var(--tes-control-padding-x) * 0.75);
+  }
+
+  :host([data-size='lg']) {
+    --_height: var(--tes-control-height-lg);
+    font-size: var(--tes-text-lg);
+    padding-inline: calc(var(--tes-control-padding-x) * 1.5);
+  }
+
+  :host([data-icon-only]) {
+    inline-size: var(--_height);
+    padding-inline: 0;
+  }
+
+  :host(:disabled),
+  :host([aria-disabled='true']) {
+    cursor: not-allowed;
+  }
+
+  :host(:disabled) {
+    --_bg: var(--tes-color-neutral-subtle);
+    --_fg: var(--tes-color-text-disabled);
+    --_border: var(--tes-color-border);
+  }
+
+  /* Loading: keep the width, hide the label, show the spinner in the label color. */
+  :host([data-loading]) {
+    color: transparent;
+  }
+
+  .spinner {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    color: var(--_fg);
+  }
+
+  @media (forced-colors: active) {
+    :host {
+      border-color: ButtonText;
+    }
+  }
+}
