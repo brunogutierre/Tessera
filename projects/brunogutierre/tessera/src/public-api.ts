@@ -9,3 +9,6 @@ export type { TesLabels } from './lib/core/labels';
 export { TES_CONFIG, TesseraTheme, provideTessera } from './lib/core/theme';
 export type { TesseraConfig } from './lib/core/theme';
 export { TesThemeScope } from './lib/core/theme-scope';
+export { TesIcon } from './lib/icon/icon';
+export { TES_ICONS } from './lib/icon/icons';
+export type { TesIconName } from './lib/icon/icons';
