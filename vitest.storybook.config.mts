@@ -27,7 +27,8 @@ export default defineConfig({
     browser: {
       enabled: true,
       headless: true,
-      provider: playwright({}),
+      // Reduced motion: axe never measures colors halfway through a transition or an enter animation.
+      provider: playwright({ contextOptions: { reducedMotion: 'reduce' } }),
       instances: [{ browser: 'chromium' }],
     },
   },
