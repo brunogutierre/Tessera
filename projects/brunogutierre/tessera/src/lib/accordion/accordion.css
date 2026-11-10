@@ -1,0 +1,9 @@
+@layer tessera.components {
+  :host {
+    display: block;
+    border: var(--tes-border-width) solid var(--tes-color-border);
+    border-radius: var(--tes-accordion-radius, var(--tes-radius-lg));
+    background-color: var(--tes-color-surface);
+    overflow: hidden;
+  }
+}
