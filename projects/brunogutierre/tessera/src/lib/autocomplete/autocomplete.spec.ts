@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FormField, form, required } from '@angular/forms/signals';
 import { userEvent } from 'vitest/browser';
+import { resolveColor, toRgba } from '../../test-utils/color';
 import { loadTesseraStyles } from '../../test-utils/styles';
 import { provideTessera } from '../core/theme';
 import { TesFormField } from '../form-field/form-field';
@@ -147,5 +148,18 @@ describe('TesAutocomplete with Reactive Forms', () => {
     await userEvent.click(el.querySelector<HTMLElement>('[role="option"]')!);
     await fixture.whenStable();
     expect(fixture.componentInstance.city.value).toBe('bh');
+    expect(document.activeElement).toBe(input);
+  });
+
+  it('is really disabled and styled as disabled, not read-only', async () => {
+    const fixture = TestBed.createComponent(ReactiveHost);
+    fixture.componentInstance.city.disable();
+    await fixture.whenStable();
+    const input = (fixture.nativeElement as HTMLElement).querySelector('input')!;
+    expect(input.disabled).toBe(true);
+    // Aria also marks a disabled editable combobox read-only; the disabled style must win.
+    expect(toRgba(getComputedStyle(input).backgroundColor)).toEqual(
+      resolveColor('--tes-color-neutral-subtle', input),
+    );
   });
 });

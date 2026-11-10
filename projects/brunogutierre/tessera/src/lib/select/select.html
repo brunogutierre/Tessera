@@ -38,6 +38,8 @@
       ngListbox
       #listbox="ngListbox"
       class="panel"
+      tabindex="-1"
+      (mousedown)="$event.preventDefault()"
       [multi]="multiple()"
       selectionMode="explicit"
       focusMode="activedescendant"
@@ -45,7 +47,6 @@
       [value]="selected()"
       (valueChange)="onSelectionChange($event)"
       [activeDescendant]="listbox.activeDescendant()"
-      [attr.aria-multiselectable]="multiple() || null"
     >
       @for (option of options(); track option.value) {
         <div

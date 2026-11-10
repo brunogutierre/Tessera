@@ -65,7 +65,7 @@ export class TesFormField {
   /** Set by the projected control. */
   readonly controlId = signal<string | null>(null);
   readonly control = signal<HTMLElement | null>(null);
-  /** Custom (non-native) controls report `required` and how to focus them. */
+  /** Controls report `required` (as a signal-reading function); custom ones also how to focus. */
   readonly controlRequiredOverride = signal<(() => boolean) | null>(null);
   readonly focusControl = signal<(() => void) | null>(null);
 
@@ -77,12 +77,9 @@ export class TesFormField {
     ),
   );
 
-  /** Read from the control itself, so `required` (or the form's required rule) is the only source. */
+  /** Reported by the control, so its `required` (or the form's required rule) is the only source. */
   protected controlRequired(): boolean {
-    const override = this.controlRequiredOverride();
-    if (override) return override();
-    const control = this.control();
-    return control !== null && 'required' in control && control.required === true;
+    return this.controlRequiredOverride()?.() ?? false;
   }
 
   /** A `<label for>` only focuses native controls; custom ones are focused on a label click. */
