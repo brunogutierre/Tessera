@@ -1,0 +1,121 @@
+/* Layout for the showcase pages. Documentation only: not part of the package. */
+.page {
+  display: grid;
+  gap: var(--tes-space-5);
+  max-inline-size: 72rem;
+  margin-inline: auto;
+}
+
+.page-header {
+  display: grid;
+  gap: var(--tes-space-2);
+}
+
+.title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tes-space-3);
+}
+
+h1 {
+  margin: 0;
+  font-size: var(--tes-text-2xl);
+  font-weight: var(--tes-weight-semibold);
+  line-height: var(--tes-leading-tight);
+}
+
+h2 {
+  margin: 0;
+  font-size: var(--tes-text-lg);
+  font-weight: var(--tes-weight-semibold);
+}
+
+.kpis {
+  display: grid;
+  gap: var(--tes-space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+
+.filters {
+  display: grid;
+  gap: var(--tes-space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  align-items: end;
+}
+
+.bulk {
+  inline-size: fit-content;
+}
+
+.muted {
+  padding-inline: var(--tes-space-2);
+  color: var(--tes-color-text-muted);
+  font-size: var(--tes-text-sm);
+}
+
+.table-wrap {
+  overflow: auto;
+  max-block-size: 32rem;
+  border: var(--tes-border-width) solid var(--tes-color-border);
+  border-radius: var(--tes-radius-md);
+}
+
+.empty {
+  padding-block: var(--tes-space-6);
+  color: var(--tes-color-text-muted);
+  text-align: center;
+}
+
+.columns {
+  display: grid;
+  gap: var(--tes-space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  align-items: start;
+}
+
+.stack {
+  display: grid;
+  gap: var(--tes-space-4);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--tes-space-3);
+}
+
+.spread {
+  justify-content: space-between;
+}
+
+.allocation {
+  display: grid;
+  gap: var(--tes-space-3);
+}
+
+.allocation-row {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  align-items: center;
+  gap: var(--tes-space-3);
+  font-size: var(--tes-text-sm);
+}
+
+.doctor {
+  display: flex;
+  align-items: center;
+  gap: var(--tes-space-3);
+}
+
+.doctor p {
+  margin: 0;
+  color: var(--tes-color-text-muted);
+  font-size: var(--tes-text-sm);
+}
+
+form.stack {
+  max-inline-size: 36rem;
+}

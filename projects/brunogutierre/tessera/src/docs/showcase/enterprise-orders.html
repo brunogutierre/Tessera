@@ -1,0 +1,142 @@
+<div class="page">
+  <header class="page-header">
+    <tes-breadcrumbs>
+      <li><a href="#procurement">Procurement</a></li>
+      <li aria-current="page">Purchase orders</li>
+    </tes-breadcrumbs>
+    <div class="title-row">
+      <h1>Purchase orders</h1>
+      <button tes-button variant="primary"><tes-icon name="plus" />New order</button>
+    </div>
+  </header>
+
+  <section class="kpis" aria-label="Summary">
+    <tes-card
+      ><tes-stat
+        label="Open value"
+        [value]="money.format(openValue())"
+        [delta]="0.042"
+        deltaLabel="vs last week"
+    /></tes-card>
+    <tes-card
+      ><tes-stat
+        label="Orders on hold"
+        value="9"
+        [delta]="-0.18"
+        positive="down"
+        deltaLabel="vs last week"
+    /></tes-card>
+    <tes-card
+      ><tes-stat label="On-time delivery" value="96.4%" [delta]="0.012" deltaLabel="vs last month"
+    /></tes-card>
+  </section>
+
+  <section class="filters" aria-label="Filters">
+    <tes-form-field label="Search">
+      <input
+        tes-input
+        type="search"
+        placeholder="Order or supplier"
+        [value]="query()"
+        (input)="query.set($any($event.target).value)"
+      />
+    </tes-form-field>
+    <tes-form-field label="Status">
+      <tes-select
+        multiple
+        [options]="statusOptions"
+        [value]="statuses()"
+        (valueChange)="setStatuses($event)"
+        placeholder="Any status"
+      />
+    </tes-form-field>
+    <tes-form-field label="Warehouse">
+      <tes-select [options]="warehouseOptions" [(value)]="warehouse" placeholder="All warehouses" />
+    </tes-form-field>
+  </section>
+  @if (statuses().length > 0) {
+    <div class="sb-row" aria-label="Active filters" role="group">
+      @for (status of statuses(); track status) {
+        <tes-tag removable (removed)="removeStatus(status)">Status: {{ status }}</tes-tag>
+      }
+    </div>
+  }
+
+  <tes-toolbar aria-label="Bulk actions" class="bulk">
+    <span class="muted">{{ selected().size }} selected</span>
+    <button
+      tes-button
+      tesToolbarItem
+      variant="ghost"
+      size="sm"
+      [disabled]="selected().size === 0"
+      (click)="approveSelected()"
+    >
+      <tes-icon name="check" />Approve
+    </button>
+    <button tes-button tesToolbarItem variant="ghost" size="sm" [disabled]="selected().size === 0">
+      <tes-icon name="download" />Export
+    </button>
+  </tes-toolbar>
+
+  <div class="table-wrap">
+    <table tes-table [(sort)]="sort" stickyHeader>
+      <caption class="tes-visually-hidden">
+        Purchase orders
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col"><span class="tes-visually-hidden">Select</span></th>
+          <th tes-sort-header="id">Order</th>
+          <th tes-sort-header="supplier">Supplier</th>
+          <th tes-sort-header="warehouse">Warehouse</th>
+          <th tes-sort-header="date">Date</th>
+          <th tes-sort-header="lines" data-type="number">Lines</th>
+          <th tes-sort-header="total" data-type="number">Total</th>
+          <th scope="col">Status</th>
+          <th scope="col"><span class="tes-visually-hidden">Actions</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (order of rows(); track order.id) {
+          <tr [attr.data-selected]="selected().has(order.id) || null">
+            <td>
+              <input
+                type="checkbox"
+                tes-checkbox
+                [checked]="selected().has(order.id)"
+                (change)="toggle(order.id)"
+                [attr.aria-label]="'Select ' + order.id"
+              />
+            </td>
+            <th scope="row">{{ order.id }}</th>
+            <td>{{ order.supplier }}</td>
+            <td>{{ order.warehouse }}</td>
+            <td>{{ order.date }}</td>
+            <td data-type="number">{{ order.lines }}</td>
+            <td data-type="number">{{ money.format(order.total) }}</td>
+            <td>
+              <tes-badge [tone]="tone[order.status]">{{ order.status }}</tes-badge>
+            </td>
+            <td>
+              <tes-menu
+                [label]="'Actions for ' + order.id"
+                icon="ellipsis"
+                iconOnly
+                variant="ghost"
+                size="sm"
+                [items]="rowActions"
+                (selected)="rowAction($event, order)"
+              />
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="9" class="empty">No orders match these filters.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <tes-paginator [length]="filtered().length" [(pageIndex)]="pageIndex" [(pageSize)]="pageSize" />
+</div>
