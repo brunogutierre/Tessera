@@ -1,0 +1,96 @@
+@layer tessera.components {
+  :host {
+    --_fill: var(--tes-color-primary);
+    --_thickness: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    gap: var(--tes-space-3);
+    inline-size: 100%;
+  }
+
+  :host([data-size='sm']) {
+    --_thickness: 0.25rem;
+  }
+
+  :host([data-tone='success']) {
+    --_fill: var(--tes-color-success);
+  }
+
+  :host([data-tone='warning']) {
+    --_fill: var(--tes-color-warning);
+  }
+
+  :host([data-tone='danger']) {
+    --_fill: var(--tes-color-danger);
+  }
+
+  /*
+   * The track is the plain surface (every fill tone is tested at 3:1 against it), outlined so its
+   * extent is visible on any background.
+   */
+  .track {
+    position: relative;
+    flex: 1;
+    block-size: var(--_thickness);
+    overflow: hidden;
+    border-radius: var(--tes-radius-full);
+    background-color: var(--tes-color-surface);
+    box-shadow: inset 0 0 0 1px var(--tes-color-border-strong);
+  }
+
+  .bar {
+    block-size: 100%;
+    border-radius: inherit;
+    background-color: var(--_fill);
+    transition: inline-size var(--tes-duration-normal) var(--tes-easing-standard);
+  }
+
+  :host([data-indeterminate]) .bar {
+    position: absolute;
+    inset-block: 0;
+    inline-size: 40%;
+    animation: tes-indeterminate 1.4s var(--tes-easing-standard) infinite;
+  }
+
+  .value {
+    min-inline-size: 3.5ch;
+    color: var(--tes-color-text-muted);
+    font-size: var(--tes-text-sm);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+
+  /* Still visible as "busy", but without movement. */
+  @media (prefers-reduced-motion: reduce) {
+    :host([data-indeterminate]) .bar {
+      inline-size: 100%;
+      animation: tes-pulse 2s ease-in-out infinite;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .track {
+      border: 1px solid CanvasText;
+    }
+
+    .bar {
+      background-color: Highlight;
+    }
+  }
+
+  @keyframes tes-indeterminate {
+    from {
+      inset-inline-start: -40%;
+    }
+    to {
+      inset-inline-start: 100%;
+    }
+  }
+
+  @keyframes tes-pulse {
+    50% {
+      opacity: 0.4;
+    }
+  }
+}

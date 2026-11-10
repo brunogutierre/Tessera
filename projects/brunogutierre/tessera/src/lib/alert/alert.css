@@ -1,0 +1,84 @@
+@layer tessera.components {
+  :host {
+    --_accent: var(--tes-color-info);
+    --_accent-text: var(--tes-color-info-text);
+    --_bg: var(--tes-color-info-subtle);
+
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: var(--tes-space-3);
+    box-sizing: border-box;
+    padding: var(--tes-space-3) var(--tes-space-4);
+    border: var(--tes-border-width) solid var(--_accent);
+    border-inline-start-width: calc(var(--tes-border-width) * 4);
+    border-radius: var(--tes-alert-radius, var(--tes-radius-md));
+    background-color: var(--_bg);
+    color: var(--tes-color-text);
+    font-size: var(--tes-text-sm);
+    line-height: var(--tes-leading-normal);
+  }
+
+  :host([data-tone='success']) {
+    --_accent: var(--tes-color-success);
+    --_accent-text: var(--tes-color-success-text);
+    --_bg: var(--tes-color-success-subtle);
+  }
+
+  :host([data-tone='warning']) {
+    --_accent: var(--tes-color-warning);
+    --_accent-text: var(--tes-color-warning-text);
+    --_bg: var(--tes-color-warning-subtle);
+  }
+
+  :host([data-tone='danger']) {
+    --_accent: var(--tes-color-danger);
+    --_accent-text: var(--tes-color-danger-text);
+    --_bg: var(--tes-color-danger-subtle);
+  }
+
+  .icon {
+    color: var(--_accent-text);
+    /* Align with the first line of text. */
+    margin-block-start: calc((1lh - 1.25em) / 2);
+  }
+
+  .content {
+    min-inline-size: 0;
+  }
+
+  .heading {
+    margin: 0 0 var(--tes-space-1);
+    font-weight: var(--tes-weight-semibold);
+  }
+
+  .dismiss {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    margin-block-start: calc((1lh - 1.5rem) / 2);
+    padding: 0;
+    border: 0;
+    border-radius: var(--tes-radius-sm);
+    background: transparent;
+    color: var(--tes-color-text);
+    cursor: pointer;
+    --tes-icon-size: 1rem;
+  }
+
+  .dismiss:hover {
+    background-color: var(--tes-color-hover);
+  }
+
+  .dismiss:focus-visible {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: 0;
+  }
+
+  @media (forced-colors: active) {
+    :host {
+      border-color: CanvasText;
+    }
+  }
+}

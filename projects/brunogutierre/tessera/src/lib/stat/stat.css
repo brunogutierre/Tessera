@@ -1,0 +1,45 @@
+@layer tessera.components {
+  :host {
+    display: grid;
+    gap: var(--tes-space-1);
+    align-content: start;
+    font-variant-numeric: var(--tes-numeric);
+  }
+
+  .label {
+    color: var(--tes-color-text-muted);
+    font-size: var(--tes-text-sm);
+    font-weight: var(--tes-weight-medium);
+  }
+
+  .value {
+    color: var(--tes-color-text);
+    font-size: var(--tes-stat-value-size, var(--tes-text-3xl));
+    font-weight: var(--tes-weight-semibold);
+    line-height: var(--tes-leading-tight);
+  }
+
+  .delta {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--tes-space-1);
+    color: var(--tes-color-text-muted);
+    font-size: var(--tes-text-sm);
+    font-weight: var(--tes-weight-medium);
+    --tes-icon-size: 1rem;
+  }
+
+  .delta[data-good='true'] {
+    color: var(--tes-color-success-text);
+  }
+
+  .delta[data-good='false'] {
+    color: var(--tes-color-danger-text);
+  }
+
+  .context {
+    color: var(--tes-color-text-muted);
+    font-weight: var(--tes-weight-regular);
+  }
+}

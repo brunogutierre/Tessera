@@ -63,16 +63,20 @@ Tokens come in three tiers:
 
 ## Components
 
-| Component | Selector                              | Built on   | Notes                                                     |
-| --------- | ------------------------------------- | ---------- | --------------------------------------------------------- |
-| Button    | `button[tes-button]`, `a[tes-button]` | native     | 5 variants, 3 sizes, icon-only, loading (stays focusable) |
-| Icon      | `tes-icon`                            | inline SVG | 35 icons adapted from Lucide; decorative unless labelled  |
-| Spinner   | `tes-spinner`                         | native     | Indeterminate progressbar; pulses with reduced motion     |
-| Badge     | `tes-badge`                           | native     | 6 tones, subtle or solid; text always states the status   |
-| Tag       | `tes-tag`                             | native     | Optional remove button named "Remove {text}"              |
-| Avatar    | `tes-avatar`                          | native     | Picture or initials; falls back when the picture fails    |
-| Card      | `tes-card`, `article[tes-card]`       | native     | Outlined, elevated or filled; optional header and footer  |
-| Skeleton  | `tes-skeleton`                        | native     | Text lines, rectangle or circle; always `aria-hidden`     |
+| Component   | Selector                              | Built on   | Notes                                                     |
+| ----------- | ------------------------------------- | ---------- | --------------------------------------------------------- |
+| Button      | `button[tes-button]`, `a[tes-button]` | native     | 5 variants, 3 sizes, icon-only, loading (stays focusable) |
+| Icon        | `tes-icon`                            | inline SVG | 35 icons adapted from Lucide; decorative unless labelled  |
+| Spinner     | `tes-spinner`                         | native     | Indeterminate progressbar; pulses with reduced motion     |
+| Badge       | `tes-badge`                           | native     | 6 tones, subtle or solid; text always states the status   |
+| Tag         | `tes-tag`                             | native     | Optional remove button named "Remove {text}"              |
+| Avatar      | `tes-avatar`                          | native     | Picture or initials; falls back when the picture fails    |
+| Card        | `tes-card`, `article[tes-card]`       | native     | Outlined, elevated or filled; optional header and footer  |
+| Skeleton    | `tes-skeleton`                        | native     | Text lines, rectangle or circle; always `aria-hidden`     |
+| Alert       | `tes-alert`                           | native     | 4 tones spoken first ("Warning: …"); optional live region |
+| Progress    | `tes-progress`                        | native     | Determinate or indeterminate progressbar, localized value |
+| Stat        | `tes-stat`                            | native     | KPI with localized change; `positive` picks the color     |
+| Breadcrumbs | `tes-breadcrumbs`                     | native     | `nav > ol` over your own `<li>` links (any router)        |
 
 ## Usage
 
@@ -116,6 +120,8 @@ Every built-in string (button names, screen-reader text, paginator summary) come
 - **Built-in strings are injectable, and the ones with numbers are functions** (`pageRange(first, last, total)`), because word order and plurals differ between languages.
 - **Native elements stay native.** Components that enhance a native element are attributes on it (`<button tes-button>`), so `type="submit"`, `href`, `disabled` and ARIA attributes work as usual. A wrapper element (`<tes-button>`) would have to re-implement or forward all of them.
 - **`loading` uses `aria-disabled`, not `disabled`.** A disabled button loses focus, so keyboard users would be thrown back to the top of the page while a form saves.
+- **Status is never color alone.** Alerts speak their tone first ("Warning: …"), stats speak the direction of a change ("increase"), and badges always carry text.
+- **Breadcrumbs take your own `<li>` markup** instead of an items array, so links can use `href`, `routerLink` or anything else without Tessera depending on the router. It is the one component that is not view-encapsulated: its styles must reach projected items, so every selector is scoped under `.tes-breadcrumbs`.
 - **Icons are drawn from a typed map in the template.** No icon font, no runtime registry, no `innerHTML`: unknown names fail at compile time and nothing needs sanitizing.
 - **Lint enforces the component conventions.** Selectors must use the `tes` prefix (`<tes-select>`, `button[tes-button]`, `[tesTooltip]`), components must be OnPush and prefer signals, so reviews can focus on behavior.
 - **Plain CSS tokens, no Sass and no token pipeline.** Custom properties switch at runtime and cross component boundaries; a pipeline such as Style Dictionary only pays off when tokens must also reach native apps or design tools.
