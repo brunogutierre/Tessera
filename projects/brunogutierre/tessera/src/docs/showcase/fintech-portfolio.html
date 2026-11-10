@@ -1,0 +1,144 @@
+<div class="page">
+  <header class="title-row">
+    <h1>Portfolio</h1>
+    <div class="row">
+      <tes-badge tone="success" variant="solid">Market open</tes-badge>
+      <button
+        tes-button
+        variant="outline"
+        iconOnly
+        aria-label="Download statement"
+        tesTooltip="Download the monthly statement (PDF)"
+      >
+        <tes-icon name="download" />
+      </button>
+    </div>
+  </header>
+
+  @if (alertVisible()) {
+    <tes-alert
+      tone="warning"
+      heading="Margin usage at 78%"
+      dismissible
+      (dismissed)="alertVisible.set(false)"
+    >
+      Add funds or reduce leveraged positions to stay below the 80% maintenance limit.
+    </tes-alert>
+  }
+
+  <section class="kpis" aria-label="Summary">
+    <tes-card
+      ><tes-stat
+        label="Net asset value"
+        [value]="usd.format(total())"
+        [delta]="0.0184"
+        deltaLabel="today"
+    /></tes-card>
+    <tes-card><tes-stat label="Day P&amp;L" value="+$1,912.40" [delta]="0.0184" /></tes-card>
+    <tes-card
+      ><tes-stat label="Cash available" value="$8,415.02" [delta]="-0.12" deltaLabel="vs last week"
+    /></tes-card>
+    <tes-card
+      ><tes-stat label="Volatility (30d)" value="14.2%" [delta]="0.021" positive="down"
+    /></tes-card>
+  </section>
+
+  <div class="columns">
+    <tes-card>
+      <h2 tesCardHeader>Positions</h2>
+      <tes-tabs label="Positions" [(selected)]="tab">
+        <tes-tab-panel value="holdings" label="Holdings">
+          <table tes-table [(sort)]="sort">
+            <caption class="tes-visually-hidden">
+              Holdings
+            </caption>
+            <thead>
+              <tr>
+                <th tes-sort-header="ticker">Ticker</th>
+                <th tes-sort-header="quantity" data-type="number">Qty</th>
+                <th tes-sort-header="price" data-type="number">Price</th>
+                <th tes-sort-header="change" data-type="number">Day</th>
+                <th tes-sort-header="value" data-type="number">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (h of holdings(); track h.ticker) {
+                <tr>
+                  <th scope="row">{{ h.ticker }}</th>
+                  <td data-type="number">{{ h.quantity }}</td>
+                  <td data-type="number">{{ usd.format(h.price) }}</td>
+                  <td data-type="number">
+                    <tes-badge [tone]="h.change >= 0 ? 'success' : 'danger'">{{
+                      percent.format(h.change)
+                    }}</tes-badge>
+                  </td>
+                  <td data-type="number">{{ usd.format(h.value) }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </tes-tab-panel>
+        <tes-tab-panel value="activity" label="Activity">
+          <table tes-table>
+            <caption class="tes-visually-hidden">
+              Recent activity
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Description</th>
+                <th scope="col" data-type="number">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (a of activity; track a.date + a.description) {
+                <tr>
+                  <td>{{ a.date }}</td>
+                  <td>{{ a.description }}</td>
+                  <td data-type="number">{{ usd.format(a.amount) }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </tes-tab-panel>
+      </tes-tabs>
+    </tes-card>
+
+    <div class="stack">
+      <tes-card>
+        <h2 tesCardHeader>Allocation</h2>
+        <div class="allocation">
+          @for (a of allocation(); track a.ticker) {
+            <div class="allocation-row">
+              <span>{{ a.ticker }}</span>
+              <tes-progress
+                [label]="a.ticker + ' share of portfolio'"
+                [value]="a.share"
+                showValue
+                size="sm"
+              />
+            </div>
+          }
+        </div>
+      </tes-card>
+      <tes-card>
+        <h2 tesCardHeader>Quick order</h2>
+        <div class="stack">
+          <tes-form-field label="Instrument">
+            <tes-autocomplete
+              [options]="instruments"
+              [(value)]="instrument"
+              placeholder="Ticker or company"
+            />
+          </tes-form-field>
+          <tes-form-field label="Quantity">
+            <input tes-input type="number" min="1" value="10" />
+          </tes-form-field>
+          <div>
+            <button tes-button variant="primary" (click)="placeOrder()">Place market order</button>
+          </div>
+        </div>
+      </tes-card>
+    </div>
+  </div>
+</div>
