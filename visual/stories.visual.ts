@@ -58,6 +58,21 @@ for (const [theme, mode] of [
   });
 }
 
+// MDX documentation pages: they render Markdown (tables need remark-gfm), not components.
+const DOC_PAGES = ['introduction--docs', 'foundations-theming--docs'];
+test.describe('docs', () => {
+  for (const id of DOC_PAGES) {
+    test(id, async ({ page }) => {
+      await page.setViewportSize({ width: 1100, height: 900 });
+      await page.goto(`/iframe.html?id=${id}&viewMode=docs&globals=theme:enterprise;mode:light`);
+      await page.waitForSelector('#storybook-docs table');
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(500);
+      await expect(page).toHaveScreenshot(`docs/${id}.png`, { fullPage: true });
+    });
+  }
+});
+
 // Whole screens: each showcase pins its theme; check both modes.
 for (const mode of ['light', 'dark'] as const) {
   test.describe(`showcase ${mode}`, () => {
