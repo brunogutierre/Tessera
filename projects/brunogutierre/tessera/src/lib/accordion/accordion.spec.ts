@@ -7,7 +7,7 @@ import { TesAccordion, TesAccordionItem } from './accordion';
 @Component({
   imports: [TesAccordion, TesAccordionItem],
   template: `
-    <tes-accordion [multi]="multi()">
+    <tes-accordion [multiple]="multi()">
       <tes-accordion-item heading="Shipping" level="2">Ships in 2 days.</tes-accordion-item>
       <tes-accordion-item heading="Returns" [(expanded)]="returnsOpen"
         >30-day returns.</tes-accordion-item

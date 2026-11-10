@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostAttributeToken,
+  computed,
+  inject,
+  input,
+} from '@angular/core';
 import { uniqueId } from '../core/id';
 import { TesIcon } from '../icon/icon';
 
@@ -42,10 +49,16 @@ export class TesFieldset {
 
   protected readonly hintId = uniqueId('tes-hint');
   protected readonly errorId = uniqueId('tes-error');
-  protected readonly describedBy = computed(
-    () =>
-      [this.hint() ? this.hintId : null, this.error() ? this.errorId : null]
-        .filter(Boolean)
-        .join(' ') || null,
-  );
+  readonly #staticDescribedBy = inject(new HostAttributeToken('aria-describedby'), {
+    optional: true,
+  });
+  /** The app's own descriptions first, then the hint and the error. */
+  protected readonly describedBy = computed(() => {
+    const ids = [
+      this.#staticDescribedBy,
+      this.hint() ? this.hintId : null,
+      this.error() ? this.errorId : null,
+    ].filter(Boolean);
+    return ids.length > 0 ? ids.join(' ') : null;
+  });
 }

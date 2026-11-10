@@ -19,15 +19,14 @@ import {
   viewChild,
 } from '@angular/core';
 import { TES_LABELS } from '../core/labels';
+import type { TesStatusTone } from '../core/tones';
 import { TesButton } from '../button/button';
 import { TesIcon } from '../icon/icon';
 import type { TesIconName } from '../icon/icons';
 
-export type TesToastTone = 'info' | 'success' | 'warning' | 'danger';
-
 export interface TesToastOptions {
   message: string;
-  tone?: TesToastTone;
+  tone?: TesStatusTone;
   /** One action, such as "Undo". A toast with an action stays until it is used or dismissed. */
   action?: { label: string; run: () => void };
   /** Milliseconds before it disappears; 0 keeps it until dismissed. Default 5000. */
@@ -38,7 +37,7 @@ export interface TesToastOptions {
 export interface TesToast {
   readonly id: number;
   readonly message: string;
-  readonly tone: TesToastTone;
+  readonly tone: TesStatusTone;
   readonly action?: { label: string; run: () => void };
 }
 
@@ -47,7 +46,7 @@ export interface TesToastRef {
   dismiss(): void;
 }
 
-const ICONS: Record<TesToastTone, TesIconName> = {
+const ICONS: Record<TesStatusTone, TesIconName> = {
   info: 'info',
   success: 'circle-check',
   warning: 'triangle-alert',

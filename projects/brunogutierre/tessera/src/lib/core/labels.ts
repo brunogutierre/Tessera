@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import type { TesStatusTone } from './tones';
 
 /**
  * Every built-in string Tessera renders (screen-reader labels, button names, status text).
@@ -8,9 +9,7 @@ export interface TesLabels {
   close: string;
   dismiss: string;
   loading: string;
-  clear: string;
   noResults: string;
-  required: string;
   optional: string;
   breadcrumbs: string;
   notifications: string;
@@ -28,7 +27,7 @@ export interface TesLabels {
   /** Accessible name of a removable tag's remove button. */
   remove: (item: string) => string;
   /** Spoken before an alert's content, so its tone never depends on color or icon alone. */
-  tones: { info: string; success: string; warning: string; danger: string };
+  tones: Record<TesStatusTone, string>;
   /** Spoken after a stat's change, e.g. "+12.5% increase". */
   increase: string;
   decrease: string;
@@ -38,9 +37,7 @@ export const DEFAULT_LABELS: TesLabels = {
   close: 'Close',
   dismiss: 'Dismiss',
   loading: 'Loading',
-  clear: 'Clear',
   noResults: 'No results',
-  required: 'required',
   optional: 'optional',
   breadcrumbs: 'Breadcrumb',
   notifications: 'Notifications',

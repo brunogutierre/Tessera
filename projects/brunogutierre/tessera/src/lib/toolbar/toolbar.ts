@@ -1,5 +1,5 @@
 import { Toolbar, ToolbarWidget } from '@angular/aria/toolbar';
-import { ChangeDetectionStrategy, Component, Directive } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Directive, computed, inject } from '@angular/core';
 
 /**
  * Marks a control inside a `tes-toolbar` as one of its items, so the arrow keys reach it.
@@ -17,9 +17,19 @@ export class TesToolbarItem {}
   template: '',
   styleUrl: './toolbar-separator.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'tes-toolbar-separator', role: 'separator', 'aria-orientation': 'vertical' },
+  host: {
+    class: 'tes-toolbar-separator',
+    role: 'separator',
+    '[attr.aria-orientation]': 'orientation()',
+  },
 })
-export class TesToolbarSeparator {}
+export class TesToolbarSeparator {
+  readonly #toolbar = inject(Toolbar, { optional: true });
+  /** A separator runs across the toolbar: vertical in a horizontal toolbar and vice versa. */
+  protected readonly orientation = computed(() =>
+    this.#toolbar?.orientation() === 'vertical' ? 'horizontal' : 'vertical',
+  );
+}
 
 /**
  * A row of controls with a single tab stop.
