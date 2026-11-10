@@ -11,6 +11,10 @@ import { applicationConfig } from '@storybook/angular-vite';
 import type { Decorator, Preview } from '@storybook/angular-vite';
 import { provideTessera } from '../projects/brunogutierre/tessera/src/public-api';
 
+/** Set by the story test runner (vitest.storybook.config.mts) to test each theme and mode. */
+declare const __TES_GLOBALS__: { theme: string; mode: string } | undefined;
+const testGlobals = typeof __TES_GLOBALS__ === 'undefined' ? undefined : __TES_GLOBALS__;
+
 /**
  * Mirrors the toolbar globals onto <html>, exactly like a static `data-tes-*` attribute in an
  * app's index.html. `TesseraTheme` reads them at startup, so stories and the service agree.
@@ -66,7 +70,7 @@ const preview: Preview = {
       },
     },
   },
-  initialGlobals: { theme: 'enterprise', mode: 'light', dir: 'ltr' },
+  initialGlobals: { theme: 'enterprise', mode: 'light', dir: 'ltr', ...testGlobals },
   parameters: {
     layout: 'padded',
     controls: { expanded: true, sort: 'requiredFirst' },

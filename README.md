@@ -38,6 +38,7 @@ projects/brunogutierre/tessera/   the library (@brunogutierre/tessera)
 .storybook/                      Storybook config: globals for theme, mode and direction; fonts
   src/docs/                       MDX pages and foundation stories
 vitest.storybook.config.mts       runs every story as a browser test
+scripts/test-stories.mjs          runs the story tests once per theme and mode
 .github/workflows/ci.yml          format, lint, unit tests, package checks, story tests
 .github/workflows/pages.yml       deploys Storybook to GitHub Pages on every push to main
 ```
@@ -59,6 +60,14 @@ Tokens come in three tiers:
 ```html
 <html data-tes-theme="fintech" data-tes-mode="dark"></html>
 ```
+
+## Components
+
+| Component | Selector                              | Built on   | Notes                                                     |
+| --------- | ------------------------------------- | ---------- | --------------------------------------------------------- |
+| Button    | `button[tes-button]`, `a[tes-button]` | native     | 5 variants, 3 sizes, icon-only, loading (stays focusable) |
+| Icon      | `tes-icon`                            | inline SVG | 35 icons adapted from Lucide; decorative unless labelled  |
+| Spinner   | `tes-spinner`                         | native     | Indeterminate progressbar; pulses with reduced motion     |
 
 ## Usage
 
@@ -95,11 +104,14 @@ Every built-in string (button names, screen-reader text, paginator summary) come
 
 - **Library-only workspace.** Storybook is the documentation and the playground, so there is no separate demo app to build, deploy and keep in sync.
 - **Storybook on Vite (`@storybook/angular-vite`) instead of Webpack.** It is the only Angular framework that runs stories as Vitest tests, and it matches Angular's own esbuild/Vite toolchain. It is still marked preview, so versions are pinned exactly; the fallback is `@storybook/angular`.
-- **Every story is a test.** `npm run test:stories` renders each story in Chromium, runs its play function and fails on any axe violation (`a11y.test: 'error'`).
+- **Every story is a test, in every theme.** `npm run test:stories` renders each story in Chromium, runs its play function and fails on any axe violation (`a11y.test: 'error'`), once per theme and mode (six runs, sequential to keep memory low).
 - **Fonts only in Storybook.** The package ships no fonts and its tokens end in system stacks; Storybook loads OFL fonts locally (`@fontsource-variable/*`) so pages and screenshots never depend on a CDN.
 - **Unit tests run in a real browser (Chromium) instead of jsdom.** Components rely on the Popover API, focus management, `:focus-visible`, `matchMedia` and the CSS cascade to resolve tokens; jsdom fakes or lacks all of these.
 - **Theme state is two attributes on `<html>`.** `TesseraTheme` only writes `data-tes-theme` and `data-tes-mode`; the CSS does the rest. It adopts attributes already present in `index.html`, so server-rendered or static pages never flash the wrong theme.
 - **Built-in strings are injectable, and the ones with numbers are functions** (`pageRange(first, last, total)`), because word order and plurals differ between languages.
+- **Native elements stay native.** Components that enhance a native element are attributes on it (`<button tes-button>`), so `type="submit"`, `href`, `disabled` and ARIA attributes work as usual. A wrapper element (`<tes-button>`) would have to re-implement or forward all of them.
+- **`loading` uses `aria-disabled`, not `disabled`.** A disabled button loses focus, so keyboard users would be thrown back to the top of the page while a form saves.
+- **Icons are drawn from a typed map in the template.** No icon font, no runtime registry, no `innerHTML`: unknown names fail at compile time and nothing needs sanitizing.
 - **Lint enforces the component conventions.** Selectors must use the `tes` prefix (`<tes-select>`, `button[tes-button]`, `[tesTooltip]`), components must be OnPush and prefer signals, so reviews can focus on behavior.
 - **Plain CSS tokens, no Sass and no token pipeline.** Custom properties switch at runtime and cross component boundaries; a pipeline such as Style Dictionary only pays off when tokens must also reach native apps or design tools.
 - **`light-dark()` with `color-scheme` for modes.** Each theme defines each color once, `system` mode needs no JavaScript, and a subtree can switch mode by setting one attribute.
@@ -130,6 +142,10 @@ npm test
 | `npm run test:stories`    | Every story as a browser test, with axe            |
 | `npm run build-storybook` | Static Storybook in `storybook-static/`            |
 | `npm run check:package`   | Build, then publint, attw and `npm pack --dry-run` |
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the component checklist, API and styling conventions.
 
 ## License
 

@@ -1,0 +1,18 @@
+@layer tessera.components {
+  :host {
+    display: inline-flex;
+    flex-shrink: 0;
+    inline-size: var(--tes-icon-size, 1.25em);
+    block-size: var(--tes-icon-size, 1.25em);
+    vertical-align: middle;
+  }
+
+  svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  :host([data-directional]:dir(rtl)) svg {
+    transform: scaleX(-1);
+  }
+}
