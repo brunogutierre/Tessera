@@ -1,6 +1,6 @@
 # Tessera
 
-An Angular design system: 33 accessible components, three professional themes (Enterprise, Fintech and Care), each with light and dark modes, documented and tested in Storybook.
+An Angular design system: 35 accessible components, three professional themes (Enterprise, Fintech and Care), each with light and dark modes, documented and tested in Storybook.
 
 **Live Storybook:** https://brunogutierre.github.io/Tessera/. Start with the **Showcase** pages: a purchase-order back office (Enterprise), a portfolio dashboard (Fintech) and an appointment booking form (Care), built only from Tessera components.
 
@@ -30,41 +30,43 @@ Show how a production-grade design system is built with modern Angular: design t
 
 ## Components
 
-| Component    | Selector                                  | Built on   | Notes                                                          |
-| ------------ | ----------------------------------------- | ---------- | -------------------------------------------------------------- |
-| Button       | `button[tes-button]`, `a[tes-button]`     | native     | 5 variants, 3 sizes, icon-only, loading, soft-disabled         |
-| Icon         | `tes-icon`                                | inline SVG | 35 icons adapted from Lucide; decorative unless labelled       |
-| Spinner      | `tes-spinner`                             | native     | Indeterminate progressbar; pulses with reduced motion          |
-| Badge        | `tes-badge`                               | native     | 6 tones, subtle or solid; text always states the status        |
-| Tag          | `tes-tag`                                 | native     | Optional remove button named "Remove {text}"                   |
-| Avatar       | `tes-avatar`                              | native     | Picture or initials; falls back when the picture fails         |
-| Card         | `tes-card`, `article[tes-card]`           | native     | Outlined, elevated or filled; optional header and footer       |
-| Skeleton     | `tes-skeleton`                            | native     | Text lines, rectangle or circle; always `aria-hidden`          |
-| Alert        | `tes-alert`                               | native     | 4 tones spoken first ("Warning: …"); optional live region      |
-| Progress     | `tes-progress`                            | native     | Determinate or indeterminate progressbar, localized value      |
-| Stat         | `tes-stat`                                | native     | KPI with localized change; `positive` picks the color          |
-| Breadcrumbs  | `tes-breadcrumbs`                         | native     | `nav > ol` over your own `<li>` links (any router)             |
-| Form field   | `tes-form-field`                          | native     | Label, hint and error wired to the control by itself           |
-| Input        | `input[tes-input]`, `textarea[tes-input]` | native     | Native value and validation; textareas grow with content       |
-| Checkbox     | `input[type=checkbox][tes-checkbox]`      | native     | Checked, indeterminate; mark cut out with a CSS mask           |
-| Radio        | `input[type=radio][tes-radio]`            | native     | Browser arrow keys and single tab stop                         |
-| Switch       | `input[type=checkbox][tes-switch]`        | native     | `role="switch"`; knob mirrors in RTL                           |
-| Slider       | `input[type=range][tes-slider]`           | native     | Filled track follows the value, even when set by a form        |
-| Choice       | `label[tes-choice]`                       | native     | Clickable label for a checkbox, radio or switch                |
-| Fieldset     | `fieldset[tes-fieldset]`                  | native     | Legend, hint and error for a group of choices                  |
-| Tooltip      | `[tesTooltip]`                            | CDK        | WCAG 1.4.13: dismissible, hoverable; always the description    |
-| Menu         | `tes-menu`                                | Aria + CDK | Menu button with data-driven items, separators, danger         |
-| Select       | `tes-select`                              | Aria + CDK | Single or multiple; a Signal Forms `FormValueControl`          |
-| Listbox      | `tes-listbox`                             | Aria       | Always-visible list, single (follows focus) or multiple        |
-| Autocomplete | `tes-autocomplete`                        | Aria + CDK | Editable combobox, accent-insensitive filter, "no results"     |
-| Tabs         | `tes-tabs`, `tes-tab-panel`               | Aria       | Tabs built from panel labels; hidden panels stay rendered      |
-| Accordion    | `tes-accordion`, `tes-accordion-item`     | Aria       | One section at a time unless `multiple`; lazy content          |
-| Toolbar      | `tes-toolbar`, `[tesToolbarItem]`         | Aria       | Single tab stop, arrow keys, separators                        |
-| Tree         | `tes-tree`                                | Aria       | Data-driven hierarchy; expand, collapse, typeahead, select     |
-| Dialog       | `TesDialog`, `tes-dialog`                 | CDK        | Modal or drawer; focus trap and return, `alertdialog`          |
-| Toast        | `TesToaster`                              | CDK        | Announced, pausable, optional action; never color alone        |
-| Table        | `table[tes-table]`, `th[tes-sort-header]` | native     | Native table, sortable headers with `aria-sort`, `tesSortRows` |
-| Paginator    | `tes-paginator`                           | native     | Page size select, announced range, first to last buttons       |
+| Component    | Selector                                  | Built on   | Notes                                                                       |
+| ------------ | ----------------------------------------- | ---------- | --------------------------------------------------------------------------- |
+| Button       | `button[tes-button]`, `a[tes-button]`     | native     | 5 variants, 3 sizes, icon-only, loading (stays focusable)                   |
+| Icon         | `tes-icon`                                | inline SVG | 35 icons adapted from Lucide; decorative unless labelled                    |
+| Spinner      | `tes-spinner`                             | native     | Indeterminate progressbar; pulses with reduced motion                       |
+| Badge        | `tes-badge`                               | native     | 6 tones, subtle or solid; text always states the status                     |
+| Tag          | `tes-tag`                                 | native     | Optional remove button named "Remove {text}"                                |
+| Avatar       | `tes-avatar`                              | native     | Picture or initials; falls back when the picture fails                      |
+| Card         | `tes-card`, `article[tes-card]`           | native     | Outlined, elevated or filled; optional header and footer                    |
+| Skeleton     | `tes-skeleton`                            | native     | Text lines, rectangle or circle; always `aria-hidden`                       |
+| Alert        | `tes-alert`                               | native     | 4 tones spoken first ("Warning: …"); optional live region                   |
+| Progress     | `tes-progress`                            | native     | Determinate or indeterminate progressbar, localized value                   |
+| Stat         | `tes-stat`                                | native     | KPI with localized change; `positive` picks the color                       |
+| Breadcrumbs  | `tes-breadcrumbs`                         | native     | `nav > ol` over your own `<li>` links (any router)                          |
+| Form field   | `tes-form-field`                          | native     | Label, hint and error wired to the control by itself                        |
+| Input        | `input[tes-input]`, `textarea[tes-input]` | native     | Native value and validation; textareas grow with content                    |
+| Checkbox     | `input[type=checkbox][tes-checkbox]`      | native     | Checked, indeterminate; mark cut out with a CSS mask                        |
+| Radio        | `input[type=radio][tes-radio]`            | native     | Browser arrow keys and single tab stop                                      |
+| Switch       | `input[type=checkbox][tes-switch]`        | native     | `role="switch"`; knob mirrors in RTL                                        |
+| Slider       | `input[type=range][tes-slider]`           | native     | Filled track follows the value, even when set by a form                     |
+| Choice       | `label[tes-choice]`                       | native     | Clickable label for a checkbox, radio or switch                             |
+| Fieldset     | `fieldset[tes-fieldset]`                  | native     | Legend, hint and error for a group of choices                               |
+| Tooltip      | `[tesTooltip]`                            | CDK        | WCAG 1.4.13: dismissible, hoverable; always the description                 |
+| Menu         | `tes-menu`                                | Aria + CDK | Menu button with data-driven items, separators, danger                      |
+| Select       | `tes-select`                              | Aria + CDK | Single or multiple; a Signal Forms `FormValueControl`                       |
+| Listbox      | `tes-listbox`                             | Aria       | Always-visible list, single (follows focus) or multiple                     |
+| Autocomplete | `tes-autocomplete`                        | Aria + CDK | Editable combobox, accent-insensitive filter, "no results"                  |
+| Tabs         | `tes-tabs`, `tes-tab-panel`               | Aria       | Tabs built from panel labels; hidden panels stay rendered                   |
+| Accordion    | `tes-accordion`, `tes-accordion-item`     | Aria       | One section at a time unless `multiple`; lazy content                       |
+| Toolbar      | `tes-toolbar`, `[tesToolbarItem]`         | Aria       | Single tab stop, arrow keys, separators                                     |
+| Tree         | `tes-tree`                                | Aria       | Data-driven hierarchy; expand, collapse, typeahead, select                  |
+| Dialog       | `TesDialog`, `tes-dialog`                 | CDK        | Modal or drawer; focus trap and return, `alertdialog`                       |
+| Toast        | `TesToaster`                              | CDK        | Announced, pausable, optional action; never color alone                     |
+| Table        | `table[tes-table]`, `th[tes-sort-header]` | native     | Native table, sortable headers with `aria-sort`, `tesSortRows`              |
+| Paginator    | `tes-paginator`                           | native     | Page size select, announced range, first to last buttons                    |
+| Calendar     | `tes-calendar`                            | native     | Month grid for one ISO date; APG date grid keyboard, min/max, locale-aware  |
+| Date picker  | `tes-date-picker`                         | CDK        | Typed locale date plus calendar dialog; `FormValueControl` of an ISO string |
 
 ## Themes and design tokens
 
@@ -139,11 +141,13 @@ Every built-in string (button names, screen-reader text, the paginator summary) 
 - **Status is never color alone.** Alerts and toasts speak their tone first ("Warning: …"), stats speak the direction of a change, badges carry text, selected rows add a start bar.
 - **Disabled has two meanings.** Form controls are natively disabled. Items of composite widgets and buttons that become unavailable right after being pressed are soft-disabled (focusable, `aria-disabled`), so keyboard focus is never thrown to the page.
 - **Tables stay native HTML.** A read-only data table is not an interactive grid. `th[tes-sort-header]` adds the sort button and `aria-sort`. Row selection uses a checkbox, since `aria-selected` is only valid on grid rows.
+- **The calendar keyboard is hand-written.** `tes-calendar` follows the APG date grid, but moving past the first or last day must change the month, and Page Up/Down change month and year. `@angular/aria/grid` navigates inside a fixed set of cells, so the calendar owns a roving tab stop over a native table with `role="grid"` instead.
 - **Icons are drawn from a typed map in the template.** There is no icon font, no runtime registry and no `innerHTML`: unknown names fail at compile time and nothing needs sanitizing.
 
 ### Forms
 
-- **No `ControlValueAccessor` anywhere.** Native controls bind through each form library's own accessors. Composite controls (`tes-select`, `tes-listbox`, `tes-autocomplete`) are Signal Forms `FormValueControl`s (`value` as a `model()` plus a `touch` output); Angular 22 binds that shape from `[formField]`, Reactive Forms and `ngModel` alike, and tests cover all three.
+- **No `ControlValueAccessor` anywhere.** Native controls bind through each form library's own accessors. Composite controls (`tes-select`, `tes-listbox`, `tes-autocomplete`, `tes-date-picker`) are Signal Forms `FormValueControl`s (`value` as a `model()` plus a `touch` output); Angular 22 binds that shape from `[formField]`, Reactive Forms and `ngModel` alike, and tests cover all three.
+- **Dates are ISO strings.** `tes-date-picker` and `tes-calendar` read and write `YYYY-MM-DD` strings, not `Date` objects: a calendar date has no time zone, the value serializes as is, and equality is `===`. Date math runs in UTC; names, the first day of the week and the typed format come from `LOCALE_ID` through `Intl`, with no date library.
 - **The app decides when an error shows.** `tes-form-field` takes the message, not a validation rule, so it works with any form library and any "after blur or submit" policy. The control registers with the field, which wires `for`/`aria-labelledby`, `aria-describedby` and `aria-invalid`.
 
 ### Documentation and tests
@@ -200,7 +204,7 @@ Versions follow SemVer and are listed in [CHANGELOG.md](CHANGELOG.md). Publishin
 
 ## Roadmap
 
-- A date picker on the `@angular/aria` grid (cut from this first version; native `input[type=date][tes-input]` is themed meanwhile).
+- Date range selection and a month/year view in the calendar.
 - Storybook 11 once it ships stable (`@storybook/angular-vite` leaves preview).
 
 ## License

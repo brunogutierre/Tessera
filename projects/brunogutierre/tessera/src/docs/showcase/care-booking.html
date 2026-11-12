@@ -40,7 +40,7 @@
       </tes-form-field>
 
       <tes-form-field label="Preferred date" [error]="errorOf('date')">
-        <input tes-input type="date" [formField]="booking.date" />
+        <tes-date-picker [formField]="booking.date" />
       </tes-form-field>
 
       <tes-form-field label="Anything we should know?" optional>
