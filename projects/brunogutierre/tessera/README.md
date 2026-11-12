@@ -1,6 +1,6 @@
 # @brunogutierre/tessera
 
-An Angular design system: 33 accessible components, three professional themes (Enterprise, Fintech and Care), each with light and dark modes.
+An Angular design system: 35 accessible components, three professional themes (Enterprise, Fintech and Care), each with light and dark modes.
 
 - **Storybook (docs, playground and showcase pages):** https://brunogutierre.github.io/Tessera/
 - **Source, decisions and contributing guide:** https://github.com/brunogutierre/Tessera

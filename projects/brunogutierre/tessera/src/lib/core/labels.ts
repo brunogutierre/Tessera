@@ -19,6 +19,10 @@ export interface TesLabels {
   lastPage: string;
   itemsPerPage: string;
   pagination: string;
+  previousMonth: string;
+  nextMonth: string;
+  /** Name of the button and dialog that open the calendar. */
+  chooseDate: string;
   /** Spoken by a sortable column header: "Amount, sort ascending". */
   sortAscending: string;
   sortDescending: string;
@@ -47,6 +51,9 @@ export const DEFAULT_LABELS: TesLabels = {
   lastPage: 'Last page',
   itemsPerPage: 'Items per page',
   pagination: 'Pagination',
+  previousMonth: 'Previous month',
+  nextMonth: 'Next month',
+  chooseDate: 'Choose date',
   sortAscending: 'sorted ascending',
   sortDescending: 'sorted descending',
   pageRange: (first, last, total) =>

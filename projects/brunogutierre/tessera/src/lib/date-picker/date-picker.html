@@ -1,0 +1,52 @@
+<div class="field" cdkOverlayOrigin #origin="cdkOverlayOrigin">
+  <input
+    tes-input
+    class="input"
+    type="text"
+    inputmode="numeric"
+    autocomplete="off"
+    [value]="text()"
+    [placeholder]="formatHint"
+    [disabled]="disabled()"
+    [required]="required()"
+    [invalid]="invalid() || rejected()"
+    [attr.aria-label]="field ? null : (label() ?? null)"
+    (change)="commit($event)"
+  />
+  <button
+    tes-button
+    #toggle
+    class="toggle"
+    variant="ghost"
+    size="sm"
+    iconOnly
+    type="button"
+    aria-haspopup="dialog"
+    [attr.aria-expanded]="open()"
+    [attr.aria-label]="toggleLabel()"
+    [disabled]="disabled()"
+    (click)="toggleOpen()"
+  >
+    <tes-icon name="calendar" />
+  </button>
+</div>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="origin"
+  [cdkConnectedOverlayOpen]="open()"
+  [cdkConnectedOverlayPositions]="positions"
+  cdkConnectedOverlayUsePopover="inline"
+  (overlayOutsideClick)="onOutsideClick($event)"
+  (attach)="onAttach()"
+>
+  <div
+    class="panel"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="labels.chooseDate"
+    cdkTrapFocus
+  >
+    <tes-calendar [value]="value()" [min]="min()" [max]="max()" (picked)="pick($event)" />
+  </div>
+</ng-template>

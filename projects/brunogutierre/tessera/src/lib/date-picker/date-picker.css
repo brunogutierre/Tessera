@@ -1,0 +1,50 @@
+@layer tessera.components {
+  :host {
+    display: block;
+    min-inline-size: 0;
+  }
+
+  .field {
+    position: relative;
+  }
+
+  /* Room for the calendar button inside the field. */
+  .input {
+    padding-inline-end: calc(var(--tes-control-height-sm) + var(--tes-space-2));
+    font-variant-numeric: tabular-nums;
+  }
+
+  .toggle {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: var(--tes-space-1);
+    margin-block: auto;
+    color: var(--tes-color-text-muted);
+  }
+
+  /* Panel: resets inherited text styles, since it renders in the top layer. */
+  .panel {
+    padding: var(--tes-space-3);
+    border: var(--tes-border-width) solid var(--tes-color-border);
+    border-radius: var(--tes-radius-lg);
+    background-color: var(--tes-color-surface-raised);
+    box-shadow: var(--tes-shadow-md);
+    color: var(--tes-color-text);
+    line-height: var(--tes-leading-tight);
+    text-align: start;
+    white-space: normal;
+    transition: opacity var(--tes-duration-fast) var(--tes-easing-standard);
+  }
+
+  @starting-style {
+    .panel {
+      opacity: 0;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .panel {
+      border-color: CanvasText;
+    }
+  }
+}

@@ -1,0 +1,58 @@
+<div class="header">
+  <button
+    tes-button
+    variant="ghost"
+    size="sm"
+    iconOnly
+    type="button"
+    [attr.aria-label]="labels.previousMonth"
+    (click)="showMonth(-1)"
+  >
+    <tes-icon name="chevron-left" />
+  </button>
+  <div class="title" [id]="headingId" aria-live="polite">{{ title() }}</div>
+  <button
+    tes-button
+    variant="ghost"
+    size="sm"
+    iconOnly
+    type="button"
+    [attr.aria-label]="labels.nextMonth"
+    (click)="showMonth(1)"
+  >
+    <tes-icon name="chevron-right" />
+  </button>
+</div>
+<table class="grid" role="grid" [attr.aria-labelledby]="headingId">
+  <thead>
+    <tr>
+      @for (day of weekdays(); track day.long) {
+        <th scope="col" [attr.abbr]="day.long">{{ day.short }}</th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (week of weeks(); track $index) {
+      <tr>
+        @for (day of week; track $index) {
+          <td role="gridcell" [attr.aria-selected]="day ? day.iso === value() : null">
+            @if (day) {
+              <button
+                type="button"
+                class="day"
+                [attr.data-date]="day.iso"
+                [attr.tabindex]="day.iso === active() ? 0 : -1"
+                [attr.aria-label]="day.label"
+                [attr.aria-current]="day.iso === today() ? 'date' : null"
+                [disabled]="day.disabled"
+                (click)="pick(day.iso)"
+              >
+                {{ day.number }}
+              </button>
+            }
+          </td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>

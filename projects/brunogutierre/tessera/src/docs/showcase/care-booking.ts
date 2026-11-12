@@ -7,6 +7,7 @@ import { TesButton } from '../../lib/button/button';
 import { TesCard } from '../../lib/card/card';
 import { TesCheckbox } from '../../lib/checkbox/checkbox';
 import { TesChoice } from '../../lib/choice/choice';
+import { TesDatePicker } from '../../lib/date-picker/date-picker';
 import { TesFieldset } from '../../lib/fieldset/fieldset';
 import { TesFormField } from '../../lib/form-field/form-field';
 import { TesInput } from '../../lib/input/input';
@@ -19,7 +20,7 @@ interface Booking {
   visit: string;
   specialty: string | null;
   doctor: string | null;
-  date: string;
+  date: string | null;
   notes: string;
   consent: boolean;
 }
@@ -44,6 +45,7 @@ const DOCTORS: TesOption[] = [
     TesCard,
     TesCheckbox,
     TesChoice,
+    TesDatePicker,
     TesFieldset,
     TesFormField,
     TesInput,
@@ -68,7 +70,7 @@ export class CareBooking {
     visit: 'clinic',
     specialty: null,
     doctor: null,
-    date: '',
+    date: null,
     notes: '',
     consent: false,
   });

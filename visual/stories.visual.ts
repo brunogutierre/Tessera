@@ -24,7 +24,11 @@ for (const story of stories) {
 const showcases = stories.filter((story) => story.title === 'Showcase');
 
 /** Stories whose play function opens an overlay, so open panels are covered too. */
-const OPEN_OVERLAYS = ['components-select--open', 'components-menu--open'];
+const OPEN_OVERLAYS = [
+  'components-select--open',
+  'components-menu--open',
+  'components-date-picker--open',
+];
 for (const id of OPEN_OVERLAYS) {
   const story = stories.find((entry) => entry.id === id);
   if (story) firstPerTitle.set(`${story.title} (open)`, story);
