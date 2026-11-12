@@ -63,3 +63,4 @@ export type { TesSort, TesSortDirection } from './lib/table/table';
 export { TesPaginator } from './lib/paginator/paginator';
 export type { TesIsoDate } from './lib/core/date';
 export { TesCalendar } from './lib/calendar/calendar';
+export { TesDatePicker } from './lib/date-picker/date-picker';
