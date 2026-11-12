@@ -4,6 +4,12 @@ All notable changes to `@brunogutierre/tessera` are documented here. The format 
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-11-11
+
+### Changed
+
+- First version published from CI through npm Trusted Publishing, with a signed provenance statement. The code is the same as 0.1.0.
+
 ## [0.1.0] - 2026-11-11
 
 First release.
