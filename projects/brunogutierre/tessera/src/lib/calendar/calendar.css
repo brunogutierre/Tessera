@@ -1,0 +1,93 @@
+@layer tessera.components {
+  :host {
+    --_cell: max(var(--tes-control-height-sm), 2rem);
+
+    display: inline-block;
+    color: var(--tes-color-text);
+    font-family: var(--tes-font-sans);
+    font-size: var(--tes-text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: var(--tes-space-2);
+    margin-block-end: var(--tes-space-2);
+  }
+
+  .title {
+    flex: 1;
+    font-size: var(--tes-text-md);
+    font-weight: var(--tes-weight-semibold);
+    text-align: center;
+  }
+
+  .grid {
+    border-collapse: collapse;
+  }
+
+  th {
+    block-size: var(--_cell);
+    padding: 0;
+    color: var(--tes-color-text-muted);
+    font-size: var(--tes-text-xs);
+    font-weight: var(--tes-weight-medium);
+    text-align: center;
+  }
+
+  td {
+    padding: 1px;
+  }
+
+  .day {
+    display: grid;
+    place-items: center;
+    inline-size: var(--_cell);
+    block-size: var(--_cell);
+    margin: 0;
+    padding: 0;
+    border: var(--tes-border-width) solid transparent;
+    border-radius: var(--tes-radius-md);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .day:hover:not(:disabled) {
+    background-color: var(--tes-color-neutral-subtle);
+  }
+
+  .day:focus-visible {
+    outline: var(--tes-focus-ring-width) solid var(--tes-color-focus);
+    outline-offset: var(--tes-focus-ring-offset);
+  }
+
+  /* Today: an outline and bold text, so it is not marked by color alone. */
+  .day[aria-current='date'] {
+    border-color: var(--tes-color-border-strong);
+    font-weight: var(--tes-weight-bold);
+  }
+
+  td[aria-selected='true'] .day {
+    border-color: var(--tes-color-primary);
+    background-color: var(--tes-color-primary);
+    color: var(--tes-color-on-primary);
+    font-weight: var(--tes-weight-semibold);
+  }
+
+  .day:disabled {
+    color: var(--tes-color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    td[aria-selected='true'] .day {
+      forced-color-adjust: none;
+      border-color: Highlight;
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+}
