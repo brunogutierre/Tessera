@@ -3,6 +3,8 @@
  */
 export { SEMANTIC_TOKENS, TES_MODES, TES_THEMES } from './lib/core/tokens';
 export type { TesMode, TesThemeName, TesToken } from './lib/core/tokens';
+export { TES_CONTRAST_PAIRS } from './lib/core/contrast';
+export type { TesContrastPair } from './lib/core/contrast';
 export { DEFAULT_LABELS, TES_LABELS } from './lib/core/labels';
 export type { TesLabels } from './lib/core/labels';
 export type { TesStatusTone } from './lib/core/tones';
