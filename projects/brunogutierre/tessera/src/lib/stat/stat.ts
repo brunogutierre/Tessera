@@ -26,10 +26,15 @@ export type TesStatTrend = 'up' | 'down' | 'flat';
   selector: 'tes-stat',
   imports: [TesIcon],
   template: `
-    <span class="label">{{ label() }}</span>
-    <span class="value">{{ value() }}</span>
+    <span class="label" data-tes-part="label">{{ label() }}</span>
+    <span class="value" data-tes-part="value">{{ value() }}</span>
     @if (delta() !== undefined) {
-      <span class="delta" [attr.data-trend]="trend()" [attr.data-good]="good()">
+      <span
+        class="delta"
+        data-tes-part="delta"
+        [attr.data-trend]="trend()"
+        [attr.data-good]="good()"
+      >
         @if (trend() !== 'flat') {
           <tes-icon [name]="trend() === 'up' ? 'trending-up' : 'trending-down'" />
         }
@@ -38,7 +43,7 @@ export type TesStatTrend = 'up' | 'down' | 'flat';
           <span class="tes-visually-hidden"> {{ text }}</span>
         }
         @if (deltaLabel(); as context) {
-          <span class="context"> {{ context }}</span>
+          <span class="context" data-tes-part="context"> {{ context }}</span>
         }
       </span>
     }

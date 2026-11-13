@@ -28,11 +28,12 @@ import { TesIcon } from '../icon/icon';
   selector: 'tes-tag',
   imports: [TesIcon],
   template: `
-    <span class="label" #label><ng-content /></span>
+    <span class="label" data-tes-part="label" #label><ng-content /></span>
     @if (removable()) {
       <button
         type="button"
         class="remove"
+        data-tes-part="remove"
         [attr.aria-label]="removeLabel()"
         [disabled]="disabled()"
         (click)="removed.emit()"

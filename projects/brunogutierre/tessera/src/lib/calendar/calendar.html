@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header" data-tes-part="header">
   <button
     tes-button
     variant="ghost"
@@ -10,7 +10,7 @@
   >
     <tes-icon name="chevron-left" />
   </button>
-  <div class="title" [id]="headingId" aria-live="polite">{{ title() }}</div>
+  <div class="title" data-tes-part="title" [id]="headingId" aria-live="polite">{{ title() }}</div>
   <button
     tes-button
     variant="ghost"
@@ -23,7 +23,7 @@
     <tes-icon name="chevron-right" />
   </button>
 </div>
-<table class="grid" role="grid" [attr.aria-labelledby]="headingId">
+<table class="grid" data-tes-part="grid" role="grid" [attr.aria-labelledby]="headingId">
   <thead>
     <tr>
       @for (day of weekdays(); track day.long) {
@@ -40,6 +40,7 @@
               <button
                 type="button"
                 class="day"
+                data-tes-part="day"
                 [attr.data-date]="day.iso"
                 [attr.tabindex]="day.iso === active() ? 0 : -1"
                 [attr.aria-label]="day.label"

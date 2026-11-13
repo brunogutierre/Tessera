@@ -26,11 +26,15 @@ export type TesProgressSize = 'sm' | 'md';
 @Component({
   selector: 'tes-progress',
   template: `
-    <div class="track">
-      <div class="bar" [style.inline-size.%]="indeterminate() ? null : percent()"></div>
+    <div class="track" data-tes-part="track">
+      <div
+        class="bar"
+        data-tes-part="bar"
+        [style.inline-size.%]="indeterminate() ? null : percent()"
+      ></div>
     </div>
     @if (showValue() && !indeterminate()) {
-      <span class="value" aria-hidden="true">{{ valueText() }}</span>
+      <span class="value" data-tes-part="value" aria-hidden="true">{{ valueText() }}</span>
     }
   `,
   styleUrl: './progress.css',

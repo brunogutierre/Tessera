@@ -24,13 +24,15 @@ import { TesIcon } from '../icon/icon';
   selector: 'fieldset[tes-fieldset]',
   imports: [TesIcon],
   template: `
-    <legend class="legend">{{ legend() }}</legend>
+    <legend class="legend" data-tes-part="legend">{{ legend() }}</legend>
     @if (hint()) {
-      <p class="hint" [id]="hintId">{{ hint() }}</p>
+      <p class="hint" data-tes-part="hint" [id]="hintId">{{ hint() }}</p>
     }
-    <div class="options"><ng-content /></div>
+    <div class="options" data-tes-part="options"><ng-content /></div>
     @if (error()) {
-      <p class="error" [id]="errorId"><tes-icon name="circle-alert" />{{ error() }}</p>
+      <p class="error" data-tes-part="error" [id]="errorId">
+        <tes-icon name="circle-alert" />{{ error() }}
+      </p>
     }
   `,
   styleUrl: './fieldset.css',

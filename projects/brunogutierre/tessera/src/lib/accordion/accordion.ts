@@ -26,22 +26,23 @@ import { TesIcon } from '../icon/icon';
   selector: 'tes-accordion-item',
   imports: [AccordionTrigger, AccordionPanel, AccordionContent, TesIcon],
   template: `
-    <div class="heading" role="heading" [attr.aria-level]="level()">
+    <div class="heading" data-tes-part="heading" role="heading" [attr.aria-level]="level()">
       <button
         ngAccordionTrigger
         type="button"
         class="trigger"
+        data-tes-part="trigger"
         [panel]="panel"
         [disabled]="disabled()"
         [(expanded)]="expanded"
       >
-        <span class="title">{{ heading() }}</span>
-        <tes-icon name="chevron-down" class="chevron" />
+        <span class="title" data-tes-part="title">{{ heading() }}</span>
+        <tes-icon name="chevron-down" class="chevron" data-tes-part="chevron" />
       </button>
     </div>
-    <div ngAccordionPanel #panel="ngAccordionPanel" class="panel">
+    <div ngAccordionPanel #panel="ngAccordionPanel" class="panel" data-tes-part="panel">
       <ng-template ngAccordionContent>
-        <div class="content"><ng-content /></div>
+        <div class="content" data-tes-part="content"><ng-content /></div>
       </ng-template>
     </div>
   `,

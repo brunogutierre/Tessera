@@ -18,9 +18,9 @@ export type TesCardVariant = 'outlined' | 'elevated' | 'filled';
 @Component({
   selector: 'tes-card, article[tes-card], section[tes-card]',
   template: `
-    <div class="header"><ng-content select="[tesCardHeader]" /></div>
-    <div class="body"><ng-content /></div>
-    <div class="footer"><ng-content select="[tesCardFooter]" /></div>
+    <div class="header" data-tes-part="header"><ng-content select="[tesCardHeader]" /></div>
+    <div class="body" data-tes-part="body"><ng-content /></div>
+    <div class="footer" data-tes-part="footer"><ng-content select="[tesCardFooter]" /></div>
   `,
   styleUrl: './card.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

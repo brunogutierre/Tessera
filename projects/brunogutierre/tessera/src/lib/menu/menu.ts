@@ -68,7 +68,7 @@ export type TesMenuEntry<V = string> = TesMenuItem<V> | 'separator';
       }
       @if (!iconOnly()) {
         {{ label() }}
-        <tes-icon name="chevron-down" class="chevron" />
+        <tes-icon name="chevron-down" class="chevron" data-tes-part="chevron" />
       }
     </button>
 
@@ -79,15 +79,16 @@ export type TesMenuEntry<V = string> = TesMenuItem<V> | 'separator';
       [cdkConnectedOverlayPositions]="positions"
       cdkConnectedOverlayUsePopover="inline"
     >
-      <div ngMenu class="panel" (itemSelected)="onSelected($event)">
+      <div ngMenu class="panel" data-tes-part="panel" (itemSelected)="onSelected($event)">
         <ng-template ngMenuContent>
           @for (entry of items(); track $index) {
             @if (entry === 'separator') {
-              <div class="separator" role="separator"></div>
+              <div class="separator" data-tes-part="separator" role="separator"></div>
             } @else {
               <div
                 ngMenuItem
                 class="item"
+                data-tes-part="item"
                 [value]="entry.value"
                 [disabled]="!!entry.disabled"
                 [searchTerm]="entry.label"
@@ -96,7 +97,7 @@ export type TesMenuEntry<V = string> = TesMenuItem<V> | 'separator';
                 @if (entry.icon) {
                   <tes-icon [name]="entry.icon" />
                 }
-                <span class="item-label">{{ entry.label }}</span>
+                <span class="item-label" data-tes-part="item-label">{{ entry.label }}</span>
               </div>
             }
           }
