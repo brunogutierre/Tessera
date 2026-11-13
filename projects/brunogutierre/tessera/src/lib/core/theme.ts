@@ -25,6 +25,12 @@ export interface TesseraConfig {
   labels?: Partial<TesLabels>;
 }
 
+/**
+ * Theme names registered on top of the built-in ones, one array per provider. Use
+ * `provideTesseraThemes` rather than providing this token directly.
+ */
+export const TES_EXTRA_THEMES = new InjectionToken<readonly TesThemeName[][]>('TES_EXTRA_THEMES');
+
 export const TES_CONFIG = new InjectionToken<TesseraConfig>('TES_CONFIG', {
   providedIn: 'root',
   factory: () => ({}),
@@ -45,8 +51,13 @@ export class TesseraTheme {
   readonly #config = inject(TES_CONFIG);
   readonly #prefersDark = signal(false);
 
+  /** Every theme this application can show: the built-in ones, then the registered ones. */
+  readonly themes: readonly TesThemeName[] = [
+    ...new Set([...TES_THEMES, ...(inject(TES_EXTRA_THEMES, { optional: true }) ?? []).flat()]),
+  ];
+
   readonly theme: WritableSignal<TesThemeName> = signal(
-    this.#config.theme ?? this.#initial(TES_THEMES, 'data-tes-theme') ?? 'enterprise',
+    this.#config.theme ?? this.#initial(this.themes, 'data-tes-theme') ?? 'enterprise',
   );
   readonly mode: WritableSignal<TesMode> = signal(
     this.#config.mode ?? this.#initial(TES_MODES, 'data-tes-mode') ?? 'system',
@@ -100,4 +111,17 @@ export function provideTessera(config: TesseraConfig = {}): EnvironmentProviders
     { provide: TES_LABELS, useValue: { ...DEFAULT_LABELS, ...config.labels } },
     provideEnvironmentInitializer(() => inject(TesseraTheme)),
   ]);
+}
+
+/**
+ * Registers themes defined outside Tessera, so `TesseraTheme` adopts them from the markup and
+ * lists them in `themes`. Add the names to `TesThemeRegistry` as well, for the types. Provide it
+ * at the application level, next to `provideTessera`; several calls add up.
+ *
+ * ```ts
+ * providers: [provideTessera({ theme: 'christmas' }), provideTesseraThemes(['christmas'])];
+ * ```
+ */
+export function provideTesseraThemes(themes: readonly TesThemeName[]): EnvironmentProviders {
+  return makeEnvironmentProviders([{ provide: TES_EXTRA_THEMES, useValue: themes, multi: true }]);
 }

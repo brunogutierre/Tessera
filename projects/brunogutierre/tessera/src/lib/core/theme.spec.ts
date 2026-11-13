@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { DEFAULT_LABELS, TES_LABELS } from './labels';
-import { TesseraTheme, provideTessera } from './theme';
+import { TesseraTheme, provideTessera, provideTesseraThemes } from './theme';
 import { TesThemeScope } from './theme-scope';
 import type { TesMode, TesThemeName } from './tokens';
 
@@ -92,6 +92,22 @@ describe('TesseraTheme', () => {
     theme();
     TestBed.resetTestingModule();
     expect(media.query.removeEventListener).toHaveBeenCalledWith('change', expect.any(Function));
+  });
+
+  it('lists the built-in themes', () => {
+    expect(theme().themes).toEqual(['enterprise', 'fintech', 'care']);
+  });
+
+  it('adopts registered themes from the markup and lists them once', () => {
+    // Cast: the test suite does not augment TesThemeRegistry.
+    const extra = ['christmas', 'halloween'] as unknown as TesThemeName[];
+    html.dataset['tesTheme'] = 'halloween';
+    TestBed.configureTestingModule({
+      providers: [provideTesseraThemes(extra), provideTesseraThemes([extra[0]!, 'care'])],
+    });
+    const t = theme();
+    expect(t.theme()).toBe('halloween');
+    expect(t.themes).toEqual(['enterprise', 'fintech', 'care', 'christmas', 'halloween']);
   });
 
   it('applies the theme at startup when provided, without being injected', () => {
