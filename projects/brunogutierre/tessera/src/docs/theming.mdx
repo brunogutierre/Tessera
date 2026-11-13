@@ -20,7 +20,7 @@ Modes use the CSS `color-scheme` property and `light-dark()`: each theme defines
 ```ts
 const theme = inject(TesseraTheme);
 
-theme.theme.set('care'); // WritableSignal<'enterprise' | 'fintech' | 'care'>
+theme.theme.set('care'); // WritableSignal<TesThemeName>
 theme.mode.set('dark'); // WritableSignal<'light' | 'dark' | 'system'>
 theme.resolvedMode(); // Signal<'light' | 'dark'>, with system resolved
 ```
@@ -42,6 +42,29 @@ Any subtree can use another theme or mode:
 ```
 
 Popovers anchored inside the subtree (menus, selects, tooltips) keep the scoped theme. Dialogs and toasts render at the page level, so they follow the page theme.
+
+## Adding a theme
+
+A theme package (or an app) can add its own themes next to the built-in ones:
+
+1. **CSS.** Define every token of `SEMANTIC_TOKENS` under `[data-tes-theme='christmas']`, colors with `light-dark()`. Load it after `tessera.css`, in a layer of its own declared after Tessera's, so app CSS still wins.
+2. **Types.** Add the name to `TesThemeRegistry`, so `theme.set('christmas')` and `tesTheme="christmas"` type-check and typos still fail:
+
+   ```ts
+   declare module '@brunogutierre/tessera' {
+     interface TesThemeRegistry {
+       christmas: true;
+     }
+   }
+   ```
+
+3. **Runtime.** Register the name, so `TesseraTheme` adopts it from the markup and lists it in `themes`:
+
+   ```ts
+   providers: [provideTessera({ theme: 'christmas' }), provideTesseraThemes(['christmas'])];
+   ```
+
+`TesseraTheme.themes` lists every theme the app can show, built-in ones first, for a theme picker.
 
 ## Customizing
 
