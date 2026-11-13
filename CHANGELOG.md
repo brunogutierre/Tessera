@@ -4,6 +4,17 @@ All notable changes to `@brunogutierre/tessera` are documented here. The format 
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-11-12
+
+Hooks for theme packages, such as `@brunogutierre/tessera-themes`. All changes are additive.
+
+### Added
+
+- Theme registry: `TesThemeRegistry` (augment it to add theme names to the types), `provideTesseraThemes()` and `TES_EXTRA_THEMES` to register them at runtime, and `TesseraTheme.themes`, which lists every theme the app can show.
+- Public styling API, documented in Foundations/Extending Tessera: `data-tes-part` on the internal elements of components, next to the host classes, state attributes and component tokens. `npm run check:parts` keeps the docs and templates in sync.
+- Component tokens for native controls: `--tes-checkbox-mark`, `--tes-checkbox-mark-indeterminate`, `--tes-switch-knob`, `--tes-switch-knob-checked`, `--tes-slider-filled`, `--tes-slider-empty` and `--tes-slider-thumb-image`.
+- `TES_CONTRAST_PAIRS`: the 49 color pairs, with their WCAG minimum ratios, that every theme must pass. A theme is complete when it defines `SEMANTIC_TOKENS` and passes these pairs.
+
 ## [0.1.1] - 2026-11-11
 
 ### Changed

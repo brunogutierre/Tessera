@@ -64,6 +64,8 @@ A theme package (or an app) can add its own themes next to the built-in ones:
    providers: [provideTessera({ theme: 'christmas' }), provideTesseraThemes(['christmas'])];
    ```
 
+4. **Contrast.** Test both modes against `TES_CONTRAST_PAIRS`, the 49 color pairs with their WCAG minimum ratios that Tessera's own themes pass.
+
 `TesseraTheme.themes` lists every theme the app can show, built-in ones first, for a theme picker.
 
 ## Customizing

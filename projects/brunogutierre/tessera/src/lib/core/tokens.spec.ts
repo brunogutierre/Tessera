@@ -1,53 +1,11 @@
 import { contrast, resolveColor, toRgba } from '../../test-utils/color';
 import { loadTesseraStyles, readStyle } from '../../test-utils/styles';
+import { TES_CONTRAST_PAIRS } from './contrast';
 import { SEMANTIC_TOKENS, TES_THEMES } from './tokens';
 import type { TesThemeName } from './tokens';
 
 type Mode = 'light' | 'dark';
 const MODES: readonly Mode[] = ['light', 'dark'];
-const STATUSES = ['success', 'warning', 'danger', 'info'] as const;
-
-/** [foreground, background] pairs that carry text: WCAG 1.4.3 needs 4.5:1. */
-const TEXT_PAIRS: readonly (readonly [string, string])[] = [
-  ['text', 'bg'],
-  ['text', 'surface'],
-  ['text', 'surface-raised'],
-  ['text', 'surface-sunken'],
-  ['text', 'selected'],
-  ['text', 'neutral-subtle'],
-  ['text', 'neutral-subtle-hover'],
-  ['text-muted', 'bg'],
-  ['text-muted', 'surface'],
-  ['text-muted', 'surface-raised'],
-  ['text-muted', 'surface-sunken'],
-  ['on-primary', 'primary'],
-  ['on-primary', 'primary-hover'],
-  ['on-primary', 'primary-active'],
-  ['on-primary-subtle', 'primary-subtle'],
-  ['primary', 'surface'],
-  ['primary', 'bg'],
-  ['primary', 'surface-raised'],
-  ...STATUSES.flatMap((s) => [
-    [`on-${s}`, s] as const,
-    [`on-${s}`, `${s}-hover`] as const,
-    [`${s}-text`, `${s}-subtle`] as const,
-    [`${s}-text`, 'surface'] as const,
-    [`${s}-text`, 'bg'] as const,
-  ]),
-];
-
-/** Pairs for borders, focus rings and icons: WCAG 1.4.11 needs 3:1. */
-const UI_PAIRS: readonly (readonly [string, string])[] = [
-  ['border-strong', 'surface'],
-  ['border-strong', 'bg'],
-  ['border-strong', 'surface-raised'],
-  ['border-strong', 'surface-sunken'],
-  ['focus', 'bg'],
-  ['focus', 'surface'],
-  ['focus', 'surface-raised'],
-  ...STATUSES.map((s) => [s, 'surface'] as const),
-];
-
 const scopes: HTMLElement[] = [];
 
 function scope(theme: TesThemeName, mode?: Mode | 'system', parent = document.body): HTMLElement {
@@ -59,8 +17,15 @@ function scope(theme: TesThemeName, mode?: Mode | 'system', parent = document.bo
   return el;
 }
 
-function ratio(fg: string, bg: string, el: HTMLElement): number {
-  return contrast(resolveColor(`--tes-color-${fg}`, el), resolveColor(`--tes-color-${bg}`, el));
+/** Pairs below their minimum ratio, as readable strings. */
+function failures(minRatio: number, el: HTMLElement): string[] {
+  return TES_CONTRAST_PAIRS.filter((p) => p.minRatio === minRatio)
+    .map((p) => ({
+      pair: `${p.foreground} on ${p.background}`,
+      ratio: contrast(resolveColor(p.foreground, el), resolveColor(p.background, el)),
+    }))
+    .filter((r) => r.ratio < minRatio)
+    .map((r) => `${r.pair}: ${r.ratio.toFixed(2)}`);
 }
 
 function token(el: Element, name: string): string {
@@ -75,6 +40,14 @@ afterEach(() => {
 });
 
 describe('design tokens', () => {
+  it('checks 49 contrast pairs', () => {
+    expect(TES_CONTRAST_PAIRS).toHaveLength(49);
+    for (const p of TES_CONTRAST_PAIRS) {
+      expect(SEMANTIC_TOKENS).toContain(p.foreground);
+      expect(SEMANTIC_TOKENS).toContain(p.background);
+    }
+  });
+
   describe.each(TES_THEMES)('%s theme', (theme) => {
     it('declares exactly the semantic token set', async () => {
       const css = await readStyle(`themes/${theme}.css`);
@@ -90,24 +63,12 @@ describe('design tokens', () => {
 
     it.each(MODES)('meets text contrast (4.5:1) in %s mode', (mode) => {
       const el = scope(theme, mode);
-      const failures = TEXT_PAIRS.map(([fg, bg]) => ({
-        pair: `${fg} on ${bg}`,
-        ratio: ratio(fg, bg, el),
-      }))
-        .filter((r) => r.ratio < 4.5)
-        .map((r) => `${r.pair}: ${r.ratio.toFixed(2)}`);
-      expect(failures).toEqual([]);
+      expect(failures(4.5, el)).toEqual([]);
     });
 
     it.each(MODES)('meets non-text contrast (3:1) in %s mode', (mode) => {
       const el = scope(theme, mode);
-      const failures = UI_PAIRS.map(([fg, bg]) => ({
-        pair: `${fg} on ${bg}`,
-        ratio: ratio(fg, bg, el),
-      }))
-        .filter((r) => r.ratio < 3)
-        .map((r) => `${r.pair}: ${r.ratio.toFixed(2)}`);
-      expect(failures).toEqual([]);
+      expect(failures(3, el)).toEqual([]);
     });
 
     it('gives light and dark modes different colors from the same tokens', () => {
