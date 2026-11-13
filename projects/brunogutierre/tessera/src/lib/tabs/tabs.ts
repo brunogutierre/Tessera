@@ -51,6 +51,7 @@ export class TesTabPanel {
     <div
       ngTabList
       class="list"
+      data-tes-part="list"
       [selectedTab]="current()"
       (selectedTabChange)="selected.set($event)"
       [attr.aria-label]="label() ?? null"
@@ -61,6 +62,7 @@ export class TesTabPanel {
           ngTab
           type="button"
           class="tab"
+          data-tes-part="tab"
           [value]="panel.value()"
           [disabled]="panel.disabled()"
         >

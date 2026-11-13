@@ -14,6 +14,7 @@
     "test:watch": "ng test @brunogutierre/tessera",
     "test:coverage": "ng test @brunogutierre/tessera --watch=false --coverage",
     "lint": "ng lint",
+    "check:parts": "node scripts/check-parts.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check:package": "npm run build && publint dist/brunogutierre/tessera && cd dist/brunogutierre/tessera && attw --pack . --profile esm-only && npm pack --dry-run",

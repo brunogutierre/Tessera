@@ -82,4 +82,18 @@ describe('TesCheckbox + TesChoice', () => {
     );
     expect(getComputedStyle(label).cursor).toBe('not-allowed');
   });
+
+  it('takes its marks from the component tokens', async () => {
+    const { box, fixture, host } = await render();
+    box.style.setProperty(
+      '--tes-checkbox-mark',
+      'url("data:image/svg+xml,%3Csvg%20id=%27star%27/%3E")',
+    );
+    box.style.setProperty('--tes-checkbox-mark-indeterminate', 'linear-gradient(red, red)');
+    host.model.set({ terms: true });
+    await fixture.whenStable();
+    expect(getComputedStyle(box).maskImage).toContain('star');
+    box.indeterminate = true;
+    expect(getComputedStyle(box).maskImage).toContain('linear-gradient');
+  });
 });

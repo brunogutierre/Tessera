@@ -1,7 +1,8 @@
-<div class="field" cdkOverlayOrigin #origin="cdkOverlayOrigin">
+<div class="field" data-tes-part="field" cdkOverlayOrigin #origin="cdkOverlayOrigin">
   <input
     tes-input
     class="input"
+    data-tes-part="input"
     type="text"
     inputmode="numeric"
     autocomplete="off"
@@ -17,6 +18,7 @@
     tes-button
     #toggle
     class="toggle"
+    data-tes-part="toggle"
     variant="ghost"
     size="sm"
     iconOnly
@@ -42,6 +44,7 @@
 >
   <div
     class="panel"
+    data-tes-part="panel"
     role="dialog"
     aria-modal="true"
     [attr.aria-label]="labels.chooseDate"

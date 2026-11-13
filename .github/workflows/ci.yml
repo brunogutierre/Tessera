@@ -36,6 +36,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Styling parts match the docs
+        run: npm run check:parts
+
       - name: Unit tests with coverage
         run: npm run test:coverage
 

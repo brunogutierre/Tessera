@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormField, form, max, min } from '@angular/forms/signals';
 import { userEvent } from 'vitest/browser';
+import { loadTesseraStyles } from '../../test-utils/styles';
 import { TesSlider } from './slider';
 
 @Component({
@@ -30,6 +31,8 @@ async function render() {
 }
 
 const fill = (input: HTMLInputElement) => input.style.getPropertyValue('--_fill');
+
+beforeAll(loadTesseraStyles);
 
 describe('TesSlider', () => {
   it('fills the track up to the value', async () => {
@@ -61,5 +64,16 @@ describe('TesSlider', () => {
     input.max = '5';
     input.dispatchEvent(new Event('input'));
     expect(fill(input)).toBe('0%');
+  });
+
+  it('takes its track colors from the component tokens', async () => {
+    // The thumb image token cannot be asserted here: Chromium's getComputedStyle does not read
+    // ::-webkit-slider-thumb. Theme packages cover it with screenshots.
+    const { slider } = await render();
+    slider.style.setProperty('--tes-slider-filled', 'rgb(255, 0, 0)');
+    slider.style.setProperty('--tes-slider-empty', 'rgb(0, 0, 255)');
+    const track = getComputedStyle(slider).backgroundImage;
+    expect(track).toContain('rgb(255, 0, 0)');
+    expect(track).toContain('rgb(0, 0, 255)');
   });
 });

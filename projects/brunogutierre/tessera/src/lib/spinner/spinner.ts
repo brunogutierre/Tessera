@@ -22,8 +22,8 @@ export type TesSpinnerSize = 'sm' | 'md' | 'lg';
 @Component({
   selector: 'tes-spinner',
   template: `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <circle class="track" cx="12" cy="12" r="9.5" />
-    <circle class="arc" cx="12" cy="12" r="9.5" />
+    <circle class="track" data-tes-part="track" cx="12" cy="12" r="9.5" />
+    <circle class="arc" data-tes-part="arc" cx="12" cy="12" r="9.5" />
   </svg>`,
   styleUrl: './spinner.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

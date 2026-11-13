@@ -4,6 +4,12 @@
     --_track-h: 1.25rem;
     --_knob: calc(var(--_track-h) - 0.375rem);
     --_knob-color: var(--tes-color-text-muted);
+    --_knob-dot: radial-gradient(
+      circle closest-side,
+      var(--_knob-color) 0 calc(100% - 0.5px),
+      transparent 100%
+    );
+    --_knob-image: var(--tes-switch-knob, var(--_knob-dot));
     --_start: 0.125rem;
     --_end: calc(var(--_track-w) - var(--_knob) - 0.125rem - 2 * var(--tes-border-width));
     --_x: var(--_start);
@@ -17,11 +23,7 @@
     border: var(--tes-border-width) solid var(--tes-color-border-strong);
     border-radius: var(--tes-radius-full);
     background-color: var(--tes-color-neutral-subtle);
-    background-image: radial-gradient(
-      circle closest-side,
-      var(--_knob-color) 0 calc(100% - 0.5px),
-      transparent 100%
-    );
+    background-image: var(--_knob-image);
     background-size: var(--_knob) var(--_knob);
     background-position: var(--_x) center;
     background-repeat: no-repeat;
@@ -34,6 +36,7 @@
 
   :host(:checked) {
     --_knob-color: var(--tes-color-on-primary);
+    --_knob-image: var(--tes-switch-knob-checked, var(--tes-switch-knob, var(--_knob-dot)));
     --_x: var(--_end);
     border-color: var(--tes-color-primary);
     background-color: var(--tes-color-primary);

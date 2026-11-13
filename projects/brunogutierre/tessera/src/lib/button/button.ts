@@ -32,9 +32,9 @@ export type TesButtonSize = 'sm' | 'md' | 'lg';
   selector: 'button[tes-button], a[tes-button]',
   imports: [TesSpinner],
   template: `
-    <span class="label"><ng-content /></span>
+    <span class="label" data-tes-part="label"><ng-content /></span>
     @if (loading()) {
-      <tes-spinner class="spinner" size="sm" decorative />
+      <tes-spinner class="spinner" data-tes-part="spinner" size="sm" decorative />
     }
   `,
   styleUrl: './button.css',

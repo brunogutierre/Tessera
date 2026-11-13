@@ -1,0 +1,89 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Extending Tessera" />
+
+# Extending Tessera
+
+Theme packages and apps restyle Tessera from the outside, without forking it. These hooks are the **public styling API**: they follow semantic versioning, so a rename is a breaking change. Everything else in the rendered markup, including the internal class names, may change in any release.
+
+| Hook             | Example                                              | Use it for                                                           |
+| ---------------- | ---------------------------------------------------- | -------------------------------------------------------------------- |
+| Semantic tokens  | `--tes-color-primary`                                | A whole theme (see [Theming](?path=/docs/foundations-theming--docs)) |
+| Component tokens | `--tes-button-radius`, `--tes-checkbox-mark`         | One component, everywhere or in a subtree                            |
+| Host class       | `.tes-card`                                          | Selecting a component                                                |
+| State attributes | `[data-variant='primary']`, `[aria-expanded='true']` | Styling a variant or a state                                         |
+| Parts            | `[data-tes-part='header']`                           | Styling an element inside a component                                |
+
+```css
+@layer my-theme.decor {
+  [data-tes-theme='christmas'] .tes-card [data-tes-part='header'] {
+    background: var(--my-garland) top / auto 0.75rem repeat-x;
+  }
+}
+```
+
+Component styles use Angular's emulated encapsulation, which only scopes Tessera's own rules: global CSS reaches every part. Put your rules in a cascade layer declared after Tessera's, or leave them unlayered, and they win without `!important`.
+
+## Parts by component
+
+`npm run check:parts` fails when this table and the templates disagree.
+
+| Component      | Host classes                          | State attributes                                           | Parts (`data-tes-part`)                                            |
+| -------------- | ------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------ |
+| `accordion`    | `tes-accordion-item` `tes-accordion`  | —                                                          | `heading` `trigger` `title` `chevron` `panel` `content`            |
+| `alert`        | `tes-alert`                           | `data-tone`                                                | `icon` `content` `heading` `body` `dismiss`                        |
+| `autocomplete` | `tes-autocomplete`                    | —                                                          | `panel` `list` `option` `empty`                                    |
+| `avatar`       | `tes-avatar`                          | `data-size`                                                | —                                                                  |
+| `badge`        | `tes-badge`                           | `data-tone` `data-variant`                                 | —                                                                  |
+| `breadcrumbs`  | `tes-breadcrumbs`                     | —                                                          | —                                                                  |
+| `button`       | `tes-button`                          | `data-icon-only` `data-loading` `data-size` `data-variant` | `label` `spinner`                                                  |
+| `calendar`     | `tes-calendar`                        | —                                                          | `header` `title` `grid` `day`                                      |
+| `card`         | `tes-card`                            | `data-variant`                                             | `header` `body` `footer`                                           |
+| `checkbox`     | `tes-checkbox`                        | —                                                          | —                                                                  |
+| `choice`       | `tes-choice`                          | —                                                          | —                                                                  |
+| `date-picker`  | `tes-date-picker`                     | —                                                          | `field` `input` `toggle` `panel`                                   |
+| `dialog`       | `tes-dialog`                          | `data-drawer` `data-size`                                  | `header` `title` `body` `footer`                                   |
+| `fieldset`     | `tes-fieldset`                        | `data-orientation`                                         | `legend` `hint` `options` `error`                                  |
+| `form-field`   | `tes-form-field`                      | —                                                          | `label` `marker` `hint` `error`                                    |
+| `icon`         | `tes-icon`                            | `data-directional`                                         | —                                                                  |
+| `input`        | `tes-input`                           | `data-size`                                                | —                                                                  |
+| `listbox`      | `tes-listbox`                         | —                                                          | `list` `option` `check`                                            |
+| `menu`         | `tes-menu`                            | —                                                          | `chevron` `panel` `separator` `item` `item-label`                  |
+| `paginator`    | `tes-paginator`                       | —                                                          | `bar` `size` `size-label` `size-select` `range` `buttons`          |
+| `progress`     | `tes-progress`                        | `data-indeterminate` `data-size` `data-tone`               | `track` `bar` `value`                                              |
+| `radio`        | `tes-radio`                           | —                                                          | —                                                                  |
+| `select`       | `tes-select`                          | —                                                          | `trigger` `text` `chevron` `panel` `option` `option-label` `check` |
+| `skeleton`     | `tes-skeleton`                        | `data-shape`                                               | `bone`                                                             |
+| `slider`       | `tes-slider`                          | —                                                          | —                                                                  |
+| `spinner`      | `tes-spinner`                         | `data-size`                                                | `track` `arc`                                                      |
+| `stat`         | `tes-stat`                            | —                                                          | `label` `value` `delta` `context`                                  |
+| `switch`       | `tes-switch`                          | —                                                          | —                                                                  |
+| `table`        | `tes-table`                           | `data-sorted` `data-sticky` `data-striped`                 | `sort-button` `sort-icon`                                          |
+| `tabs`         | `tes-tab-panel` `tes-tabs`            | —                                                          | `list` `tab`                                                       |
+| `tag`          | `tes-tag`                             | `data-disabled`                                            | `label` `remove`                                                   |
+| `toast`        | `tes-toast-stack`                     | —                                                          | `stack` `list` `toast` `icon` `message` `dismiss`                  |
+| `toolbar`      | `tes-toolbar-separator` `tes-toolbar` | —                                                          | —                                                                  |
+| `tooltip`      | `tes-tooltip`                         | —                                                          | —                                                                  |
+| `tree`         | `tes-tree`                            | —                                                          | `tree` `item` `row` `twisty` `node-icon` `text` `group`            |
+
+## Tokens for native controls
+
+Checkboxes, radios, switches and sliders are `<input>` elements, which cannot carry `::before` or `::after` in every browser. Their visuals are images you can replace:
+
+| Token                                       | Default                | Notes                                                     |
+| ------------------------------------------- | ---------------------- | --------------------------------------------------------- |
+| `--tes-checkbox-mark`                       | Check mark             | Mask image: only its shape counts, the color is the fill  |
+| `--tes-checkbox-mark-indeterminate`         | Dash                   | Mask image                                                |
+| `--tes-switch-knob`                         | Round knob             | Background image of the unchecked knob, sized as the knob |
+| `--tes-switch-knob-checked`                 | `--tes-switch-knob`    | Background image of the checked knob                      |
+| `--tes-slider-filled`, `--tes-slider-empty` | Primary, strong border | Track colors                                              |
+| `--tes-slider-thumb-image`                  | `none`                 | Image drawn on the thumb, at 80% of its size              |
+
+To decorate around a native control, style its wrapper (`label[tes-choice]`, `tes-form-field`) instead.
+
+## Rules for decoration
+
+- Keep decoration out of the layout: position it absolutely inside the component, with `pointer-events: none`, so sizes and target areas do not change.
+- Use `content: ''` in pseudo-elements: screen readers read generated text.
+- Never carry information through decoration alone, never cover the focus ring, and stop animations under `prefers-reduced-motion: reduce`.
+- Hide decoration under `forced-colors: active` and in print.

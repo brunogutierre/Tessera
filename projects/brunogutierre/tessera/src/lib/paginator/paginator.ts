@@ -27,12 +27,15 @@ import type { TesOption, TesSelectValue } from '../select/select';
   selector: 'tes-paginator',
   imports: [TesButton, TesIcon, TesSelect],
   template: `
-    <nav class="bar" [attr.aria-label]="labels.pagination">
+    <nav class="bar" data-tes-part="bar" [attr.aria-label]="labels.pagination">
       @if (pageSizes().length > 1) {
-        <span class="size">
-          <span class="size-label" aria-hidden="true">{{ labels.itemsPerPage }}</span>
+        <span class="size" data-tes-part="size">
+          <span class="size-label" data-tes-part="size-label" aria-hidden="true">{{
+            labels.itemsPerPage
+          }}</span>
           <tes-select
             class="size-select"
+            data-tes-part="size-select"
             [label]="labels.itemsPerPage"
             [options]="sizeOptions()"
             [value]="pageSize()"
@@ -40,8 +43,8 @@ import type { TesOption, TesSelectValue } from '../select/select';
           />
         </span>
       }
-      <span class="range" role="status">{{ range() }}</span>
-      <span class="buttons">
+      <span class="range" data-tes-part="range" role="status">{{ range() }}</span>
+      <span class="buttons" data-tes-part="buttons">
         <button
           tes-button
           variant="ghost"

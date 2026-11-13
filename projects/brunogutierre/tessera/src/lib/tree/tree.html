@@ -2,6 +2,7 @@
   ngTree
   #tree="ngTree"
   class="tree"
+  data-tes-part="tree"
   [multi]="multiple()"
   selectionMode="explicit"
   [softDisabled]="false"
@@ -23,6 +24,7 @@
       ngTreeItem
       #item="ngTreeItem"
       class="item"
+      data-tes-part="item"
       [parent]="level_.parent"
       [value]="node.value"
       [label]="node.label"
@@ -30,19 +32,19 @@
       [expanded]="!!node.expanded"
       [attr.aria-label]="node.label"
     >
-      <span class="row">
+      <span class="row" data-tes-part="row">
         @if (node.children?.length) {
-          <tes-icon name="chevron-right" class="twisty" />
+          <tes-icon name="chevron-right" class="twisty" data-tes-part="twisty" />
         } @else {
-          <span class="twisty"></span>
+          <span class="twisty" data-tes-part="twisty"></span>
         }
         @if (node.icon) {
-          <tes-icon [name]="node.icon" class="node-icon" />
+          <tes-icon [name]="node.icon" class="node-icon" data-tes-part="node-icon" />
         }
-        <span class="text">{{ node.label }}</span>
+        <span class="text" data-tes-part="text">{{ node.label }}</span>
       </span>
       @if (node.children?.length) {
-        <ul role="group" class="group">
+        <ul role="group" class="group" data-tes-part="group">
           <ng-template ngTreeItemGroup [ownedBy]="item" #group="ngTreeItemGroup">
             <ng-container
               [ngTemplateOutlet]="branch"

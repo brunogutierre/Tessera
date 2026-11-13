@@ -36,6 +36,7 @@ import type { TesOption, TesSelectValue } from '../select/select';
       ngListbox
       #list
       class="list"
+      data-tes-part="list"
       [id]="id"
       [multi]="multiple()"
       [selectionMode]="multiple() ? 'explicit' : 'follow'"
@@ -53,11 +54,12 @@ import type { TesOption, TesSelectValue } from '../select/select';
         <div
           ngOption
           class="option"
+          data-tes-part="option"
           [value]="option.value"
           [label]="option.label"
           [disabled]="!!option.disabled"
         >
-          <tes-icon name="check" class="check" />
+          <tes-icon name="check" class="check" data-tes-part="check" />
           <span>{{ option.label }}</span>
         </div>
       }
