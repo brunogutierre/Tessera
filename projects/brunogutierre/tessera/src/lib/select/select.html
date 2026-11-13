@@ -4,6 +4,7 @@
   cdkOverlayOrigin
   #origin="cdkOverlayOrigin"
   class="trigger"
+  data-tes-part="trigger"
   [id]="id"
   [(expanded)]="expanded"
   [disabled]="disabled()"
@@ -14,10 +15,10 @@
   [attr.aria-required]="required() || null"
   (focusout)="onFocusOut($event)"
 >
-  <span class="text" [class.placeholder]="!displayText()">{{
+  <span class="text" data-tes-part="text" [class.placeholder]="!displayText()">{{
     displayText() || placeholder()
   }}</span>
-  <tes-icon name="chevron-down" class="chevron" />
+  <tes-icon name="chevron-down" class="chevron" data-tes-part="chevron" />
 </div>
 
 <!--
@@ -38,6 +39,7 @@
       ngListbox
       #listbox="ngListbox"
       class="panel"
+      data-tes-part="panel"
       tabindex="-1"
       (mousedown)="$event.preventDefault()"
       [multi]="multiple()"
@@ -52,12 +54,13 @@
         <div
           ngOption
           class="option"
+          data-tes-part="option"
           [value]="option.value"
           [label]="option.label"
           [disabled]="!!option.disabled"
         >
-          <span class="option-label">{{ option.label }}</span>
-          <tes-icon name="check" class="check" />
+          <span class="option-label" data-tes-part="option-label">{{ option.label }}</span>
+          <tes-icon name="check" class="check" data-tes-part="check" />
         </div>
       }
     </div>

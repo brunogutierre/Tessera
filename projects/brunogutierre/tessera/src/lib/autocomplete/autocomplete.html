@@ -27,12 +27,13 @@
     [cdkConnectedOverlayMatchWidth]="true"
     cdkConnectedOverlayUsePopover="inline"
   >
-    <div class="panel" (mousedown)="$event.preventDefault()">
+    <div class="panel" data-tes-part="panel" (mousedown)="$event.preventDefault()">
       <div
         ngComboboxWidget
         ngListbox
         #listbox="ngListbox"
         class="list"
+        data-tes-part="list"
         tabindex="-1"
         selectionMode="explicit"
         focusMode="activedescendant"
@@ -45,6 +46,7 @@
           <div
             ngOption
             class="option"
+            data-tes-part="option"
             [value]="option.value"
             [label]="option.label"
             [disabled]="!!option.disabled"
@@ -54,7 +56,7 @@
         }
       </div>
       @if (suggestions().length === 0) {
-        <p class="empty" role="status">{{ labels.noResults }}</p>
+        <p class="empty" data-tes-part="empty" role="status">{{ labels.noResults }}</p>
       }
     </div>
   </ng-template>

@@ -38,16 +38,16 @@ const ICONS: Record<TesStatusTone, TesIconName> = {
   selector: 'tes-alert',
   imports: [TesButton, TesIcon],
   template: `
-    <tes-icon class="icon" [name]="icon()" />
-    <div class="content">
+    <tes-icon class="icon" data-tes-part="icon" [name]="icon()" />
+    <div class="content" data-tes-part="content">
       @if (heading(); as heading) {
-        <p class="heading">
+        <p class="heading" data-tes-part="heading">
           <span class="tes-visually-hidden">{{ toneLabel() }}: </span>{{ heading }}
         </p>
       } @else {
         <span class="tes-visually-hidden">{{ toneLabel() }}: </span>
       }
-      <div class="body"><ng-content /></div>
+      <div class="body" data-tes-part="body"><ng-content /></div>
     </div>
     @if (dismissible()) {
       <button
@@ -57,6 +57,7 @@ const ICONS: Record<TesStatusTone, TesIconName> = {
         size="sm"
         iconOnly
         class="dismiss"
+        data-tes-part="dismiss"
         [attr.aria-label]="labels.dismiss"
         (click)="dismissed.emit()"
       >

@@ -103,9 +103,14 @@ export class TesTable {
   selector: 'th[tes-sort-header]',
   imports: [TesIcon],
   template: `
-    <button type="button" class="tes-sort-button" (click)="table.toggle(column())">
+    <button
+      type="button"
+      class="tes-sort-button"
+      data-tes-part="sort-button"
+      (click)="table.toggle(column())"
+    >
       <ng-content />
-      <tes-icon class="tes-sort-icon" [name]="icon()" />
+      <tes-icon class="tes-sort-icon" data-tes-part="sort-icon" [name]="icon()" />
       @if (stateLabel(); as state) {
         <span class="tes-visually-hidden">, {{ state }}</span>
       }

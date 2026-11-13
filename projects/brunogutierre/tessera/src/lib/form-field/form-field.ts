@@ -28,20 +28,22 @@ import { TesIcon } from '../icon/icon';
   selector: 'tes-form-field',
   imports: [TesIcon],
   template: `
-    <label class="label" [id]="labelId" [attr.for]="controlId()">
+    <label class="label" data-tes-part="label" [id]="labelId" [attr.for]="controlId()">
       {{ label() }}
       @if (controlRequired()) {
-        <span class="marker" aria-hidden="true">*</span>
+        <span class="marker" data-tes-part="marker" aria-hidden="true">*</span>
       } @else if (optional()) {
-        <span class="marker optional"> ({{ labels.optional }})</span>
+        <span class="marker optional" data-tes-part="marker"> ({{ labels.optional }})</span>
       }
     </label>
     <ng-content />
     @if (hint()) {
-      <p class="hint" [id]="hintId">{{ hint() }}</p>
+      <p class="hint" data-tes-part="hint" [id]="hintId">{{ hint() }}</p>
     }
     @if (error()) {
-      <p class="error" [id]="errorId"><tes-icon name="circle-alert" />{{ error() }}</p>
+      <p class="error" data-tes-part="error" [id]="errorId">
+        <tes-icon name="circle-alert" />{{ error() }}
+      </p>
     }
   `,
   styleUrl: './form-field.css',

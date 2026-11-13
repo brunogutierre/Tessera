@@ -186,17 +186,23 @@ export class TesToaster {
       <section
         #stack
         class="stack"
+        data-tes-part="stack"
         [attr.aria-label]="labels.notifications"
         (mouseenter)="toaster.setHovered(true)"
         (mouseleave)="toaster.setHovered(false)"
         (focusin)="toaster.setFocused(true)"
         (focusout)="onFocusOut($event)"
       >
-        <ol class="list">
+        <ol class="list" data-tes-part="list">
           @for (toast of toaster.toasts(); track toast.id) {
-            <li class="toast" [attr.data-tone]="toast.tone" [attr.data-id]="toast.id">
-              <tes-icon class="icon" [name]="icons[toast.tone]" />
-              <p class="message">
+            <li
+              class="toast"
+              data-tes-part="toast"
+              [attr.data-tone]="toast.tone"
+              [attr.data-id]="toast.id"
+            >
+              <tes-icon class="icon" data-tes-part="icon" [name]="icons[toast.tone]" />
+              <p class="message" data-tes-part="message">
                 <span class="tes-visually-hidden">{{ labels.tones[toast.tone] }}: </span>
                 {{ toast.message }}
               </p>
@@ -218,6 +224,7 @@ export class TesToaster {
                 iconOnly
                 type="button"
                 class="dismiss"
+                data-tes-part="dismiss"
                 [attr.aria-label]="labels.dismiss"
                 (click)="dismiss(toast.id)"
               >

@@ -23,7 +23,7 @@ export type TesSkeletonShape = 'text' | 'rect' | 'circle';
   selector: 'tes-skeleton',
   template: `
     @for (line of lineList(); track line) {
-      <span class="bone"></span>
+      <span class="bone" data-tes-part="bone"></span>
     }
   `,
   styleUrl: './skeleton.css',
