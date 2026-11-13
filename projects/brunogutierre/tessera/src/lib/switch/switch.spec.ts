@@ -60,4 +60,16 @@ describe('TesSwitch', () => {
     const track = toRgba(getComputedStyle(input).backgroundColor);
     expect(contrast(knob, track)).toBeGreaterThanOrEqual(3);
   });
+
+  it('takes its knob images from the component tokens', async () => {
+    const { input } = await render();
+    const knob = () => getComputedStyle(input).backgroundImage;
+    expect(knob()).toContain('radial-gradient');
+    input.style.setProperty('--tes-switch-knob', 'linear-gradient(red, red)');
+    expect(knob()).toContain('rgb(255, 0, 0)');
+    input.click();
+    expect(knob()).toContain('rgb(255, 0, 0)'); // the checked knob falls back to the unchecked one
+    input.style.setProperty('--tes-switch-knob-checked', 'linear-gradient(blue, blue)');
+    expect(knob()).toContain('rgb(0, 0, 255)');
+  });
 });
