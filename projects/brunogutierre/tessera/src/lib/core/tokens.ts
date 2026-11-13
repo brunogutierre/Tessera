@@ -1,6 +1,26 @@
 /** The themes that ship with Tessera. */
 export const TES_THEMES = ['enterprise', 'fintech', 'care'] as const;
-export type TesThemeName = (typeof TES_THEMES)[number];
+
+/**
+ * The theme names the compiler accepts. A theme package adds its own names through module
+ * augmentation, so typos are still caught at compile time:
+ *
+ * ```ts
+ * declare module '@brunogutierre/tessera' {
+ *   interface TesThemeRegistry {
+ *     christmas: true;
+ *   }
+ * }
+ * ```
+ *
+ * At runtime, register the same names with `provideTesseraThemes`.
+ */
+export interface TesThemeRegistry {
+  enterprise: true;
+  fintech: true;
+  care: true;
+}
+export type TesThemeName = Extract<keyof TesThemeRegistry, string>;
 
 /** Color modes. `system` follows the operating system preference. */
 export const TES_MODES = ['light', 'dark', 'system'] as const;

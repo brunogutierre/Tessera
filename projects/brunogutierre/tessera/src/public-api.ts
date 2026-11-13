@@ -2,11 +2,16 @@
  * Public API of @brunogutierre/tessera.
  */
 export { SEMANTIC_TOKENS, TES_MODES, TES_THEMES } from './lib/core/tokens';
-export type { TesMode, TesThemeName, TesToken } from './lib/core/tokens';
+export type { TesMode, TesThemeName, TesThemeRegistry, TesToken } from './lib/core/tokens';
 export { DEFAULT_LABELS, TES_LABELS } from './lib/core/labels';
 export type { TesLabels } from './lib/core/labels';
 export type { TesStatusTone } from './lib/core/tones';
-export { TesseraTheme, provideTessera } from './lib/core/theme';
+export {
+  TES_EXTRA_THEMES,
+  TesseraTheme,
+  provideTessera,
+  provideTesseraThemes,
+} from './lib/core/theme';
 export type { TesseraConfig } from './lib/core/theme';
 export { TesThemeScope } from './lib/core/theme-scope';
 export { TesIcon } from './lib/icon/icon';
